@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Accordion Example 1</title>
+    <script src="source/moo.js"></script>
+    <script src="source/switchable.js"></script>
+	<link rel="stylesheet" href="reset.css" type="text/css" /> 
+</head>
+<body>
+    <div>
+        <p>
+            <h1>Accordion Example 1:</h1>
+        </p>
+    </div>
+<style>
+#accordion1 {width:300px;border:1px solid #ccc;}
+#accordion1 .switchable-trigger{cursor:pointer;border-bottom:1px solid #ddd;background:#f3f3f3;overflow:hidden; height: 18px;}
+#accordion1 .switchable-trigger h3{float: left; width: 100px; }
+#accordion1 .switchable-panel{height:150px;border-bottom:1px solid #ddd;}
+#accordion1 .moo-icon{float:left;width:12px;height:12px;overflow:hidden;font-size:0;vertical-align:middle;background:url(assets/accordion-sprite.png) no-repeat}
+#accordion1 .active .moo-icon{background-position:-20px 0;}
+#accordion1 .last-trigger { border-bottom-width: 0 }
+#accordion1 .active { border-bottom-width: 1px }
+#accordion1 .last-panel { border-bottom: none }
+</style>
+<div id="accordion1" class="Auto_Widget" data-widget-type="Accordion" data-widget-config="{triggers:'.switchable-trigger',panel:'.switchable-panel',eventType:'click'}">
+    <div class="switchable-trigger active"><i class="moo-icon"></i><h3>标题A</h3></div>
+    <div class="switchable-panel">
+        1、支持鼠标滑过和点击触点两种方式<br/>
+        2、支持同时展开多个面板
+    </div>
+    <div class="switchable-trigger"><i class="moo-icon"></i><h3>标题B</h3></div>
+    <div class="switchable-panel" style="display:none;">内容B<br/>内容B<br/>内容B</div>
+    <div class="switchable-trigger"><i class="moo-icon"></i><h3>标题C</h3></div>
+    <div class="switchable-panel" style="display:none;">内容C<br/>内容C<br/>内容C<br/>内容C<br/>内容C</div>
+    <div class="switchable-trigger last-trigger"><i class="moo-icon"></i><h3>标题D</h3></div>
+    <div class="switchable-panel last-panel" style="display:none;">内容D<br/>内容D<br/>内容D</div>
+</div>
+<div class="code" style="margin-top:20px;">
+    <h2>Dom code:</h2>
+    <pre>
+&lt;div id="accordion1" class="Auto_Widget" data-widget-type="Accordion" data-widget-config="{
+		triggers:'.switchable-trigger',
+		panel:'.switchable-panel',
+		eventType:'click'
+}"&gt;
+    &lt;div class="switchable-trigger active"&gt;&lt;i class="moo-icon"&gt;&lt;/i&gt;&lt;h3&gt;标题A&lt;/h3&gt;&lt;/div&gt;
+    &lt;div class="switchable-panel"&gt;
+        1、支持鼠标滑过和点击触点两种方式&lt;br/&gt;
+        2、支持同时展开多个面板
+    &lt;/div&gt;
+    &lt;div class="switchable-trigger"&gt;&lt;i class="moo-icon"&gt;&lt;/i&gt;&lt;h3&gt;标题B&lt;/h3&gt;&lt;/div&gt;
+    &lt;div class="switchable-panel" style="display:none;"&gt;内容B&lt;br/&gt;内容B&lt;br/&gt;内容B&lt;/div&gt;
+    &lt;div class="switchable-trigger"&gt;&lt;i class="moo-icon"&gt;&lt;/i&gt;&lt;h3&gt;标题C&lt;/h3&gt;&lt;/div&gt;
+    &lt;div class="switchable-panel" style="display:none;"&gt;内容C&lt;br/&gt;内容C&lt;br/&gt;内容C&lt;br/&gt;内容C&lt;br/&gt;内容C&lt;/div&gt;
+    &lt;div class="switchable-trigger last-trigger"&gt;&lt;i class="moo-icon"&gt;&lt;/i&gt;&lt;h3&gt;标题D&lt;/h3&gt;&lt;/div&gt;
+    &lt;div class="switchable-panel last-panel" style="display:none;"&gt;内容D&lt;br/&gt;内容D&lt;br/&gt;内容D&lt;/div&gt;
+&lt;/div&gt;</pre>
+</div>
+
+
+<div class="code" style="margin-top:20px;">
+    <h2>CSS code:</h2>
+    <pre>
+#accordion1 {width:300px;border:1px solid #ccc;}
+#accordion1 .switchable-trigger{
+	padding:3px 10px
+	cursor:pointer;
+	border-bottom:1px solid #ddd;
+	background:#f3f3f3;
+	overflow:hidden;
+	height: 18px;
+	}
+#accordion1 .switchable-trigger h3{float: left; width: 100px; margin-left: 5px; }
+#accordion1 .switchable-panel{
+	height:150px;
+	padding:3px 10px;
+	border-bottom:1px solid #ddd
+	}
+#accordion1 .moo-icon{
+	float:left;
+	width:12px;
+	height:12px;
+	overflow:hidden;
+	margin-top:2px;
+	font-size:0;
+	vertical-align:middle;
+	background:url(assets/accordion-sprite.png) no-repeat
+	}
+#accordion1 .active .moo-icon{background-position:-20px 0;}
+#accordion1 .last-trigger { border-bottom-width: 0 }
+#accordion1 .active { border-bottom-width: 1px }
+#accordion1 .last-panel { border-bottom: none }</pre>
+</div>
+</html>

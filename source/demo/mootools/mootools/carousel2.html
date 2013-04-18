@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Carousel Example 2</title>
+    <script src="source/moo.js"></script>
+    <script src="source/switchable.js"></script>
+	<link rel="stylesheet" href="reset.css" type="text/css" /> 
+</head>
+<body>
+    <div>
+        <p>
+            <h1>Carousel Example 2:</h1>
+        </p>
+    </div>
+    <style>
+    .scrollable {
+        position: relative;
+        width: 320px;
+    }
+    .scrollable .prev, .scrollable .next {
+        position: absolute;
+        top: 8px;
+        color: #666;
+        cursor: pointer;
+		width:12px;
+		height:12px;
+		border:1px solid #cccccc;
+		line-height:12px;
+		text-align:center;
+    }
+    .scrollable .prev { left: 10px; }
+    .scrollable .next { left: 25px; }
+    .scroller {
+        position: relative;
+        width: 220px;
+        height: 30px;
+        margin:0 0 0 50px;
+        overflow: hidden;
+    }
+	.switchable-content li{width:220px;height:30px;line-height:30px;}
+</style>
+<div class="section scrollable Auto_Widget"  data-widget-type="Switchable"  data-widget-config="{effect:'scrollx', 
+		viewSize: [220,30],
+		steps:1,
+		hasTriggers:false,
+		haslrbtn:true         
+	}">
+    <span class="prev ">&lsaquo;</span>
+    <span class="next">&rsaquo;</span>
+    <div class="scroller">
+        <ul class="switchable-content">
+            <li>名鞋馆包邮！百丽，达芙妮 3-5折！</li>
+			<li>原创服饰馆7月用心旅行，赢单反相机</li>
+			<li>上海超市天天低价，足不出户在家逛超市</li>
+			<li>美容馆兰蔻薇姿相宜本草 美白2折起</li>
+			<li>电器城每天4款超低折扣单品限量疯抢</li>
+        </ul>
+    </div>
+</div>
+
+
+
+
+<div class="code" style="margin-top:20px;">
+    <h2>Dom code:</h2>
+    <pre>
+&lt;div class="section scrollable Auto_Widget"  data-widget-type="Switchable"  data-widget-config="{effect:'scrollx', 
+		viewSize: [220,30],
+		steps:1,
+		hasTriggers:false,
+		haslrbtn:true         (注意最后一个参数的结尾不要有","号，兼容IE.)
+	}"&gt;
+    &lt;span class="prev "&gt;&lsaquo;&lt;/span&gt;
+    &lt;span class="next"&gt;&rsaquo;&lt;/span&gt;
+    &lt;div class="scroller"&gt;
+              &lt;ul class="switchable-content"&gt;
+			&lt;li&gt;名鞋馆包邮！百丽，达芙妮 3-5折！&lt;/li&gt;
+			&lt;li&gt;原创服饰馆7月用心旅行，赢单反相机&lt;/li&gt;
+			&lt;li&gt;上海超市天天低价，足不出户在家逛超市&lt;/li&gt;
+			&lt;li&gt;美容馆兰蔻薇姿相宜本草 美白2折起&lt;/li&gt;
+			&lt;li&gt;电器城每天4款超低折扣单品限量疯抢&lt;/li&gt;
+              &lt;/ul&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+</div>
+
+<div class="code" style="margin-top:20px;">
+    <h2>Css code:</h2>
+<pre>
+.scrollable {
+        position: relative;
+        width: 320px;
+    }
+.scrollable .prev, .scrollable .next {
+        position: absolute;
+        top: 8px;
+        color: #666;
+        cursor: pointer;
+		width:12px;
+		height:12px;
+		border:1px solid #cccccc;
+		line-height:12px;
+		text-align:center;
+    }
+.scrollable .prev { left: 10px; }
+.scrollable .next { left: 25px; }
+.scroller {
+        position: relative;
+        width: 220px;
+        height: 30px;
+        margin:0 0 0 50px;;
+        overflow: hidden;
+    }
+.switchable-content li{width:220px;height:30px;line-height:30px;}
+</pre>
+</div>
+</body>
+</html>

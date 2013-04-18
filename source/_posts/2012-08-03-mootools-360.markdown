@@ -1,0 +1,28 @@
+---
+layout: post
+title: "mootools框架学习和开发"
+date: 2012-08-03 15:23
+comments: true
+categories: javascript mootools 封装
+---
+{% img http://www.feeloc.cn/downloads/images/2012-08-03/1.png %}
+>MooTools是一个简洁，模块化，面向对象的JavaScript框架。它能够帮助你更快，更简单地编写可扩展和兼容性强的JavaScript代码。 
+>Mootools从Prototype.js中汲取了许多有益的设计理念，语法也和其极其类似。但它提供的功能要比Prototype.js多，
+>整体设计也比Prototype.js要相对完善，功能更强大，比如增加了动画特效、拖放操作等。前一阵子本来说一个项目需要用到mootools框架，于是就开始了框架的学习。
+<!-- more -->
+
+##一、以实际需求入手##
+*	一个新的编程知识的学习，我喜欢以实际需求入手，这样不仅可以达到练习的作用，还能够解决一些实际问题，有阶段性成就感。
+*	在mootools学习的过程中，我是想用一个店商网站的首页做学习，最终选择了京东商城的首页做练习。因为它包含了几个模块:
+	*	slide效果，如京东商城的首页图片展示区
+	{% img http://www.feeloc.cn/downloads/images/2012-08-03/2.png 500 %}
+	*	tab切换效果，如京东商城的首页各处商品展示
+	{% img http://www.feeloc.cn/downloads/images/2012-08-03/3.png 500 %}
+	*	弹出层效果，如京东商城的所有页面商品分类
+	{% img http://www.feeloc.cn/downloads/images/2012-08-03/4.png 500 %}
+	*	Lazyload延迟加载，在可视区域的图片加载，加快页面速度
+	*	倒计时效果，经常会出现在团购网站中，京东也会有团购，商城也会有团购
+	{% img http://www.feeloc.cn/downloads/images/2012-08-03/5.png 500 %}
+*	最终，从显示层面上，我希望能模仿出京东首页的样子，在技术底层，我希望能够将mootools做一些封装，方便调用。
+
+##二、mootools框架##

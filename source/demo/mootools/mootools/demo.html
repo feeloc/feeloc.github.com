@@ -1,0 +1,332 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>switchable demo</title>
+	
+	<script src="../../javascript/switchable-1.3.2.js"" ></script>
+	<script src="Source/switchable.js"></script>
+	<link rel="stylesheet" href="reset.css" type="text/css" /> 
+    
+</head>
+<body>
+   <h2>Tabs - 普通标签页</h2>
+<style>
+    #demo1 { position: relative; width: 750px; padding-top: 29px; }
+    #demo1 .switchable-triggerBox { position: absolute; left: 20px; margin-top: -29px; z-index: 99; }
+    #demo1 .switchable-triggerBox li {
+        float: left;
+        width: 130px;
+        height: 27px;
+        line-height: 21px;
+        text-align: center;
+        background: url(assets/tabs-sprite.gif) no-repeat 0 6px;
+        margin-right: 3px;
+        padding-top: 8px;
+        cursor: pointer;
+    }
+    #demo1 .switchable-triggerBox li.active { background-position: 0 -40px; cursor: default; }
+    #demo1 .switchable-content {
+        position: relative;
+        height: 120px;
+        padding: 20px;
+        border: 1px solid #AEC7E5;
+    }
+</style>
+<div id="demo1" class="section">
+    <ul class="switchable-triggerBox">
+        <li class="active"><span>标题 A</span></li>
+        <li>标题 B</li>
+        <li>标题 C</li>
+        <li>标题 D</li>
+        <li>标题 E</li>
+    </ul>
+    <div class="switchable-content">
+
+		<div class="switchable-panel">
+			<pre>  - 在当前 trigger 中 mouseover/mouseout, click, focus, 不触发
+			  - 鼠标快速滑过非当前 trigger, 不触发
+			  - mouseover 到非当前 trigger, 停留时间到达延迟时，触发
+			  - click 或 Tab 切换到 trigger, 立即触发
+			  - beforeSwitch/onSwitch 事件的触发
+			  - 延迟的内容能正确加载
+			</pre>
+		</div>
+        <div class="switchable-panel" style="display: none;">内容 B</div>
+        <div class="switchable-panel" style="display: none;">内容 C</div>
+        <div class="switchable-panel" style="display: none;">内容 D</div>
+        <div class="switchable-panel" style="display: none;">
+            <textarea class="textarea-lazyload">                我是延迟内容
+                &lt;script&gt;alert('我是延迟内容中的脚本，仅在第一次加载时执行。');&lt;/script&gt;
+            </textarea>
+        </div>
+    </div>
+</div>
+<script>
+
+
+var tabs = new Switchable('demo1', {autoplay:true,
+ onSwitch:function(){
+
+ 
+ }
+});
+</script>
+
+<style>
+    #demo2 { position: relative; width: 470px; height: 150px; border: 1px solid #B6D1E6; overflow: hidden; }
+    #demo2 .switchable-triggerBox { position: absolute; bottom: 5px; right: 5px; z-index: 99; }
+    #demo2 .switchable-triggerBox li {
+        float: left;
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        margin-left: 3px;
+        background-color: #FCF2CF;
+        border: 1px solid #F47500;
+        color: #D94B01;
+        text-align: center;
+        cursor: pointer;
+    }
+    #demo2 .switchable-triggerBox li.active {
+        width: 18px;
+        height: 18px;
+        line-height: 18px;
+        margin-top: -1px;
+        color: #FFF;
+        background-color: #FFB442;
+        font-weight: bold;
+    }
+    #demo2 .switchable-content li { height: 150px; width: 470px; overflow: hidden; }
+    /* for countdown plugin */
+    #demo2 .switchable-triggerBox li,
+    #demo2 .content {
+        position: relative;
+    }
+    #demo2 .mask {
+        position: absolute;
+        right: 0;
+        width: 18px;
+        height: 18px;
+        background-color: #FF9415;
+        visibility: hidden
+    }
+    #demo2 .active .mask {
+        visibility: visible
+    }
+</style>
+
+<div id="demo2" class="section loading" style="margin-top:70px;">
+    <ol class="switchable-content">
+        <li class=""><img alt="" src="http://img05.taobaocdn.com/tps/i5/T1HllqXjXpXXXXXXXX-470-150.jpg"/></li>
+        <li class="hidden "><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-24/091224170529.gif"/></li>
+        <li class="hidden "><img alt="" width="470" height="150" border="0" src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-29/091229160359.jpg"/></li>
+        <li class="hidden "><img alt="" src="http://img01.taobaocdn.com/tps/i1/T1qS0qXhBhXXXXXXXX-470-150.jpg"/></li>
+       
+    </ol>
+	<ul class="switchable-triggerBox">
+	
+	<li class="active"><div class="mask"></div><div class="content">1</div></li>
+	<li class=""><div class="mask"></div><div class="content">2</div></li>
+	<li class=""><div class="mask"></div><div class="content">3</div></li>
+	<li class=""><div class="mask"></div><div class="content">4</div></li></ul>
+	</div>
+
+</div>
+<script>
+var tabs = new Switchable('demo2', {autoplay:true,effect:'scrollx',fromStyle:{width:18},toStyle:{width:0},
+progressEl:$$('.mask','#demo2'),
+	 onSwitch:function(){
+		
+	 }
+});
+</script>
+
+
+
+<style>
+    .scrollable {
+        position: relative;
+        width: 820px;
+    }
+    .scrollable .prev, .scrollable .next {
+        position: absolute;
+        top: 50px;
+        color: #666;
+        cursor: pointer;
+    }
+    .scrollable .prev { left: 10px; }
+    .scrollable .next { right: 10px; }
+    .scrollable .disable { color: #ddd; cursor: default; }
+
+    .scrollable .switchable-triggerBox {
+        position: absolute;
+        right: 30px;
+        top: -10px;
+    }
+    .scrollable .switchable-triggerBox li {
+        float: left;
+        padding: 5px;
+        font-size: 18px;
+        cursor: pointer;
+    }
+    .scrollable .switchable-triggerBox li.active {
+        color: #C8282B;
+    }
+
+    .scroller {
+        position: relative;
+        width: 680px;
+        height: 120px;
+        border: 1px solid #ccc;
+        background-color: #F9F9F9;
+        margin: auto;
+        overflow: hidden;
+    }
+    .scroller .switchable-content img {
+        float: left;
+        width: 100px;
+        height: 75px;
+        padding: 2px;
+        margin: 20px 15px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        display: inline !important; /* fix ie6 双边距 bug */
+    }
+</style>
+<div id="demo4" class="section scrollable" style="margin-top:70px;">
+    <span id="scroller-prev" class="prev disable">&lsaquo; 上一页</span>
+    <span id="scroller-next" class="next">下一页 &rsaquo;</span>
+    <div class="scroller">
+        <div class="switchable-content">
+            <!-- 1-5 -->
+            <img alt="" src="http://farm1.static.flickr.com/143/321464099_a7cfcb95cf_t.jpg"/>
+            <img alt="" src="http://farm4.static.flickr.com/3089/2796719087_c3ee89a730_t.jpg"/>
+            <img alt="" src="http://farm1.static.flickr.com/79/244441862_08ec9b6b49_t.jpg"/>
+            <img alt="" src="http://farm1.static.flickr.com/28/66523124_b468cf4978_t.jpg"/>
+            <img alt="" src="http://farm1.static.flickr.com/164/399223606_b875ddf797_t.jpg"/>
+            <!-- 5-10 -->
+            <img alt="" img-lazyload="http://farm1.static.flickr.com/163/399223609_db47d35b7c_t.jpg"/>
+            <img alt="" img-lazyload="http://farm1.static.flickr.com/135/321464104_c010dbf34c_t.jpg"/>
+            <img alt="" img-lazyload="http://farm1.static.flickr.com/40/117346184_9760f3aabc_t.jpg"/>
+            <img alt="" img-lazyload="http://farm1.static.flickr.com/153/399232237_6928a527c1_t.jpg"/>
+            <img alt="" img-lazyload="http://farm1.static.flickr.com/50/117346182_1fded507fa_t.jpg"/>
+            <!-- 10-15 -->
+            <img alt="" img-lazyload="http://farm4.static.flickr.com/3629/3323896446_3b87a8bf75_t.jpg"/>
+            <img alt="" img-lazyload="http://farm4.static.flickr.com/3023/3323897466_e61624f6de_t.jpg"/>
+            <img alt="" img-lazyload="http://farm4.static.flickr.com/3650/3323058611_d35c894fab_t.jpg"/>
+            <img alt="" img-lazyload="http://farm4.static.flickr.com/3635/3323893254_3183671257_t.jpg"/>
+            <img alt="" img-lazyload="http://farm4.static.flickr.com/3624/3323893148_8318838fbd_t.jpg"/>
+        </div>
+        <ul class="switchable-triggerBox">
+            <li class="active">&bull;</li>
+            <li>&bull;</li>
+            <li>&bull;</li>
+        </ul>
+    </div>
+</div>
+<script>
+var carousel = new Switchable('demo4', {
+            effect: 'scrollx',
+            viewSize: [680,120],
+            steps:5,
+            circular: false,  
+			haslrbtn:true,
+			disableCls: 'disable',
+            lazyDataType: 'img'
+});
+</script>
+
+<style>
+    .scroll-news { height: 20px; overflow: hidden; }
+    .scroll-news a { color: #FF7E00; }
+</style>
+<div id="demo5" class="scroll-news">
+    <ul class="news-items" id="news-items">
+        <li><a target="_blank" href="http://youa.baidu.com/shop/72e01b38fb26b4ebc5db0136">“一分钱”轻松体验有啊网购流程</a></li>
+        <li><a target="_blank" href="http://co.youa.baidu.com/content/payhelp/b12/zhaoshang/">开通网银，百付宝为您一路护航</a></li>
+        <li><a target="_blank" href="http://co.youa.baidu.com/picture/r/mall/guide/index.html">新手买家？帮助教程带您走通有啊</a></li>
+        <li><a target="_blank" href="http://youa.baidu.com/static/help/quality_form_build.html">尽情挥洒你的创意，共建百度有啊</a></li>
+        <li><a target="_blank" href="http://co.youa.baidu.com/content/help/A10/2008-09-06/153433185574.html">认准标识，精选实力卖家任您选择</a></li>
+        <li><a target="_blank" href="http://co.youa.baidu.com/content/help/A3/2/2008-09-01/143723181295.html#10">收藏</a> + <a target="_blank" href="http://co.youa.baidu.com/content/help/A3/2009-01-08/112820209991.html">购物车</a>，逛街搜店更便捷</li>
+    </ul>
+</div>
+<script>
+var tabs = new Switchable('demo5', {
+	 content: '.news-items',
+	 hasTriggers:false,
+	 interval: 3000,
+	 duration: 200,
+	 effect: 'scrolly',
+	 onSwitch:function(){
+
+	 }
+});
+
+</script>
+
+
+
+<style>
+    #accordion1 {width:300px;border:1px solid #ccc;}
+    #accordion1 .switchable-trigger{padding:3px 10px;cursor:pointer;border-bottom:1px solid #ddd;background:#f3f3f3;overflow:hidden; height: 18px;}
+    #accordion1 .switchable-trigger h3{float: left; width: 100px; margin-left: 5px; }
+    #accordion1 .switchable-panel{height:150px;padding:3px 10px;border-bottom:1px solid #ddd;}
+    #accordion1 .ks-icon{float:left;width:12px;height:12px;overflow:hidden;margin-top:2px;font-size:0;vertical-align:middle;background:url(assets/accordion-sprite.png) no-repeat 0 0;}
+    #accordion1 .ks-active .ks-icon{background-position:-20px 0;}
+    #accordion1 .last-trigger { border-bottom-width: 0 }
+    #accordion1 .active { border-bottom-width: 1px }
+    #accordion1 .last-panel { border-bottom: none }
+</style>
+<div id="accordion1" class="section">
+    <div class="switchable-trigger active"><i class="ks-icon"></i><h3>标题A</h3></div>
+    <div class="switchable-panel">
+        1、支持鼠标滑过和点击触点两种方式<br/>
+        2、支持同时展开多个面板
+    </div>
+    <div class="switchable-trigger"><i class="ks-icon"></i><h3>标题B</h3></div>
+    <div class="switchable-panel" style="display:none;">内容B<br/>内容B<br/>内容B</div>
+    <div class="switchable-trigger"><i class="ks-icon"></i><h3>标题C</h3></div>
+    <div class="switchable-panel" style="display:none;">内容C<br/>内容C<br/>内容C<br/>内容C<br/>内容C</div>
+    <div class="switchable-trigger last-trigger"><i class="ks-icon"></i><h3>标题D</h3></div>
+    <div class="switchable-panel last-panel" style="display:none;">内容D<br/>内容D<br/>内容D</div>
+</div>
+<script>
+  new  Accordion('accordion1',{triggers:'.switchable-trigger',panel:'.switchable-panel'});
+
+</script>
+
+                <div class="x-place">
+                      <a href="#" rel="toggle" class="place_default"><span>上海站</span></a>
+                </div>
+				<div id="toggle">
+
+                         <ul>
+                            <li><a href="#">北京（敬请期待）</a></li>
+                            <li><a href="#">杭州（敬请期待）</a></li>
+                            <li><a href="#">深圳（敬请期待）</a></li>
+                            <li><a href="#">广州（敬请期待）</a></li>
+                         </ul>
+                  </div>
+
+
+
+<script>
+	new DropMenu($E('.place_default'),{menu:$('toggle'),offset:{x:120,y:120}});
+
+	$$('.s-cat-depth-1 li').addEvents({
+		'mouseenter':function(){
+			this.addClass('over');
+		},
+	    'mouseleave':function(){
+			this.removeClass('over');
+		}
+});
+</script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Popup Example 1</title>
+    <script src="source/moo.js"></script>
+    <script src="source/switchable.js"></script>
+	<link rel="stylesheet" href="reset.css" type="text/css" /> 
+</head>
+<body>
+    <style>
+        #demo{
+            height:80px; 
+            width:110px; 
+            background:#ffeec4;
+			text-align:center;
+			line-height:50px;
+        }
+        .aaa{
+            height:220px; 
+            width:158px; 
+            background:#fbb4b4;
+			text-align:center;
+			line-height:220px;
+        }
+        .bbb{
+            width:200px;
+            height:200px;
+            background:#ccc;
+        }
+    </style>
+    <div>
+        <p>
+            <h1>Popup Example 1:</h1>
+        </p>
+    </div>
+    <div class="aaa">
+		<div id="demo" class="Auto_Widget" data-widget-type="Popup"  data-widget-config="{
+				trigger:'.aaa',
+				triggerType:'mouse',
+				align:{
+					node:'.aaa',
+					points:['cr','cc'],
+					offset:[0,0]
+				}}">
+				弹出层
+		</div>
+		触点层
+	</div>
+<div class="code" style="margin-top:20px;">
+    <h2>Dom Code:</h2>
+    <pre>
+&lt;div class="aaa"&gt;
+		&lt;div id="demo" class="Auto_Widget" data-widget-type="Popup"  data-widget-config="{
+				trigger:'.aaa',
+				triggerType:'mouse',
+				align:{
+					node:'.aaa',
+					points:['cr','cc'],
+					offset:[0,0]
+				}}"&gt;
+				弹出层
+		&lt;/div&gt;
+		触点层      &lt;!-- Dom结构中，弹出层务必放进触点层里，防止冒泡 --&gt;
+&lt;/div&gt;
+    </pre>
+</div>
+
+
+
+<div class="code" style="margin-top:20px;">
+    <h2>Css code:</h2>
+<pre>
+#demo{
+            height:80px; 
+            width:110px; 
+            background:#ffeec4;
+			text-align:center;
+			line-height:50px;
+        }
+#trigger{
+            height:220px; 
+            width:158px; 
+            background:#fbb4b4;
+			text-align:center;
+			line-height:220px;
+        }
+.bbb{width:200px;height:200px;background:#ccc;}
+</pre>
+</div>
+
+
+</body>
+</html>
