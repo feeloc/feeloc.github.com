@@ -1,0 +1,41 @@
+---
+layout: post
+title: "SVG实现任意形状相框"
+date: 2013-05-21 16:54
+comments: true
+categories: javascript svg
+---
+{% img http://www.feeloc.cn/downloads/images/2013-05-21/idea.png 800 %}
+>SVG是可缩放矢量图形（Scalable Vector Graphics，SVG）是基于可扩展标记语言（XML），用于描述二维矢量图形的一种图形格式。本文不具体讨论SVG，只是
+>利用SVG做任意开关的相框，方便平时去做一些样式，不用去做背景图，方便些。
+<!-- more -->
+##一、实现思路
+*   将需要加相框的图片做为一个定宽定高的DIV的背景
+*   在此DIV上覆盖一个用SVG做的相框，边框宽度足够大，能够覆盖住图片的其它部位就行，所以DIV一定要是`overflow: hidden`的
+<br>
+##二、代码
+*   在此，我们利用一个svg插件，方便去做svg画图，[raphael-min.js](http://raphaeljs.com/)
+{% codeblock main.html %}
+<div class="photo" id="photo"></div>
+{% endcodeblock %}
+{% codeblock main.css %}
+.photo{
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+    background: url("http://fs3u.dajie.com/2013/05/17/101/13687605014653364m.png");
+}
+{% endcodeblock %}
+{% codeblock main.js %}
+var r = Raphael("photo", 121, 121);
+var c = Raphael.getColor();
+var color = '#d8e5f1';
+r.circle(60, 60, 82).attr({stroke: c, transform: 'r0 320 240', "fill-opacity": .1, 'stroke-width': 46, 'stroke': color}).mouseover(function () {
+    this.stop().animate({"fill": '#d8e5f1', "fill-opacity": .7}, 300);
+}).mouseout(function () {
+    this.stop().animate({"fill": 'none', "fill-opacity": .1}, 300);
+});
+r.circle(60, 60, 58).attr({stroke: c, transform: 'r0 320 240', "fill-opacity": .4, 'stroke-width': 2, 'stroke': '#a1b3c4'});
+{% endcodeblock %}
+##三、demo
+<iframe src="http://www.feeloc.cn/demo/svg/svg-bg.html" width="800px" height="150px"></iframe>

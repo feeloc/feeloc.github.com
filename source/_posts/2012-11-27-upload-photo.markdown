@@ -1,10 +1,13 @@
 ---
 layout: post
-title: "上传插件编写"
+title: "jquery上传插件"
 date: 2012-11-27 23:29
 comments: true
-categories: 
+categories: javascript jquery plugin upload
 ---
 {% img http://feeloc.cn/downloads/images/1.jpg %}
->上传功能在WEB网站中经常需要使用到，整理下以前写的上传插件，包括图片裁剪及上传
+>上传功能在WEB网站中经常需要使用到，整理下以前写的上传插件。
 <!-- more -->
+##首先看例子##
+
+{% gist 5539213 %}
