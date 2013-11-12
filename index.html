@@ -9,7 +9,9 @@
   <meta name="author" content="feeloc">
 
   
-  <meta name="description" content=" 元素运动很常见，这次总结一些运动轨迹，其实就是复习下各种数学公式，先从圆形运动开始全文。 ">
+  <meta name="description" content="最近准备用nodejs+mongodb开发个网站，手上正好有个vps，装个centos，那就从头搭建个开发及生产环境吧，目前只需要考虑3点：
+1、使用git作代码管理，push后能自动部署到前端资源中。
+2、如果修改了node文件，需要push后能查看，在commit消息中加入deploy， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +68,50 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/09/04/server-config/">服务器配置，tengine，git，nodejs，grunt，mongodb……</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-04T21:58:00+08:00" pubdate data-updated="true">Sep 4<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote><p>最近准备用nodejs+mongodb开发个网站，手上正好有个vps，装个centos，那就从头搭建个开发及生产环境吧，目前只需要考虑3点：
+1、使用git作代码管理，push后能自动部署到前端资源中。
+2、如果修改了node文件，需要push后能查看，在commit消息中加入<code>deploy</code>，代码全站部署。
+3、前端资源在发布时压缩，为了更加灵活，在访问时合并，并不是发布时合并。</p></blockquote>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/09/04/server-config/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -159,7 +205,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/01/11/octopress/">超简单windows下octopress环境搭建</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/01/11/octopress/">史上最简单windows下搭建octopress环境</a></h1>
     
     
       <p class="meta">
@@ -175,7 +221,7 @@
   
 
 
-<time datetime="2013-01-11T23:29:00+08:00" pubdate data-updated="true">Jan 11<span>th</span>, 2013</time>
+<time datetime="2013-01-11T01:38:00+08:00" pubdate data-updated="true">Jan 11<span>th</span>, 2013</time>
         
       </p>
     
@@ -184,9 +230,8 @@
 
   <div class="entry-content"><p><img src="http://feeloc.cn/downloads/images/2012-09-21/1.png"></p>
 
-<blockquote><p>octopress博客无论是markdown的写作方式，还是简洁的界面我都非常喜欢，但windows下搭建ruby环境真的是一个很蛋疼的问题，
-特别是在64位环境下，一度想改成<a href="https://github.com/tommy351/hexo" title="hexo github">hexo</a>去写博客，最近发现windows
-下有更简单的ruby环境搭建方法，在此分享给大家，简化windows下的octopress环境搭建。</p></blockquote>
+<blockquote><p>之前使用rubyinstall在windows环境下搭建ruby开发环境，真是蛋疼得很，经常出现各种问题，尤其是在windows 7 64位下面，
+曾经一度想放弃使用octopress写博客，想使用<a href="https://github.com/tommy351/hexo" title="hexo">hexo</a>去写博客，现在分享新的方法，简化流程。</p></blockquote>
 
 </div>
   
@@ -466,50 +511,6 @@ Mootools从Prototype.js中汲取了许多有益的设计理念，语法也和其
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/08/02/android-musicplayer/">android开源音乐播放器Jamendo学习及二次开发</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-02T19:13:00+08:00" pubdate data-updated="true">Aug 2<span>nd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="http://www.feeloc.cn/downloads/images/2012-08-02/14.png"></p>
-
-<blockquote><p>音乐播放器是我天天都会用到的，不管是电脑的，还是手机的，还是播放器的，既然这么需要，正好在研究android程序，那就以播放器做研究吧
-上网看了一下，开源的音乐播放器有很多，jamendo是其中一个做得比较全的，先看看，学习一下别人的编码风格吧！！</p></blockquote>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/08/02/android-musicplayer/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -525,6 +526,10 @@ Mootools从Prototype.js中汲取了许多有益的设计理念，语法也和其
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/09/04/server-config/">服务器配置，tengine，git，nodejs，grunt，mongodb……</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/05/21/circle-path/">元素任意路径运动</a>
       </li>
     
@@ -533,15 +538,11 @@ Mootools从Prototype.js中汲取了许多有益的设计理念，语法也和其
       </li>
     
       <li class="post">
-        <a href="/blog/2013/01/11/octopress/">超简单windows下octopress环境搭建</a>
+        <a href="/blog/2013/01/11/octopress/">史上最简单windows下搭建octopress环境</a>
       </li>
     
       <li class="post">
         <a href="/blog/2012/11/27/upload-photo/">jquery上传插件</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/09/21/maven-startup/">maven入门</a>
       </li>
     
   </ul>

@@ -1,0 +1,1436 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>服务器配置，tengine，git，nodejs，grunt，mongodb…… - feeloc's 杂货铺</title>
+  <meta name="author" content="feeloc">
+
+  
+  <meta name="description" content="最近准备用nodejs+mongodb开发个网站，手上正好有个vps，装个centos，那就从头搭建个开发及生产环境吧，目前只需要考虑3点：
+1、使用git作代码管理，push后能自动部署到前端资源中。
+2、如果修改了node文件，需要push后能查看，在commit消息中加入deploy， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://feeloc.github.io/blog/2013/09/04/server-config">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="feeloc's 杂货铺" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">feeloc's 杂货铺</a></h1>
+  
+    <h2>一切有意思的事</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:feeloc.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">主页</a></li>
+  <li><a href="/blog/archives">文章</a></li>
+  <li><a href="/about">关于我</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">服务器配置，tengine，git，nodejs，grunt，mongodb……</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-04T21:58:00+08:00" pubdate data-updated="true">Sep 4<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><blockquote><p>最近准备用nodejs+mongodb开发个网站，手上正好有个vps，装个centos，那就从头搭建个开发及生产环境吧，目前只需要考虑3点：
+1、使用git作代码管理，push后能自动部署到前端资源中。
+2、如果修改了node文件，需要push后能查看，在commit消息中加入<code>deploy</code>，代码全站部署。
+3、前端资源在发布时压缩，为了更加灵活，在访问时合并，并不是发布时合并。</p></blockquote>
+
+<!-- more -->
+
+
+<h2>一、tengine安装</h2>
+
+<blockquote><p>采用tengine完全是看中一些好用的模块，像<code>http_concat_module</code>之类的，不乏一些nginx商业版中的功能，taobao好样的。</p></blockquote>
+
+<ul>
+<li>先安装centos的编译环境，一阵y，y，y后安装成功</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>yum install gcc gcc-c++ gcc-g77 flex bison autoconf automake bzip2-devel zlib-devel ncurses-devel libjpeg-devel libpng-devel libtiff-devel freetype-devel pam-devel openssl-devel libxml2-devel gettext-devel pcre-devel make</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>常用工具 全部安装，省得麻烦
+<img src="http://feeloc.cn/downloads/images/2013-09-04/1.jpg" width="800" title="'安装成功'" ></p></li>
+<li><p>安装pcre，因为tengine依赖pcre</p>
+
+<ul>
+<li><code>yum install pcre</code>发现已经安装但版本比较老，反正编译tengine时候需要pcre源代码，更新最新版本
+<img src="http://feeloc.cn/downloads/images/2013-09-04/2.png" width="800"></li>
+<li><code>yum remove pcre</code>发现有依赖无法删除
+<img src="http://feeloc.cn/downloads/images/2013-09-04/3.png" width="800"></li>
+<li>直接用<code>rpm -e --nodeps --allmatches pcre</code>，可安全卸载，<code>rpm -ql pcre | cat -n</code>查看下包情况，其实不用卸载
+<img src="http://feeloc.cn/downloads/images/2013-09-04/4.png" width="800"></li>
+<li>下载pcre源码包放入<code>/usr/localhost/src</code>中，好习惯</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>pcre </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /usr/local/src
+</span><span class='line'>wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.33.tar.gz
+</span><span class='line'>tar  zxvf pcre-8.33.tar.gz
+</span><span class='line'>mkdir /usr/local/pcre  #创建安装目录
+</span><span class='line'>cd pcre-8.33
+</span><span class='line'>./configure  --prefix=/usr/local/pcre  #配置
+</span><span class='line'>make
+</span><span class='line'>make install</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>正式安装tengine服务器</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>tengine </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /usr/local/src
+</span><span class='line'>wget http://www.openssl.org/source/openssl-1.0.1e.tar.gz    #因为安装tengin需要openssl源码
+</span><span class='line'>cd /usr/local/src
+</span><span class='line'>tar  zxvf openssl-1.0.1e.tar.gz
+</span><span class='line'>wget http://tengine.taobao.org/download/tengine-1.5.1.tar.gz
+</span><span class='line'>tar  zxvf tengine-1.5.1
+</span><span class='line'>cd tengine-1.5.1.tar.gz
+</span><span class='line'>./configure --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_concat_module --with-openssl=/usr/local/src/openssl-1.0.1e --with-pcre=/usr/local/src/pcre-8.33  #配置
+</span><span class='line'>#--with-pcre=/usr/local/src/pcre-8.13指向的是源码包解压的路径，而不是安装的路径，否则会报错
+</span><span class='line'>#如果要使用css/js等合并请求加载，请务必安装module --with-http_concat_module，正是我们需要的
+</span><span class='line'>make    #挺长一段时间的编译过程
+</span><span class='line'>>-e "s|%%PID_PATH%%|/usr/local/nginx/logs/nginx.pid|"
+</span><span class='line'>>-e "s|%%CONF_PATH%%|/usr/local/nginx/conf/nginx.conf|"
+</span><span class='line'>>-e "s|%%ERROR_LOG_PATH%%|/usr/local/nginx/logs/error.log|"
+</span><span class='line'>make install</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>安装成功</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>success </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/usr/local/nginx/sbin/nginx
+</span><span class='line'>chown nobody.nobody -R /usr/local/nginx/html
+</span><span class='line'>chmod 700 -R /usr/local/nginx/html</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>访问http://ip发现成功界面
+<img src="http://feeloc.cn/downloads/images/2013-09-04/5.jpg" width="800"></p></li>
+<li><p>为了方便管理服务，我们编写一个脚本来启动关闭重启重载配置文件等</p>
+
+<ul>
+<li>行关闭服务</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>kill</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cat /usr/local/nginx/logs/nginx.pid #得到进程ID
+</span><span class='line'>kill id</span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>*写shell脚本，`vi /etc/init.d/nginx`
+</code></pre>
+
+<figure class='code'><figcaption><span>nginx.sh </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># nginx - this script starts and stops the nginx daemin</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># chkconfig:   - 85 15</span>
+</span><span class='line'><span class="c"># description:  Nginx is an HTTP(S) server, HTTP(S) reverse \</span>
+</span><span class='line'><span class="c">#               proxy and IMAP/POP3 proxy server</span>
+</span><span class='line'><span class="c"># processname: nginx</span>
+</span><span class='line'><span class="c"># config:      /usr/local/nginx/conf/nginx.conf</span>
+</span><span class='line'><span class="c"># pidfile:     /usr/local/nginx/logs/nginx.pid</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Source function library.</span>
+</span><span class='line'>. /etc/rc.d/init.d/functions
+</span><span class='line'>
+</span><span class='line'><span class="c"># Source networking configuration.</span>
+</span><span class='line'>. /etc/sysconfig/network
+</span><span class='line'>
+</span><span class='line'><span class="c"># Check that networking is up.</span>
+</span><span class='line'><span class="o">[</span> <span class="s2">&quot;$NETWORKING&quot;</span> <span class="o">=</span> <span class="s2">&quot;no&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>0
+</span><span class='line'>
+</span><span class='line'><span class="nv">nginx</span><span class="o">=</span><span class="s2">&quot;/usr/local/nginx/sbin/nginx&quot;</span>
+</span><span class='line'><span class="nv">prog</span><span class="o">=</span><span class="k">$(</span>basename <span class="nv">$nginx</span><span class="k">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">NGINX_CONF_FILE</span><span class="o">=</span><span class="s2">&quot;/usr/local/nginx/conf/nginx.conf&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">lockfile</span><span class="o">=</span>/var/lock/subsys/nginx
+</span><span class='line'>
+</span><span class='line'>start<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="o">[</span> -x <span class="nv">$nginx</span> <span class="o">]</span> <span class="o">||</span> <span class="nb">exit </span>5
+</span><span class='line'>    <span class="o">[</span> -f <span class="nv">$NGINX_CONF_FILE</span> <span class="o">]</span> <span class="o">||</span> <span class="nb">exit </span>6
+</span><span class='line'>    <span class="nb">echo</span> -n <span class="s2">$&quot;Starting $prog: &quot;</span>
+</span><span class='line'>    daemon <span class="nv">$nginx</span> -c <span class="nv">$NGINX_CONF_FILE</span>
+</span><span class='line'>    <span class="nv">retval</span><span class="o">=</span><span class="nv">$?</span>
+</span><span class='line'>    <span class="nb">echo</span>
+</span><span class='line'>    <span class="o">[</span> <span class="nv">$retval</span> -eq 0 <span class="o">]</span> <span class="o">&amp;&amp;</span> touch <span class="nv">$lockfile</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nv">$retval</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>stop<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="nb">echo</span> -n <span class="s2">$&quot;Stopping $prog: &quot;</span>
+</span><span class='line'>    killproc <span class="nv">$prog</span> -QUIT
+</span><span class='line'>    <span class="nv">retval</span><span class="o">=</span><span class="nv">$?</span>
+</span><span class='line'>    <span class="nb">echo</span>
+</span><span class='line'>    <span class="o">[</span> <span class="nv">$retval</span> -eq 0 <span class="o">]</span> <span class="o">&amp;&amp;</span> rm -f <span class="nv">$lockfile</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nv">$retval</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>restart<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    configtest <span class="o">||</span> <span class="k">return</span> <span class="nv">$?</span>
+</span><span class='line'>    stop
+</span><span class='line'>    start
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>reload<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    configtest <span class="o">||</span> <span class="k">return</span> <span class="nv">$?</span>
+</span><span class='line'>    <span class="nb">echo</span> -n <span class="s2">$&quot;Reloading $prog: &quot;</span>
+</span><span class='line'>    killproc <span class="nv">$nginx</span> -HUP
+</span><span class='line'>    <span class="nv">RETVAL</span><span class="o">=</span><span class="nv">$?</span>
+</span><span class='line'>    <span class="nb">echo</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>force_reload<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    restart
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>configtest<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  <span class="nv">$nginx</span> -t -c <span class="nv">$NGINX_CONF_FILE</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>rh_status<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    status <span class="nv">$prog</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>rh_status_q<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    rh_status &gt;/dev/null 2&gt;&amp;1
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">case</span> <span class="s2">&quot;$1&quot;</span> in
+</span><span class='line'>    start<span class="o">)</span>
+</span><span class='line'>        rh_status_q <span class="o">&amp;&amp;</span> <span class="nb">exit </span>0
+</span><span class='line'>        <span class="nv">$1</span>
+</span><span class='line'>        ;;
+</span><span class='line'>    stop<span class="o">)</span>
+</span><span class='line'>        rh_status_q <span class="o">||</span> <span class="nb">exit </span>0
+</span><span class='line'>        <span class="nv">$1</span>
+</span><span class='line'>        ;;
+</span><span class='line'>    restart|configtest<span class="o">)</span>
+</span><span class='line'>        <span class="nv">$1</span>
+</span><span class='line'>        ;;
+</span><span class='line'>    reload<span class="o">)</span>
+</span><span class='line'>        rh_status_q <span class="o">||</span> <span class="nb">exit </span>7
+</span><span class='line'>        <span class="nv">$1</span>
+</span><span class='line'>        ;;
+</span><span class='line'>    force-reload<span class="o">)</span>
+</span><span class='line'>        force_reload
+</span><span class='line'>        ;;
+</span><span class='line'>    status<span class="o">)</span>
+</span><span class='line'>        rh_status
+</span><span class='line'>        ;;
+</span><span class='line'>    condrestart|try-restart<span class="o">)</span>
+</span><span class='line'>        rh_status_q <span class="o">||</span> <span class="nb">exit </span>0
+</span><span class='line'>            ;;
+</span><span class='line'>    *<span class="o">)</span>
+</span><span class='line'>        <span class="nb">echo</span> <span class="s2">$&quot;Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload|configtest}&quot;</span>
+</span><span class='line'>        <span class="nb">exit </span>2
+</span><span class='line'><span class="k">esac</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>*   加权限，开机启动
+</code></pre>
+
+<figure class='code'><figcaption><span>check </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>chmod +x /etc/init.d/nginx
+</span><span class='line'>cd /et/init.d/
+</span><span class='line'>/sbin/chkconfig nginx on
+</span><span class='line'>/sbin/chkconfig --list nginx
+</span><span class='line'>nginx             0:off   1:off   2:on    3:on    4:on    5:on    6:off
+</span><span class='line'>
+</span><span class='line'>#使用以下命令操作nginx
+</span><span class='line'>service nginx start
+</span><span class='line'>service nginx stop
+</span><span class='line'>service nginx restart
+</span><span class='line'>service nginx reload
+</span><span class='line'>
+</span><span class='line'>/etc/init.d/nginx start
+</span><span class='line'>/etc/init.d/nginx stop
+</span><span class='line'>/etc/init.d/nginx restart
+</span><span class='line'>/etc/init.d/nginx reload</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>配置tengine，使之支持静态资源合并访问</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>nginx配置文件 </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /usr/local/nginx/conf
+</span><span class='line'>vi nginx.conf</span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>*   1、打开gzip
+</code></pre>
+
+<figure class='code'><figcaption><span>nginx配置文件 </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gzip on;
+</span><span class='line'>gzip_min_length 1k;
+</span><span class='line'>gzip_buffers 16 64k;
+</span><span class='line'>gzip_http_version 1.1;
+</span><span class='line'>gzip_comp_level 6;
+</span><span class='line'>gzip_types text/plain application/x-javascript text/css application/xml;
+</span><span class='line'>gzip_vary on</span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>*   2、新建conf.d/asset.dogolang.com.conf，在nginx.conf 中 include conf.d/*.conf
+</code></pre>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#静态文件
+</span><span class='line'>server {
+</span><span class='line'>        listen       80;
+</span><span class='line'>        server_name  ***********;
+</span><span class='line'>
+</span><span class='line'>        #charset koi8-r;
+</span><span class='line'>
+</span><span class='line'>        #access_log  logs/host.access.log  main;
+</span><span class='line'>        location /static/ {
+</span><span class='line'>                root /***********;
+</span><span class='line'>                concat on;
+</span><span class='line'>                concat_max_files 20;
+</span><span class='line'>        }
+</span><span class='line'>}
+</span><span class='line'>#顺便配置上呆会儿要用的nodejs的访问
+</span><span class='line'>server {
+</span><span class='line'>        listen       80;
+</span><span class='line'>        server_name  ***********;
+</span><span class='line'>
+</span><span class='line'>        #charset koi8-r;
+</span><span class='line'>
+</span><span class='line'>        #access_log  logs/host.access.log  main;
+</span><span class='line'>
+</span><span class='line'>        location / {
+</span><span class='line'>                proxy_pass    http://***********/;
+</span><span class='line'>                proxy_redirect          off;
+</span><span class='line'>                proxy_set_header Host $host;
+</span><span class='line'>                proxy_set_header X-Real-IP $remote_addr;
+</span><span class='line'>                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+</span><span class='line'>        }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>*   执行service nginx reload，更新下配置文件，成功！
+</code></pre>
+
+<h2>二、安装GIT</h2>
+
+<ul>
+<li>安装git，gitosis</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>git,gitosis安装 </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>yum install git python python-setuptools
+</span><span class='line'>cd /usr/local/src
+</span><span class='line'>git clone git://github.com/res0nat0r/gitosis.git
+</span><span class='line'>cd gitosis
+</span><span class='line'>python setup.py install</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>在开发机器上生成rsa key，这儿我想用这台服务器做git管理员管理，所以就在这台机器上生成key</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ssh-keygen -t rsa #不需要密码,一路回车就行(在本地操作)
+</span><span class='line'>cp /root/.ssh/id_rsa.pub /tmp/id_rsa.pub  # 如果是其它机器就上传下，scp ~/.ssh/id_rsa.pub root@xxx:/tmp/</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>直接用root账号生成git库，网上很多教程使用git账户，因为我对linux权限系统不太了解，最后想写git hooks时，各种命令找不到，各种权限问题，干脆直接用root</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gitosis-init &lt; /tmp/id_rsa.pub
+</span><span class='line'>#Initialized empty Git repository in /root/repositories/gitosis-admin.git/
+</span><span class='line'>#Reinitialized existing Git repository in /root/repositories/gitosis-admin.git/</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>将gitosis-admin库，clone下来，用来管理git库和用户权限，git本来也是采用git来做各种管理的</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mkdir /projects
+</span><span class='line'>cd /projects
+</span><span class='line'>git clone ssh://root@127.0.0.1/gitosis-admin.git
+</span><span class='line'>cd gitosis-admin
+</span><span class='line'>vi gitosis-admin.conf
+</span><span class='line'>[group gitosis-admin]
+</span><span class='line'>writable = gitosis-admin
+</span><span class='line'>members = root@localhost
+</span><span class='line'>
+</span><span class='line'>#这儿的members要和keydir中的*.pub中的*号名一致
+</span><span class='line'>#修改后，push
+</span><span class='line'>git add .
+</span><span class='line'>git commit -m "add a user"
+</span><span class='line'>git push</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>在刚加的git用户的机器上init一个git库，并提交到git仓库中试下</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git init
+</span><span class='line'>remote add origin git@YOUR_SERVER_HOSTNAME:PROJECT.git
+</span><span class='line'>git add .
+</span><span class='line'>git commit -a -m "init project"
+</span><span class='line'>git push origin master:refs/heads/master
+</span><span class='line'>
+</span><span class='line'>#注：修改git项目的地址
+</span><span class='line'>git remote set-url origin ssh://git@domain.com:3022/~/Projects/p1.git
+</span><span class='line'>#如果希望用代码库中的文件完全覆盖本地工作版本，方法如下：
+</span><span class='line'>git reset --hard
+</span><span class='line'>git pull
+</span><span class='line'>#如果想针对文件回退本地修改，方法如下：
+</span><span class='line'>git checkout HEAD file/to/restore</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>我在服务器上git clone一份，刚提交的代码，是一个小项目，呆会儿测试安装nodejs时候使用</li>
+</ul>
+
+
+<h2>三、安装nodejs</h2>
+
+<ul>
+<li>下载，编译，安装nodejs</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /usr/local/src/
+</span><span class='line'>wget http://nodejs.org/dist/v0.10.17/node-v0.10.17.tar.gz
+</span><span class='line'>tar zxvf node-v0.10.17.tar.gz
+</span><span class='line'>cd node-v0.10.17
+</span><span class='line'>./configure --prefix=/usr/local/node/0.10
+</span><span class='line'>make   #编译时间很久，或许是我机器不行，基本可以去做100个仰卧起坐
+</span><span class='line'>make install
+</span><span class='line'>#将node放入环境变量中
+</span><span class='line'>echo "export PATH=$PATH:/usr/local/node/0.10/bin" >> ~/.bash_profile
+</span><span class='line'>#更新环境变量
+</span><span class='line'>. ~/.bash_profile
+</span><span class='line'>#echo $PATH 发现node的bin目录已经在环境变量中
+</span><span class='line'>#安装forever模块，启动管理node程序
+</span><span class='line'>npm install forever -g</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>利用启动脚本，实现自动运行forever的node程序，实现开机自启动，<code>vi /etc/init.d/node</code></li>
+</ul>
+
+
+<figure class='code'><figcaption><span>node.sh </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># node      Start up node server daemon</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># chkconfig: 345 85 15</span>
+</span><span class='line'><span class="c"># description: Forever for Node.js</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="nv">PATH</span><span class="o">=</span>/usr/local/node/0.10/bin
+</span><span class='line'><span class="nv">DEAMON</span><span class="o">=</span>/projects/node/app.js
+</span><span class='line'><span class="nv">LOG</span><span class="o">=</span>/projects/logs/node/hosts_log
+</span><span class='line'><span class="nv">PID</span><span class="o">=</span>/tmp/forever.pid
+</span><span class='line'>
+</span><span class='line'><span class="k">case</span> <span class="s2">&quot;$1&quot;</span> in
+</span><span class='line'>    start<span class="o">)</span>
+</span><span class='line'>        forever start -l <span class="nv">$LOG</span>/forever.log -o <span class="nv">$LOG</span>/forever_out.log -e <span class="nv">$LOG</span>/forever_err.log --pidFile <span class="nv">$PID</span> --minUptime 5000 --spinSleepTime 2000 -a <span class="nv">$DEAMON</span>
+</span><span class='line'>        ;;
+</span><span class='line'>    stop<span class="o">)</span>
+</span><span class='line'>        forever stop --pidFile <span class="nv">$PID</span> <span class="nv">$DEAMON</span>
+</span><span class='line'>        ;;
+</span><span class='line'>    stopall<span class="o">)</span>
+</span><span class='line'>        forever stopall --pidFile <span class="nv">$PID</span>
+</span><span class='line'>        ;;
+</span><span class='line'>    restartall<span class="o">)</span>
+</span><span class='line'>        forever restartall --pidFile <span class="nv">$PID</span>
+</span><span class='line'>        ;;
+</span><span class='line'>    restart<span class="o">)</span>
+</span><span class='line'>        forever stop --pidFile <span class="nv">$PID</span> <span class="nv">$DEAMON</span>
+</span><span class='line'>        forever start -l <span class="nv">$LOG</span>/forever.log -o <span class="nv">$LOG</span>/forever_out.log -e <span class="nv">$LOG</span>/forever_err.log --pidFile <span class="nv">$PID</span> --minUptime 5000 --spinSleepTime 2000 -a <span class="nv">$DEAMON</span>
+</span><span class='line'>        ;;
+</span><span class='line'>    list<span class="o">)</span>
+</span><span class='line'>        forever list
+</span><span class='line'>        ;;
+</span><span class='line'>    *<span class="o">)</span>
+</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;Usage: /etc.init.d/node {start|stop|restart|reload|stopall|restartall|list}&quot;</span>
+</span><span class='line'>        <span class="nb">exit </span>1
+</span><span class='line'>        ;;
+</span><span class='line'><span class="k">esac</span>
+</span><span class='line'><span class="nb">exit </span>0
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>开机自动运行</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>chmod 755 /etc/init.d/node
+</span><span class='line'>cd /etc/init.d/
+</span><span class='line'>chkconfig node on
+</span><span class='line'>chkconfig --list node</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>四、配置GIT钩子，实现自动部署</h2>
+
+<ul>
+<li>需要在客户端push后按照需求更新服务器代码，然后重启服务，所以我们要激活post-receive钩子。<code>vim **/**.git/hooks/post-receive</code>，如果commit -m &#8220;[deploy]&#8221;，含有[deploy]，就重启该服务</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>post-receive.sh </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/sh</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># git autodeploy script when it matches the string &quot;[deploy]&quot;</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># @author    icyleaf &lt;icyleaf.cn@gmail.com&gt;</span>
+</span><span class='line'><span class="c"># @link      http://icyleaf.com</span>
+</span><span class='line'><span class="c"># @version   0.1</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># Usage:</span>
+</span><span class='line'><span class="c">#       1. put this into the post-receive hook file itself below</span>
+</span><span class='line'><span class="c">#       2. `chmod +x post-recive`</span>
+</span><span class='line'><span class="c">#       3. Done!</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Check the remote git repository whether it is bare</span>
+</span><span class='line'><span class="nv">IS_BARE</span><span class="o">=</span><span class="k">$(</span>git rev-parse --is-bare-repository<span class="k">)</span>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;$IS_BARE&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">        </span><span class="nb">echo</span> &gt;&amp;2 <span class="s2">&quot;fatal: post-receive: IS_NOT_BARE&quot;</span>
+</span><span class='line'>        <span class="nb">exit </span>1
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Get the latest commit subject</span>
+</span><span class='line'><span class="nv">SUBJECT</span><span class="o">=</span><span class="k">$(</span>git log -1 --pretty<span class="o">=</span>format:<span class="s2">&quot;%s&quot;</span><span class="k">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Deploy the HEAD sources to publish</span>
+</span><span class='line'><span class="nv">IS_PULL</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&quot;$SUBJECT&quot;</span> | grep <span class="s2">&quot;\[deploy\]&quot;</span><span class="k">)</span>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;$IS_PULL&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">        </span><span class="nb">echo</span> &gt;&amp;2 <span class="s2">&quot;tips: post-receive: IS_NOT_PULL&quot;</span>
+</span><span class='line'>        <span class="nb">exit </span>1
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Check the deploy dir whether it exists</span>
+</span><span class='line'><span class="nv">DEPLOY_DIR</span><span class="o">=</span>********
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> ! -d <span class="nv">$DEPLOY_DIR</span> <span class="o">]</span> ; <span class="k">then</span>
+</span><span class='line'><span class="k">        </span><span class="nb">echo</span> &gt;&amp;2 <span class="s2">&quot;fatal: post-receive: DEPLOY_DIR_NOT_EXIST: \&quot;$DEPLOY_DIR\&quot;&quot;</span>
+</span><span class='line'>        <span class="nb">exit </span>1
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Check the deploy dir whether it is git repository</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c">#IS_GIT=$(git rev-parse --git-dir 2&gt;/dev/null)</span>
+</span><span class='line'><span class="c">#if [ -z &quot;$IS_GIT&quot; ]; then</span>
+</span><span class='line'><span class="c">#       echo &gt;&amp;2 &quot;fatal: post-receive: IS_NOT_GIT&quot;</span>
+</span><span class='line'><span class="c">#       exit 1</span>
+</span><span class='line'><span class="c">#fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Goto the deploy dir and pull the latest sources</span>
+</span><span class='line'><span class="nb">cd</span> <span class="nv">$DEPLOY_DIR</span>
+</span><span class='line'><span class="c">#env -i git reset --hard</span>
+</span><span class='line'>env -i git pull
+</span><span class='line'>
+</span><span class='line'><span class="c"># restart app.js</span>
+</span><span class='line'>*** restart     <span class="c">#部署脚本，重启该服务</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>五、mongoDB安装</h2>
+
+<ul>
+<li>源码安装及开机启动配置</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1、下载源码，注意64位和32位
+</span><span class='line'>cd /usr/local/src/
+</span><span class='line'>wget http://fastdl.mongodb.org/linux/mongodb-linux-i686-2.4.6.tgz
+</span><span class='line'>2、解压，移动
+</span><span class='line'>tar zxvf mongodb-linux-i686-2.4.6.tgz
+</span><span class='line'>mv mongodb-linux-i686-2.4.6 /usr/local/mongodb
+</span><span class='line'>3、创建数据目录，日志目录
+</span><span class='line'>cd /usr/local/mongoDB
+</span><span class='line'>mkdir -p ./data/db/
+</span><span class='line'>mkdir logs
+</span><span class='line'>4、以后台方式运行mongoDB
+</span><span class='line'>/usr/local/mongodb/bin/mongod --dbpath=/usr/local/mongodb/data/db --logpath=/usr/local/mongodb/logs/mongodb.log --fork
+</span><span class='line'>5、开机启动mongoDB，将启动命令加入rc.local中
+</span><span class='line'>echo "/usr/local/mongodb/bin/mongod --dbpath=/usr/local/mongodb/data/db --logpath=/usr/local/mongodb/logs/mongodb.log --fork" >> /etc/rc.local
+</span><span class='line'>6、查看mongoDB运行日志
+</span><span class='line'>tail -f /usr/local/mongodb/logs/mongodb.log
+</span><span class='line'>7、查看mongoDB的运行状态
+</span><span class='line'>ps aux |grep mongodb
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>注：参数解释:
+</span><span class='line'>  --dbpath 数据库路径(数据文件)
+</span><span class='line'>  --logpath 日志文件路径
+</span><span class='line'>  --master 指定为主机器
+</span><span class='line'>  --slave 指定为从机器
+</span><span class='line'>  --source 指定主机器的IP地址
+</span><span class='line'>  --pologSize 指定日志文件大小不超过64M.因为resync是非常操作量大且耗时，最好通过设置一个足够大的oplogSize来避免resync(默认的 oplog大小是空闲磁盘大小的5%)。
+</span><span class='line'>  --logappend 日志文件末尾添加
+</span><span class='line'>  --port 启用端口号
+</span><span class='line'>  --fork 在后台运行
+</span><span class='line'>  --only 指定只复制哪一个数据库
+</span><span class='line'>  --slavedelay 指从复制检测的时间间隔
+</span><span class='line'>  --auth 是否需要验证权限登录(用户名和密码)</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>编写启动脚本</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>monogo.sh </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># auto start mongodb</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># chkconfig: 345 85 15</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="nv">mongopath</span><span class="o">=</span>/usr/local/mongodb
+</span><span class='line'><span class="nv">dbpath</span><span class="o">=</span>/usr/local/mongodb/data/db
+</span><span class='line'><span class="nv">logpath</span><span class="o">=</span>/usr/local/mongodb/logs/mongodb.log
+</span><span class='line'><span class="nv">pid</span><span class="o">=</span>/tmp/mongodb.pid
+</span><span class='line'><span class="nv">bind_ip</span><span class="o">=</span>0.0.0.0
+</span><span class='line'><span class="nv">port</span><span class="o">=</span>27017
+</span><span class='line'>
+</span><span class='line'><span class="k">case</span> <span class="s2">&quot;$1&quot;</span> in
+</span><span class='line'>    start<span class="o">)</span>
+</span><span class='line'>        <span class="nv">$mongopath</span>/bin/mongod --dbpath<span class="o">=</span><span class="nv">$dbpath</span> --logpath<span class="o">=</span><span class="nv">$logpath</span> --bind_ip<span class="o">=</span><span class="nv">$bind_ip</span> --port<span class="o">=</span><span class="nv">$port</span> --auth --pidfilepath<span class="o">=</span><span class="nv">$pid</span> --fork
+</span><span class='line'>        ;;
+</span><span class='line'>    stop<span class="o">)</span>
+</span><span class='line'>        <span class="nv">pid</span><span class="o">=</span><span class="sb">`</span>ps -o pid,command ax | grep mongod | awk <span class="s1">&#39;!/awk/ &amp;&amp; !/grep/ {print $1}&#39;</span><span class="sb">`</span>;
+</span><span class='line'>        <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;${pid}&quot;</span> !<span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">            </span><span class="nb">kill</span> -2 <span class="k">${</span><span class="nv">pid</span><span class="k">}</span>;
+</span><span class='line'>            <span class="k">fi</span>
+</span><span class='line'>        ;;
+</span><span class='line'>    *<span class="o">)</span>
+</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;Usage: /etc/init.d/mongodb {start|stop}&quot;</span>
+</span><span class='line'>        <span class="nb">exit </span>1
+</span><span class='line'>        ;;
+</span><span class='line'><span class="k">esac</span>
+</span><span class='line'><span class="nb">exit </span>0
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>开机自动运行</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>chmod 755 /etc/init.d/mongo
+</span><span class='line'>cd /etc/init.d/
+</span><span class='line'>chkconfig mongo on
+</span><span class='line'>chkconfig --list mongo</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>利用脚本更方便管理mongoDB，这样就不用在rc.local中直接写启动脚本了，把<code>/etc/init.d/mongo start</code>，写进去就可以实现开机启动了</li>
+</ul>
+
+
+<h2>MySQL安装</h2>
+
+<ul>
+<li>安装cmake<code>mysql的编译工具</code></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>下载
+</span><span class='line'>wget http://www.cmake.org/files/v2.8/cmake-2.8.12.tar.gz
+</span><span class='line'>
+</span><span class='line'>tar zxvf cmake-2.8.12.tar.gz
+</span><span class='line'>cd cmake-2.8.12
+</span><span class='line'>#反正是工具软件，就直接配置编译安装了#
+</span><span class='line'>./configure
+</span><span class='line'>make #编译
+</span><span class='line'>make install #安装
+</span><span class='line'>#漫长地过程后安装完成</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>安装MySQL</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>下载适合自己的版本`ftp://mirror.switch.ch/mirror/mysql/Downloads/`
+</span><span class='line'>wget ftp://mirror.switch.ch/mirror/mysql/Downloads/MySQL-5.6/mysql-5.6.14.tar.gz
+</span><span class='line'>
+</span><span class='line'>groupadd mysql #添加mysql组
+</span><span class='line'>useradd -g mysql mysql -s /bin/false #创建用户mysql并加入到mysql组，不允许mysql用户直接登录系统
+</span><span class='line'>mkdir -p /data/mysql #创建MySQL数据库存放目录
+</span><span class='line'>chown -R mysql:mysql /data/mysql #设置MySQL数据库目录权限
+</span><span class='line'>mkdir -p /usr/local/mysql #创建MySQL安装目录
+</span><span class='line'>cd /usr/local/src
+</span><span class='line'>tar zxvf mysql-5.5.25a.tar.gz #解压
+</span><span class='line'>cd mysql-5.5.25a
+</span><span class='line'>cmake . -DCMAKE_INSTALL_PREFIX=/usr/local/mysql -DMYSQL_DATADIR=/data/mysql -DSYSCONFDIR=/etc #配置
+</span><span class='line'>make #编译
+</span><span class='line'>make install #安装
+</span><span class='line'>
+</span><span class='line'>cd /usr/local/mysql
+</span><span class='line'>cp ./support-files/my-huge.cnf /etc/my.cnf #拷贝配置文件（注意：如果/etc目录下面默认有一个my.cnf，直接覆盖即可）
+</span><span class='line'>vi /etc/my.cnf #编辑配置文件,在 [mysqld] 部分增加下面一行
+</span><span class='line'>datadir = /data/mysql #添加MySQL数据库路径
+</span><span class='line'>:wq! #保存退出
+</span><span class='line'>./scripts/mysql_install_db --user=mysql #生成mysql系统数据库
+</span><span class='line'>cp ./support-files/mysql.server /etc/rc.d/init.d/mysqld #把Mysql加入系统启动
+</span><span class='line'>chmod 755 /etc/init.d/mysqld #增加执行权限
+</span><span class='line'>chkconfig mysqld on #加入开机启动
+</span><span class='line'>vi /etc/rc.d/init.d/mysqld #编辑
+</span><span class='line'>basedir = /usr/local/mysql #MySQL程序安装路径
+</span><span class='line'>datadir = /data/mysql #MySQl数据库存放目录
+</span><span class='line'>service mysqld start #启动
+</span><span class='line'>vi /etc/profile #把mysql服务加入系统环境变量：在最后添加下面这一行
+</span><span class='line'>export PATH=$PATH:/usr/local/mysql/bin
+</span><span class='line'>:wq! #保存退出
+</span><span class='line'>下面这两行把myslq的库文件链接到系统默认的位置，这样你在编译类似PHP等软件时可以不用指定mysql的库文件地址。
+</span><span class='line'>ln -s /usr/local/mysql/lib/mysql /usr/lib/mysql
+</span><span class='line'>ln -s /usr/local/mysql/include/mysql /usr/include/mysql
+</span><span class='line'>shutdown -r now #需要重启系统，等待系统重新启动之后继续在终端命令行下面操作
+</span><span class='line'>mysql_secure_installation #设置Mysql密码
+</span><span class='line'>根据提示按Y 回车
+</span><span class='line'>然后输入2次密码
+</span><span class='line'>继续按Y 回车，直到设置完成
+</span><span class='line'>或者直接修改密码/usr/local/mysql/bin/mysqladmin -u root -p password "123456" #修改密码
+</span><span class='line'>service mysqld restart #重启</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">feeloc</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-04T21:58:00+08:00" pubdate data-updated="true">Sep 4<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/git/'>git</a>, <a class='category' href='/blog/categories/nginx/'>nginx</a>, <a class='category' href='/blog/categories/node/'>node</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+    
+    
+    
+    
+    <!-- JiaThis Button BEGIN -->
+    <style type="text/css">.flash-video{display: none;}</style>
+    <div class="jiathis_style_32x32">
+        <a class="jiathis_button_tsina"></a>
+        <a class="jiathis_button_renren"></a>
+        <a class="jiathis_button_tqq"></a>
+        <a class="jiathis_button_ydnote"></a>
+        <a class="jiathis_button_cqq"></a>
+        <a class="jiathis_button_weixin"></a>
+        <a class="jiathis_button_fav"></a>
+        <a class="jiathis_button_print"></a>
+        <a class="jiathis_button_douban"></a>
+        <a class="jiathis_button_baidu"></a>
+        <a class="jiathis_button_email"></a>
+        <a class="jiathis_button_twitter"></a>
+        <a class="jiathis_button_qzone"></a>
+        <a class="jiathis_button_ishare"></a>
+        <a class="jiathis_counter_style"></a>
+    </div>
+    <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1347255918068209" charset="utf-8"></script>
+    <!-- JiaThis Button END -->
+    <!-- UJian Button BEGIN -->
+    <div class="ujian-hook"></div>
+    <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+    <!-- UJian Button END -->
+    
+    <br><br>
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/05/21/circle-path/" title="Previous Post: 元素任意路径运动">&laquo; 元素任意路径运动</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/09/04/server-config/">服务器配置，tengine，git，nodejs，grunt，mongodb……</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/21/circle-path/">元素任意路径运动</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/21/svg-img/">SVG实现任意形状相框</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/11/octopress/">史上最简单windows下搭建octopress环境</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/27/upload-photo/">jquery上传插件</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+<h1>分类</h1>
+<span class='categories_tag'> <a href='/blog/categories/android' style='font-size: 126.66666666666667%'>Android(2)</a>  <a href='/blog/categories/chrome' style='font-size: 113.33333333333333%'>Chrome(1)</a>  <a href='/blog/categories/github' style='font-size: 113.33333333333333%'>Github(1)</a>  <a href='/blog/categories/helloworld' style='font-size: 113.33333333333333%'>Helloworld(1)</a>  <a href='/blog/categories/jamendo' style='font-size: 113.33333333333333%'>Jamendo(1)</a>  <a href='/blog/categories/java' style='font-size: 126.66666666666667%'>Java(2)</a>  <a href='/blog/categories/javascript' style='font-size: 140.0%'>Javascript(3)</a>  <a href='/blog/categories/maven' style='font-size: 113.33333333333333%'>Maven(1)</a>  <a href='/blog/categories/mootools' style='font-size: 113.33333333333333%'>Mootools(1)</a>  <a href='/blog/categories/music' style='font-size: 113.33333333333333%'>Music(1)</a>  <a href='/blog/categories/octopress' style='font-size: 113.33333333333333%'>Octopress(1)</a>  <a href='/blog/categories/project' style='font-size: 113.33333333333333%'>Project(1)</a>  <a href='/blog/categories/sony' style='font-size: 113.33333333333333%'>Sony(1)</a>  <a href='/blog/categories/sr45h' style='font-size: 113.33333333333333%'>Sr45h(1)</a>  <a href='/blog/categories/封装' style='font-size: 113.33333333333333%'>封装(1)</a>  <a href='/blog/categories/拆机' style='font-size: 113.33333333333333%'>拆机(1)</a>  <a href='/blog/categories/环境搭建' style='font-size: 126.66666666666667%'>环境搭建(2)</a>  <a href='/blog/categories/算法' style='font-size: 113.33333333333333%'>算法(1)</a> </span>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/feeloc">@feeloc</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'feeloc',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+<section>
+  <h1></h1>
+  <p>
+    <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=300&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=0&uid=1721691142&verifier=813d76ea&dpc=1"></iframe>
+  </p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - feeloc -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'feeloc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://feeloc.github.io/blog/2013/09/04/server-config/';
+        var disqus_url = 'http://feeloc.github.io/blog/2013/09/04/server-config/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
