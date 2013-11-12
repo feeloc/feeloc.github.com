@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Carousel Example 3</title>
+    <script src="source/moo.js"></script>
+    <script src="source/switchable.js"></script>
+	<link rel="stylesheet" href="reset.css" type="text/css" /> 
+</head>
+<body>
+    <div>
+        <p>
+            <h1>Carousel Example 3:</h1>
+        </p>
+    </div>
+    <style>
+.scrollable{position:relative;width: 200px;border:1px solid #505050;margin-left:100px;height:260px}
+.scrollable .prev, .scrollable .next {
+        position: absolute;
+        top: 75px;
+        color: #666;
+        cursor: pointer;
+		width:15px;
+		height:28px;		
+		text-align:left;
+		text-indent:-9999px;
+		overflow:hidden;
+		background:url(assets/btn.gif) no-repeat;
+    }
+.scrollable .prev { left:10px; }
+.scrollable .next { right:10px;background-position:-15px 0; }
+.view-content{ 
+		width:130px;
+		height:130px;
+		overflow:hidden;
+		border:1px solid #cccccc;
+		margin:20px auto;
+	}
+.trigger-content{position:absolute;
+		width:142px;
+		height:93px;
+		overflow:hidden;
+		bottom:5px;
+		left:28px;
+	}
+.switchable-triggerBox{width:150px;}
+.switchable-triggerBox li{
+		width:40px;
+		height:40px;
+		float:left;
+		padding:1px;
+		border:1px solid #cccccc;
+		margin:0 5px 5px 0;
+	}
+.switchable-triggerBox li img{display:block;}
+.switchable-triggerBox li.active{border-color:#990000;background:#990000;}
+</style>
+<div class="scrollable Auto_Widget"  data-widget-type="Switchable"  data-widget-config="{effect:'scrollx', 
+		viewSize: [130,130],
+		steps:1,
+		haslrbtn:true
+	}">
+		<span class="prev ">&lsaquo;</span>
+		<span class="next">&rsaquo;</span>
+		<div class="view-content">
+			 <ul class="switchable-content">
+					<li><img src="assets/1.jpg" alt="" /></li>
+					<li><img src="assets/2.jpg" alt="" /></li>
+					<li><img src="assets/3.jpg" alt="" /></li>
+					<li><img src="assets/4.jpg" alt="" /></li>
+					<li><img src="assets/5.jpg" alt="" /></li>
+					<li><img src="assets/6.jpg" alt="" /></li>
+			 </ul>
+		</div>
+		<div class="trigger-content">
+			 <ul class="switchable-triggerBox clearfix">
+					<li><img src="assets/1.jpg" width="40" height="40" alt="" /></li>
+					<li><img src="assets/2.jpg" width="40" height="40" alt="" /></li>
+					<li><img src="assets/3.jpg" width="40" height="40" alt="" /></li>
+					<li><img src="assets/4.jpg" width="40" height="40" alt="" /></li>
+					<li><img src="assets/5.jpg" width="40" height="40" alt="" /></li>
+					<li><img src="assets/6.jpg" width="40" height="40" alt="" /></li>
+			 </ul>
+	    </div>
+</div>
+
+<div class="code" style="margin-top:20px;">
+    <h2>Dom code:</h2>
+    <pre>
+&lt;div class="scrollable Auto_Widget"  data-widget-type="Switchable"  data-widget-config="{effect:'scrollx', 
+		viewSize: [130,130],
+		steps:1,
+		haslrbtn:true
+	}"&gt;
+		&lt;span class="prev "&gt;&lsaquo;&lt;/span&gt;
+		&lt;span class="next"&gt;&rsaquo;&lt;/span&gt;
+	&lt;div class="view-content"&gt;
+		&lt;ul class="switchable-content"&gt;
+			&lt;li&gt;&lt;img src="assets/1.jpg" alt="" /&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;img src="assets/2.jpg" alt="" /&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;img src="assets/3.jpg" alt="" /&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;img src="assets/4.jpg" alt="" /&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;img src="assets/5.jpg" alt="" /&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;img src="assets/6.jpg" alt="" /&gt;&lt;/li&gt;
+		&lt;/ul&gt;
+	&lt;/div&gt;
+	&lt;div class="trigger-content"&gt;
+		&lt;ul class="switchable-triggerBox clearfix"&gt;
+			&lt;li&gt;&lt;img src="assets/1.jpg" width="40" height="40" alt="" /&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;img src="assets/2.jpg" width="40" height="40" alt="" /&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;img src="assets/3.jpg" width="40" height="40" alt="" /&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;img src="assets/4.jpg" width="40" height="40" alt="" /&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;img src="assets/5.jpg" width="40" height="40" alt="" /&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;img src="assets/6.jpg" width="40" height="40" alt="" /&gt;&lt;/li&gt;
+		&lt;/ul&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</pre>
+</div>
+
+<div class="code" style="margin-top:20px;">
+    <h2>Css code:</h2>
+<pre>
+.scrollable{position:relative;width: 200px;border:1px solid #505050;margin-left:100px;height:260px}
+.scrollable .prev, .scrollable .next {
+		position: absolute;
+		top: 75px;
+		color: #666;
+		cursor: pointer;
+		width:15px;
+		height:28px;		
+		text-align:left;
+		text-indent:-9999px;
+		overflow:hidden;
+		background:url(assets/btn.gif) no-repeat;
+    }
+.scrollable .prev { left:10px; }
+.scrollable .next { right:10px;background-position:-15px 0; }
+.view-content{ 
+		width:130px;
+		height:130px;
+		overflow:hidden;
+		border:1px solid #cccccc;
+		margin:20px auto;
+	}
+.trigger-content{position:absolute;
+		width:142px;
+		height:93px;
+		overflow:hidden;
+		bottom:5px;
+		left:28px;
+	}
+.switchable-triggerBox{width:150px;}
+.switchable-triggerBox li{
+		width:40px;
+		height:40px;
+		float:left;
+		padding:1px;
+		border:1px solid #cccccc;
+		margin:0 5px 5px 0;
+	}
+.switchable-triggerBox li img{display:block;}
+.switchable-triggerBox li.active{border-color:#990000;background:#990000;}
+</pre>
+</div>
+</body>
+</html>

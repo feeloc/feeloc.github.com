@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Accordion Example 2</title>
+    <script src="source/moo.js"></script>
+    <script src="source/switchable.js"></script>
+	<link rel="stylesheet" href="reset.css" type="text/css" /> 
+</head>
+<body>
+    <div>
+        <p>
+            <h1>Accordion Example 2:</h1>
+        </p>
+    </div>
+<style>
+#accordion2 {width:190px;border:1px solid #ccc;}
+#accordion2 .switchable-trigger{cursor:pointer;border-bottom:1px solid #ddd;background:#f3f3f3;overflow:hidden; height: 18px;}
+#accordion2 .switchable-trigger h3{float: left; width: 100px; margin-left: 5px; }
+#accordion2 .switchable-panel{border-bottom:1px solid #ddd;}
+#accordion2 .moo-icon{float:left;width:12px;height:12px;overflow:hidden;font-size:0;vertical-align:middle;background:url(assets/accordion-sprite.png) no-repeat}
+#accordion2 .last-trigger { border-bottom-width:0;}
+#accordion2 .last-panel { border-bottom:none;}
+</style>
+<div id="accordion2" class="Auto_Widget" data-widget-type="Accordion" data-widget-config="{
+		triggers:'.switchable-trigger',
+		panel:'.switchable-panel',
+		eventType:'click',
+		effect:true,
+		multiple:true
+}">
+    <div class="switchable-trigger active"><i class="moo-icon"></i><h3>韩版女装</h3></div>
+    <ul class="switchable-panel">
+		<li>外套</li>
+		<li>长裙</li>
+		<li>女裤</li>
+    </ul>
+    <div class="switchable-trigger"><i class="moo-icon"></i><h3>包包</h3></div>
+    <ul class="switchable-panel" style="display:none;">
+		<li>手提包</li>
+		<li>皮夹钱包</li>
+		<li>单肩包</li>
+		<li>双肩包</li>
+	</ul>
+    <div class="switchable-trigger"><i class="moo-icon"></i><h3>时尚女鞋</h3></div>
+    <ul class="switchable-panel" style="display:none;">
+		<li>气质休闲</li>
+		<li>运动单鞋</li>
+	</ul>
+    <div class="switchable-trigger last-trigger"><i class="moo-icon"></i><h3>促销专场</h3></div>
+    <ul class="switchable-panel last-panel" style="display:none;">
+		<li>包包特卖</li>
+		<li>Esprit特价</li>
+		<li>韩朝专场</li>
+		<li>白领专场</li>
+	</ul>
+</div>
+<div class="code" style="margin-top:20px;">
+    <h2>Dom code:</h2>
+<pre>
+&lt;div id="accordion2" class="Auto_Widget" data-widget-type="Accordion" data-widget-config="{
+		triggers:'.switchable-trigger',
+		panel:'.switchable-panel',
+		eventType:'click',
+		effect:true,           /*  此参数开启展开/收起的动画效果，默认为false  */
+		multiple:true           /*  此参数支持多面板展开，使用时请删除本行注释  */
+}"&gt;
+    &lt;div class="switchable-trigger active"&gt;&lt;i class="moo-icon"&gt;&lt;/i&gt;&lt;h3&gt;韩版女装&lt;/h3&gt;&lt;/div&gt;
+    &lt;ul class="switchable-panel"&gt;
+		&lt;li&gt;外套&lt;/li&gt;
+		&lt;li&gt;长裙&lt;/li&gt;
+		&lt;li&gt;女裤&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;div class="switchable-trigger"&gt;&lt;i class="moo-icon"&gt;&lt;/i&gt;&lt;h3&gt;包包&lt;/h3&gt;&lt;/div&gt;
+    &lt;ul class="switchable-panel" style="display:none;"&gt;
+		&lt;li&gt;手提包&lt;/li&gt;
+		&lt;li&gt;皮夹钱包&lt;/li&gt;
+		&lt;li&gt;单肩包&lt;/li&gt;
+		&lt;li&gt;双肩包&lt;/li&gt;
+	&lt;/ul&gt;
+    &lt;div class="switchable-trigger"&gt;&lt;i class="moo-icon"&gt;&lt;/i&gt;&lt;h3&gt;时尚女鞋&lt;/h3&gt;&lt;/div&gt;
+    &lt;ul class="switchable-panel" style="display:none;"&gt;
+		&lt;li&gt;气质休闲&lt;/li&gt;
+		&lt;li&gt;运动单鞋&lt;/li&gt;
+	&lt;/ul&gt;
+    &lt;div class="switchable-trigger last-trigger"&gt;&lt;i class="moo-icon"&gt;&lt;/i&gt;&lt;h3&gt;促销专场&lt;/h3&gt;&lt;/div&gt;
+    &lt;ul class="switchable-panel last-panel" style="display:none;"&gt;
+		&lt;li&gt;包包特卖&lt;/li&gt;
+		&lt;li&gt;Esprit特价&lt;/li&gt;
+		&lt;li&gt;韩朝专场&lt;/li&gt;
+		&lt;li&gt;白领专场&lt;/li&gt;
+	&lt;/ul&gt;
+&lt;/div&gt;</pre>
+</div>
+
+
+<div class="code" style="margin-top:20px;">
+    <h2>CSS code:</h2>
+    <pre>
+#accordion2 {width:190px;border:1px solid #ccc;}
+#accordion2 .switchable-trigger{
+		padding:3px 10px;
+		cursor:pointer;
+		border-bottom:1px solid #ddd;
+		background:#f3f3f3;
+		overflow:hidden; 
+		height: 18px
+}
+#accordion2 .switchable-trigger h3{float: left; width: 100px; margin-left: 5px; }
+#accordion2 .switchable-panel{padding:3px 10px;border-bottom:1px solid #ddd;}
+#accordion2 .moo-icon{
+		float:left;
+		width:12px;
+		height:12px;
+		overflow:hidden;
+		margin-top:2px;
+		font-size:0;
+		vertical-align:middle
+		background:url(assets/accordion-sprite.png) no-repeat
+}
+#accordion2 .last-trigger { border-bottom-width:0;}
+#accordion2 .last-panel { border-bottom:none;}</pre>
+</div>
+</html>

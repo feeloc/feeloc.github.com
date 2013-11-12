@@ -1,0 +1,281 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Tab Example 2</title>
+    <script src="source/moo.js"></script>
+    <script src="source/switchable.js"></script>
+	<link rel="stylesheet" href="reset.css" type="text/css" /> 
+</head>
+<body>
+    <div>
+        <p>
+            <h1>Tab Example 2:</h1>
+        </p>
+    </div>
+    <style>
+    body{margin:20px;}
+    #Tabs { position: relative; width: 950px; padding-top: 29px; }
+    #Tabs .switchable-triggerBox { position: absolute; left: 20px; margin-top: -29px; z-index: 99; }
+    #Tabs .switchable-triggerBox li {
+        float: left;
+        width: 130px;
+        height: 27px;
+        line-height: 21px;
+        text-align: center;
+        background: url(assets/tabs-sprite.gif) no-repeat 0 6px;
+        margin-right: 3px;
+        padding-top: 8px;
+        cursor: pointer;
+    }
+    #Tabs .switchable-triggerBox li.active { background-position: 0 -40px; cursor: default; }
+    #Tabs .switchable-content {
+        position: relative;
+        height: 500px;
+        padding: 20px;
+        border: 1px solid #AEC7E5;
+    }
+#accordion2 {width:190px;border:1px solid #ccc;}
+#accordion2 .switchable-trigger{padding:3px 10px;cursor:pointer;border-bottom:1px solid #ddd;background:#f3f3f3;overflow:hidden; height: 18px;}
+#accordion2 .switchable-trigger h3{float: left; width: 100px; margin-left: 5px; }
+#accordion2 .switchable-panel{padding:3px 10px;border-bottom:1px solid #ddd;}
+#accordion2 .moo-icon{float:left;width:12px;height:12px;overflow:hidden;margin-top:2px;font-size:0;vertical-align:middle;background:url(assets/accordion-sprite.png) no-repeat}
+#accordion2 .last-trigger { border-bottom-width:0;}
+#accordion2 .last-panel { border-bottom:none;}
+#Slide1 { position: relative; width: 540px; height: 290px; border: 1px solid #6ce26c; overflow: hidden; }
+#Slide1 .switchable-triggerBox { position: absolute; bottom: 5px; right: 5px; z-index: 99; }
+#Slide1 .switchable-triggerBox li {
+        float: left;
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        margin-left: 3px;
+        background-color: #cffcd4;
+        border: 1px solid #6ce26c;
+        color: #00e31b;
+        text-align: center;
+        cursor: pointer;
+    }
+#Slide1 .switchable-triggerBox li.active {
+        color: #FFF;
+        background-color: #96e496;
+        font-weight: bold;
+    }
+#Slide1 .switchable-content li { height: 290px; width: 540px; overflow: hidden; }
+    /* for countdown plugin */
+#Slide1 .switchable-triggerBox li,
+#Slide1 .content {
+        position: relative;
+    }
+#Slide1 .mask {
+        position: absolute;
+        right: 0;
+        width: 18px;
+        height: 18px;
+        background-color: #FF9415;
+        visibility: hidden
+    }
+#Slide1 .active .mask {
+        visibility: visible
+    }
+    .scrollable {
+        position: relative;
+        width: 820px;
+    }
+    .scrollable .prev, .scrollable .next {
+        position: absolute;
+        top: 50px;
+        color: #666;
+        cursor: pointer;
+    }
+    .scrollable .prev { left: 10px; }
+    .scrollable .next { right: 10px; }
+    .scrollable .disable { color: #ddd; cursor: default; }
+
+    .scrollable .switchable-triggerBox {
+        position: absolute;
+        right: 30px;
+        top: -10px;
+    }
+    .scrollable .switchable-triggerBox li {
+        float: left;
+        padding: 5px;
+        font-size: 18px;
+        cursor: pointer;
+    }
+    .scrollable .switchable-triggerBox li.active {
+        color: #C8282B;
+    }
+
+    .scroller {
+        position: relative;
+        width: 680px;
+        height: 120px;
+        border: 1px solid #ccc;
+        background-color: #F9F9F9;
+        margin: auto;
+        overflow: hidden;
+    }
+    .scroller .switchable-content img {
+        float: left;
+        width: 100px;
+        height: 75px;
+        padding: 2px;
+        margin: 20px 15px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        display: inline !important; /* fix ie6 双边距 bug */
+    }
+	#Slide4 { position: relative; width: 500px; height: 25px; overflow: hidden;}
+#Slide4 .switchable-content li {
+        height: 25px;
+        line-height: 25px;
+        color: #ffffff;
+        text-align: left;
+        cursor: pointer;
+		overflow:hidden;
+    }
+#Slide4 .switchable-content li a{color:#505050;line-height:25px;}
+#Slide3 { position: relative; width: 680px; height: 290px; overflow: hidden; border:1px solid #000000;}
+#Slide3 .switchable-triggerBox { position: absolute; top: 1px; right: 1px; z-index: 99;width:138px; }
+#Slide3 .switchable-triggerBox li {
+        float: left;
+        width: 134px;
+        height: 52px;
+        line-height: 32px;
+        margin-bottom: 1px;
+        background-color: #000000;
+        color: #ffffff;
+        text-align: center;
+        cursor: pointer;
+		border:2px solid #cccccc
+
+    }
+#Slide3 .switchable-triggerBox li.last{
+		margin:0; 
+		height:56px;
+	} 
+#Slide3 .switchable-triggerBox li.active {
+        color: #FFF;
+        background-color: #505050;
+        font-weight: bold;
+		border-color:#f60;
+
+    }
+#Slide3 .switchable-content li { height: 290px; width: 680px; overflow: hidden; }
+    /* for countdown plugin */
+#Slide3 .switchable-triggerBox li,
+#Slide3 .content {
+        position: relative;
+    }
+#Slide3 .mask {
+        position: absolute;
+        right: 0;
+        width: 18px;
+        height: 18px;
+        background-color: #FF9415;
+        visibility: hidden
+    }
+#Slide3 .active .mask {
+        visibility: visible
+    }
+    </style>
+<div id="Tabs" class="Auto_Widget" data-widget-type="Tabs" data-widget-config="{autoplay:false,effect:'scrolly',interval:1000}">
+    <ul class="switchable-triggerBox">
+        <li class="active"><span>标题 A</span></li>
+        <li>标题 B</li>
+        <li>标题 C</li>
+    </ul>
+    <div class="switchable-content">
+			<div class="switchable-panel">
+									11
+			</div>
+			<div class="switchable-panel" style="display: none;">
+									<div id="Slide3" class="Auto_Widget" data-widget-type="Switchable" data-widget-config ="{autoplay:true,effect:'scrolly',duration:1000,interval:4000,activeClass:'active',circular:false,eventType:'mouse',lazyDataType:'img'}">
+										<ul class="switchable-content">
+											<li class=""><img alt="" src="assets/01.jpg"/></li>
+											<li class="hidden "><img alt="" src="assets/02.jpg"/></li>
+											<li class="hidden "><img alt="" src="assets/03.jpg"/></li>
+											<li class="hidden "><img alt="" img-lazyload="assets/04.jpg" src="assets/loading.gif"/></li>
+											<li class="hidden "><img alt="" img-lazyload="assets/05.jpg" src="assets/loading.gif"/></li>
+										   
+										</ul>
+										<ul class="switchable-triggerBox">
+											<li class="active"><img alt="" src="assets/01.jpg" width="134" height="52" /></li>
+											<li class=""><img alt="" src="assets/02.jpg" width="134" height="52" /></li>
+											<li class=""><img alt="" src="assets/03.jpg" width="134" height="52" /></li>
+											<li class=""><img alt="" src="assets/04.jpg" width="134" height="52" /></li>
+											<li class="last"><img alt="" src="assets/05.jpg" width="134" height="56" /></li>
+										</ul>
+									</div>
+					
+			</div>
+			<div class="switchable-panel" style="display: none;">			
+						333					
+			</div>
+
+
+    </div>
+</div>
+
+<div class="code" style="margin-top:20px;">
+    <h2>Dom code:</h2>
+    <pre>
+&lt;div id="Tabs" class="Auto_Widget" data-widget-type="Tabs" data-widget-config="{autoplay:true,effect:'scrolly',interval:1000}"&gt;
+    &lt;ul class="switchable-triggerBox"&gt;
+        &lt;li class="active"&gt;&lt;span&gt;标题 A&lt;/span&gt;&lt;/li&gt;
+        &lt;li&gt;标题 B&lt;/li&gt;
+        &lt;li&gt;标题 C&lt;/li&gt;
+        &lt;li&gt;标题 D&lt;/li&gt;
+        &lt;li&gt;标题 E&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;div class="switchable-content"&gt;
+			&lt;div class="switchable-panel"&gt;
+				&lt;p&gt;  - 在当前 trigger 中 mouseover/mouseout, click, focus, 不触发&lt;br /&gt;
+				  - 鼠标快速滑过非当前 trigger, 不触发&lt;br /&gt;
+				  - mouseover 到非当前 trigger, 停留时间到达延迟时，触发&lt;br /&gt;
+				  - click 或 Tab 切换到 trigger, 立即触发&lt;br /&gt;
+				  - beforeSwitch/onSwitch 事件的触发&lt;br /&gt;
+				  - 延迟的内容能正确加载
+				&lt;/P&gt;
+			&lt;/div&gt;
+			&lt;div class="switchable-panel" style="display: none;"&gt;内容 B&lt;/div&gt;
+			&lt;div class="switchable-panel" style="display: none;"&gt;内容 C&lt;/div&gt;
+			&lt;div class="switchable-panel" style="display: none;"&gt;内容 D&lt;/div&gt;
+			&lt;div class="switchable-panel" style="display: none;"&gt;
+					&lt;textarea class="textarea-lazyload"&gt;                我是延迟内容
+						&lt;script&gt;alert('我是延迟内容中的脚本，仅在第一次加载时执行。');&lt;/script&gt;
+					&lt;/textarea&gt;
+			&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+</div>
+
+
+<div class="code" style="margin-top:20px;">
+    <h2>Css code:</h2>
+<pre>
+#Tabs { position: relative; width: 750px; padding-top: 29px; }
+#Tabs .switchable-triggerBox { position: absolute; left: 20px; margin-top: -29px; z-index: 99; }
+#Tabs .switchable-triggerBox li {
+        float: left;
+        width: 130px;
+        height: 27px;
+        line-height: 21px;
+        text-align: center;
+        background: url(assets/tabs-sprite.gif) no-repeat 0 6px;
+        margin-right: 3px;
+        padding-top: 8px;
+        cursor: pointer;
+    }
+#Tabs .switchable-triggerBox li.active { background-position: 0 -40px; cursor: default; }
+#Tabs .switchable-content {
+        position: relative;
+        height: 120px;
+        padding: 20px;
+        border: 1px solid #AEC7E5;
+    }
+</pre>
+</div>
+</body>
+</html>

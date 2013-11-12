@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Tab Example 2</title>
+    <script src="source/moo.js"></script>
+    <script src="source/switchable.js"></script>
+	<link rel="stylesheet" href="reset.css" type="text/css" /> 
+</head>
+<body>
+    <div>
+        <p>
+            <h1>Tab Example 2:</h1>
+        </p>
+    </div>
+    <style>
+    body{margin:20px;}
+    #Tabs { position: relative; width: 750px; padding-top: 29px; }
+    #Tabs .switchable-triggerBox { position: absolute; left: 20px; margin-top: -29px; z-index: 99; }
+    #Tabs .switchable-triggerBox li {
+        float: left;
+        width: 130px;
+        height: 27px;
+        line-height: 21px;
+        text-align: center;
+        background: url(assets/tabs-sprite.gif) no-repeat 0 6px;
+        margin-right: 3px;
+        padding-top: 8px;
+        cursor: pointer;
+    }
+    #Tabs .switchable-triggerBox li.active { background-position: 0 -40px; cursor: default; }
+    #Tabs .switchable-content {
+        position: relative;
+        height: 120px;
+        padding: 20px;
+        border: 1px solid #AEC7E5;
+    }
+    </style>
+<div id="Tabs" class="Auto_Widget" data-widget-type="Tabs" data-widget-config="{autoplay:true,effect:'scrolly',interval:1000}">
+    <ul class="switchable-triggerBox">
+        <li class="active"><span>标题 A</span></li>
+        <li>标题 B</li>
+        <li>标题 C</li>
+        <li>标题 D</li>
+        <li>标题 E</li>
+    </ul>
+    <div class="switchable-content">
+			<div class="switchable-panel">
+				<p>  - 在当前 trigger 中 mouseover/mouseout, click, focus, 不触发<br />
+				  - 鼠标快速滑过非当前 trigger, 不触发<br />
+				  - mouseover 到非当前 trigger, 停留时间到达延迟时，触发<br />
+				  - click 或 Tab 切换到 trigger, 立即触发<br />
+				  - beforeSwitch/onSwitch 事件的触发<br />
+				  - 延迟的内容能正确加载
+				</P>
+			</div>
+			<div class="switchable-panel" style="display: none;">内容 B</div>
+			<div class="switchable-panel" style="display: none;">内容 C</div>
+			<div class="switchable-panel" style="display: none;">内容 D</div>
+			<div class="switchable-panel" style="display: none;">
+					<textarea class="textarea-lazyload">                我是延迟内容
+						&lt;script&gt;alert('我是延迟内容中的脚本，仅在第一次加载时执行。');&lt;/script&gt;
+					</textarea>
+			</div>
+    </div>
+</div>
+
+<div class="code" style="margin-top:20px;">
+    <h2>Dom code:</h2>
+    <pre>
+&lt;div id="Tabs" class="Auto_Widget" data-widget-type="Tabs" data-widget-config="{autoplay:true,effect:'scrolly',interval:1000}"&gt;
+    &lt;ul class="switchable-triggerBox"&gt;
+        &lt;li class="active"&gt;&lt;span&gt;标题 A&lt;/span&gt;&lt;/li&gt;
+        &lt;li&gt;标题 B&lt;/li&gt;
+        &lt;li&gt;标题 C&lt;/li&gt;
+        &lt;li&gt;标题 D&lt;/li&gt;
+        &lt;li&gt;标题 E&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;div class="switchable-content"&gt;
+			&lt;div class="switchable-panel"&gt;
+				&lt;p&gt;  - 在当前 trigger 中 mouseover/mouseout, click, focus, 不触发&lt;br /&gt;
+				  - 鼠标快速滑过非当前 trigger, 不触发&lt;br /&gt;
+				  - mouseover 到非当前 trigger, 停留时间到达延迟时，触发&lt;br /&gt;
+				  - click 或 Tab 切换到 trigger, 立即触发&lt;br /&gt;
+				  - beforeSwitch/onSwitch 事件的触发&lt;br /&gt;
+				  - 延迟的内容能正确加载
+				&lt;/P&gt;
+			&lt;/div&gt;
+			&lt;div class="switchable-panel" style="display: none;"&gt;内容 B&lt;/div&gt;
+			&lt;div class="switchable-panel" style="display: none;"&gt;内容 C&lt;/div&gt;
+			&lt;div class="switchable-panel" style="display: none;"&gt;内容 D&lt;/div&gt;
+			&lt;div class="switchable-panel" style="display: none;"&gt;
+					&lt;textarea class="textarea-lazyload"&gt;                我是延迟内容
+						&lt;script&gt;alert('我是延迟内容中的脚本，仅在第一次加载时执行。');&lt;/script&gt;
+					&lt;/textarea&gt;
+			&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+</div>
+
+
+<div class="code" style="margin-top:20px;">
+    <h2>Css code:</h2>
+<pre>
+#Tabs { position: relative; width: 750px; padding-top: 29px; }
+#Tabs .switchable-triggerBox { position: absolute; left: 20px; margin-top: -29px; z-index: 99; }
+#Tabs .switchable-triggerBox li {
+        float: left;
+        width: 130px;
+        height: 27px;
+        line-height: 21px;
+        text-align: center;
+        background: url(assets/tabs-sprite.gif) no-repeat 0 6px;
+        margin-right: 3px;
+        padding-top: 8px;
+        cursor: pointer;
+    }
+#Tabs .switchable-triggerBox li.active { background-position: 0 -40px; cursor: default; }
+#Tabs .switchable-content {
+        position: relative;
+        height: 120px;
+        padding: 20px;
+        border: 1px solid #AEC7E5;
+    }
+</pre>
+</div>
+</body>
+</html>

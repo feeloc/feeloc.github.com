@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Slide Example 4</title>
+    <script src="source/moo.js"></script>
+    <script src="source/switchable.js"></script>
+	<link rel="stylesheet" href="reset.css" type="text/css" /> 
+</head>
+<body>
+    <div>
+        <p>
+            <h1>Slide Example 4:</h1>
+        </p>
+    </div>
+    <style>
+#Slide4 { position: relative; width: 500px; height: 25px; overflow: hidden;}
+#Slide4 .switchable-content li {
+        height: 25px;
+        line-height: 25px;
+        color: #ffffff;
+        text-align: left;
+        cursor: pointer;
+		overflow:hidden;
+    }
+#Slide4 .switchable-content li a{color:#505050;line-height:25px;}
+
+</style>
+
+<div id="Slide4" class="Auto_Widget" data-widget-type="Switchable" data-widget-config ="{autoplay:true,effect:'scrolly',duration:500,interval:2000,hasTriggers:false}">
+    <ul class="switchable-content">
+        <li class=""><a target="_blank" href="#">女士专场，任我选择!</a></li>
+        <li class="hidden "><a target="_blank" href="#">靓装搭配全攻略-今夏流行密码 </a></li>
+        <li class="hidden "><a target="_blank" href="#">韩版Vivid服饰全场热卖！</a></li>
+        <li class="hidden "><a target="_blank" href="#">乐不思“暑”之买就送！ </a></li> 
+    </ul>
+</div>
+<div class="code" style="margin-top:20px;">
+    <h2>Dom code:</h2>
+    <pre>
+&lt;div id="Slide4" class="Auto_Widget" data-widget-type="Switchable" data-widget-config ="{autoplay:true,effect:'scrolly',
+			duration:500,interval:2000,hasTriggers:false}"&gt;
+    &lt;ul class="switchable-content"&gt;
+        &lt;li class=""&gt;&lt;a target="_blank" href="#"&gt;女士专场，任我选择!&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="hidden "&gt;&lt;a target="_blank" href="#"&gt;靓装搭配全攻略-今夏流行密码 &lt;/a&gt;&lt;/li&gt;
+        &lt;li class="hidden "&gt;&lt;a target="_blank" href="#"&gt;韩版Vivid服饰全场热卖！&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="hidden "&gt;&lt;a target="_blank" href="#"&gt;乐不思“暑”之买就送！ &lt;/a&gt;&lt;/li&gt; 
+    &lt;/ul&gt;
+&lt;/div&gt;
+</pre>
+</div>
+
+
+
+<div class="code" style="margin-top:20px;">
+    <h2>Css code:</h2>
+<pre>
+#Slide4 { position: relative; width: 500px; height: 25px; overflow: hidden;}
+#Slide4 .switchable-content li {
+			height: 25px;
+			line-height: 25px;
+			color: #ffffff;
+			text-align: left;
+			cursor: pointer;
+			overflow:hidden;
+		}
+#Slide4 .switchable-content li a{color:#505050;line-height:25px;}
+</pre>
+</div>
+</body>
+</html>

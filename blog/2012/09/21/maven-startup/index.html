@@ -1,0 +1,499 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>maven入门 - feeloc's 杂货铺</title>
+  <meta name="author" content="feeloc">
+
+  
+  <meta name="description" content="在大学一开始接触javaweb的时候，会用myeclipse去搭建SSH项目，觉得那样很方便。后来渐渐熟悉了SSH，加之放弃了myeclipse（实在有些臃肿，还慢），开始自己
+自己手动去添加那一堆包，这样也挺方便，因为就是SSH项目，就那么多包。后来做的项目越来越大了， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://feeloc.github.io/blog/2012/09/21/maven-startup">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="feeloc's 杂货铺" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">feeloc's 杂货铺</a></h1>
+  
+    <h2>一切有意思的事</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:feeloc.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">主页</a></li>
+  <li><a href="/blog/archives">文章</a></li>
+  <li><a href="/about">关于我</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Maven入门</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-21T00:51:00+08:00" pubdate data-updated="true">Sep 21<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><img src="http://feeloc.cn/downloads/images/2012-09-21/1.png"></p>
+
+<blockquote><p>在大学一开始接触javaweb的时候，会用myeclipse去搭建SSH项目，觉得那样很方便。后来渐渐熟悉了SSH，加之放弃了myeclipse（实在有些臃肿，还慢），开始自己
+自己手动去添加那一堆包，这样也挺方便，因为就是SSH项目，就那么多包。后来做的项目越来越大了，有时这个项目还依赖另一个项目，包的管理便成了一个让人头疼
+的事。maven将这一切变得容易，解决了很多project方面的问题。</p></blockquote>
+
+<!-- more -->
+
+
+<p>下面简单介绍下maven的配置和使用，PS：下面文章假设您已经安装了jdk,tomcat,eclipse，并且已经配置了环境变量。如果还没有请稳步<a href="http://google.com" title="google java环境搭建">google</a></p>
+
+<h2>一、maven安装配置</h2>
+
+<ul>
+<li>下载Maven<a href="http://maven.apache.org/download.html" title="下载maven">下载页</a>
+<img src="http://feeloc.cn/downloads/images/2012-09-21/2.png" width="700" title="'下载maven'" ></li>
+<li>解压到自己想放的文件夹，在这儿推荐新建一个maven文件夹，然后解压在里面，因为maven会下载各种依赖包，可以将repository再放入maven文件夹中方便管理。
+<img src="http://feeloc.cn/downloads/images/2012-09-21/3.png" width="700" title="'目录结构'" ></li>
+<li>配置maven，添加环境变量<code>M2_HOME</code>，值为<code>D:\maven\maven-3.0.4</code>，将<code>M2_HOME</code>加入<code>Path</code>中
+<img src="http://feeloc.cn/downloads/images/2012-09-21/4.png" width="700" title="'配置环境变量'" ></li>
+<li>验证是否安装成功
+<img src="http://feeloc.cn/downloads/images/2012-09-21/5.png" width="700" title="'验证安装成功'" ></li>
+</ul>
+
+
+<h2>安装eclipse maven插件m2eclipse</h2>
+
+<ul>
+<li>方式一：自动安装
+
+<ul>
+<li>在菜单栏中选择<code>Help</code>，然后选择<code>Install New Software…</code>，接着你会看到一个<code>Install</code>对话框，点击<code>Work with:</code>字段边上的<code>Add</code>按钮，你会得到一个新的Add Repository对话框，在<code>Name</code>字段中输入<code>m2e</code>，Location字段中输入http://m2eclipse.sonatype.org/sites/m2e，然后点击<code>OK</code></li>
+<li>选择后点击<code>Next &gt;</code>，Eclipse会自动计算模块间依赖，然后给出一个将被安装的模块列表，确认无误后，继续点击<code>Next &gt;</code>，这时我们会看到许可证信息，m2eclipse使用的开源许可证是Eclipse Public License v1.0，选择<code>I accept the terms of the license agreements</code>，然后点击<code>Finish</code>，接着就耐心等待Eclipse下载安装这些模块</li>
+</ul>
+</li>
+<li>方式二：link方式安装（推荐）
+
+<ul>
+<li>进入 m2eclipse离线版本<a href="http://m2eclipse.sonatype.org/sites/m2e/" title="离线包">m2eclipse离线包</a>，然后那好相应的<code>features</code>，<code>plugins</code>目录，然后link，如果不会安装可以google。
+<img src="http://feeloc.cn/downloads/images/2012-09-21/6.png" width="700" title="'下载最新离线包'" ></li>
+</ul>
+</li>
+<li>重启eclipse，看m2eclipse是否安装成功，出现下图说明安装成功
+<img src="http://feeloc.cn/downloads/images/2012-09-21/7.png" width="700" title="'安装成功'" ></li>
+</ul>
+
+
+<h2>配置m2eclipse实现自动部署到tomcat</h2>
+
+<ul>
+<li>定义tomcat用户，打开<code>tomcat-users.xml</code>，在<code>&lt;tomcat-users&gt;</code>节点加入如下代码，添加两个role，一个user</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>tomcat-user.xml </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;role</span> <span class="na">rolename=</span><span class="s">&quot;manager-gui&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;role</span> <span class="na">rolename=</span><span class="s">&quot;manager-script&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;user</span> <span class="na">username=</span><span class="s">&quot;***&quot;</span> <span class="na">password=</span><span class="s">&quot;***&quot;</span> <span class="na">roles=</span><span class="s">&quot;manager-gui,manager-script&quot;</span><span class="nt">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>打开tomcat的web管理页面，输入刚才设置的用户名密码，如果出现如下界面就代表刚才的设置生效了
+<img src="http://feeloc.cn/downloads/images/2012-09-21/8.png" width="700" title="'web管理权限'" ></li>
+<li>在maven的settings.xml的servers节点上添加一台服务器，代码如下：</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>settings.xml </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;server&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;id&gt;</span>tomcat<span class="nt">&lt;/id&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;username&gt;</span>admin<span class="nt">&lt;/username&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;password&gt;</span>admin<span class="nt">&lt;/password&gt;</span>
+</span><span class='line'><span class="nt">&lt;/server&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>打开eclipse，配置maven
+<img src="http://feeloc.cn/downloads/images/2012-09-21/9.png" width="700" title="'maven目录'" >
+<img src="http://feeloc.cn/downloads/images/2012-09-21/10.png" width="700" title="'maven配置'" ></li>
+</ul>
+
+
+<h2>依旧是hello world</h2>
+
+<ul>
+<li>在eclipse中新建一个maven project，我们需要一个web项目
+<img src="http://feeloc.cn/downloads/images/2012-09-21/11.png" width="700" title="'maven project'" >
+<img src="http://feeloc.cn/downloads/images/2012-09-21/12.png" width="700" title="'maven project 配置'" >
+<img src="http://feeloc.cn/downloads/images/2012-09-21/13.png" width="700" title="'maven project 配置注意红色部分'" >
+<img src="http://feeloc.cn/downloads/images/2012-09-21/14.png" width="700" title="'maven project'" ></li>
+<li>项目配置，加入Dynamic Web Module支持
+<img src="http://feeloc.cn/downloads/images/2012-09-21/15.png" width="700" title="'maven project'" ></li>
+<li>配置pom，实现自动打包发布到tomcat</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>pom.xml </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;plugins&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;plugin&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;groupId&gt;</span>org.codehaus.mojo<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;artifactId&gt;</span>tomcat-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;version&gt;</span>1.0-beta-1<span class="nt">&lt;/version&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;configuration&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;url&gt;</span>http://localhost:8080/manager/html<span class="nt">&lt;/url&gt;</span>  <span class="c">&lt;!-- tomcat 7自动部署 --&gt;</span>
+</span><span class='line'>          <span class="c">&lt;!-- tomcat 6自动部署 &lt;url&gt;http://localhost:8080/manager/html&lt;/url&gt; --&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;server&gt;</span>tomcat<span class="nt">&lt;/server&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/configuration&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/plugin&gt;</span>
+</span><span class='line'><span class="nt">&lt;/plugins&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>buide该项目，带参数<code>package tomcat:redeploy</code>，表示自动打包部署到tomcat
+<img src="http://feeloc.cn/downloads/images/2012-09-21/16.png" width="700" title="'maven project'" ></li>
+</ul>
+
+
+<h2>maven,eclipse实现热部署，加速度开发</h2>
+
+<ul>
+<li>在上一步中，虽然实现了自动部署到tomcat上，但每次都需要执行命令加等待还是很麻烦的，必须要实现热部署</li>
+<li>参照以往的经验，设置热部署就是在tomcat的host节点里添加项目配置，现在就是需要找到docBase，和workDir的路径</li>
+<li>重新设置maven的实时编译目录，在<code>src\main\webapp\WEB-INF\</code>下新建<code>classes</code>和<code>lib</code>目录
+<img src="http://feeloc.cn/downloads/images/2012-09-21/17.png" width="700" title="'重设目录'" ></li>
+<li>重设classes目录
+<img src="http://feeloc.cn/downloads/images/2012-09-21/18.png" width="700" title="'重设编译目录'" ></li>
+<li>maven依赖包，切换到项目目录 执行命令<code>mvn dependency:copy-dependencies</code>，这样，test的项目依赖包都会被导入到target/dependency下。将jar包全部放入到<code>src\main\webapp\WEB-INF\</code></li>
+<li>配置tomcat的server.xml文件，修改host节点根据自己的项目目录加入Context节点</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>server.xml </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;Host</span> <span class="na">name=</span><span class="s">&quot;localhost&quot;</span>  <span class="na">appBase=</span><span class="s">&quot;webapps&quot;</span> <span class="na">unpackWARs=</span><span class="s">&quot;true&quot;</span> <span class="na">autoDeploy=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="c">&lt;!-- &lt;Context path=&quot;/www&quot; docBase=&quot;d:\www&quot; debug=&quot;0&quot; reloadable=&quot;true&quot; /&gt; --&gt;</span>
+</span><span class='line'>  <span class="c">&lt;!-- SingleSignOn valve, share authentication between web applications</span>
+</span><span class='line'><span class="c">       Documentation at: /docs/config/valve.html --&gt;</span>
+</span><span class='line'>  <span class="c">&lt;!--</span>
+</span><span class='line'><span class="c">  &lt;Valve className=&quot;org.apache.catalina.authenticator.SingleSignOn&quot; /&gt;</span>
+</span><span class='line'><span class="c">  --&gt;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="c">&lt;!-- Access log processes all example.</span>
+</span><span class='line'><span class="c">       Documentation at: /docs/config/valve.html</span>
+</span><span class='line'><span class="c">       Note: The pattern used is equivalent to using pattern=&quot;common&quot; --&gt;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="nt">&lt;Context</span> <span class="na">path=</span><span class="s">&quot;/yiren&quot;</span> <span class="na">reloadable=</span><span class="s">&quot;false&quot;</span> <span class="na">defaultSessionTimeOut=</span><span class="s">&quot;3600&quot;</span>
+</span><span class='line'>      <span class="na">docBase=</span><span class="s">&quot;D:\java\workspaces\yiren\src\main\webapp&quot;</span>
+</span><span class='line'>      <span class="na">workDir=</span><span class="s">&quot;D:\java\workspaces\yiren\src\main\webapp\WEB-INF\classes&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;Valve</span> <span class="na">className=</span><span class="s">&quot;org.apache.catalina.valves.AccessLogValve&quot;</span> <span class="na">directory=</span><span class="s">&quot;logs&quot;</span>
+</span><span class='line'>      <span class="na">prefix=</span><span class="s">&quot;localhost_access_log.&quot;</span> <span class="na">suffix=</span><span class="s">&quot;.txt&quot;</span>
+</span><span class='line'>      <span class="na">pattern=</span><span class="s">&quot;%h %l %u %t &amp;quot;%r&amp;quot; %s %b&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;/Host&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>至此，大功造成啦，修改下代码，是不是不需要执行mvn命令了，速度是不是快了，是不是爽了。哈哈！！</li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">feeloc</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-21T00:51:00+08:00" pubdate data-updated="true">Sep 21<span>st</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/maven/'>maven</a>, <a class='category' href='/blog/categories/project/'>project</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+    
+    
+    
+    
+    <!-- JiaThis Button BEGIN -->
+    <style type="text/css">.flash-video{display: none;}</style>
+    <div class="jiathis_style_32x32">
+        <a class="jiathis_button_tsina"></a>
+        <a class="jiathis_button_renren"></a>
+        <a class="jiathis_button_tqq"></a>
+        <a class="jiathis_button_ydnote"></a>
+        <a class="jiathis_button_cqq"></a>
+        <a class="jiathis_button_weixin"></a>
+        <a class="jiathis_button_fav"></a>
+        <a class="jiathis_button_print"></a>
+        <a class="jiathis_button_douban"></a>
+        <a class="jiathis_button_baidu"></a>
+        <a class="jiathis_button_email"></a>
+        <a class="jiathis_button_twitter"></a>
+        <a class="jiathis_button_qzone"></a>
+        <a class="jiathis_button_ishare"></a>
+        <a class="jiathis_counter_style"></a>
+    </div>
+    <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1347255918068209" charset="utf-8"></script>
+    <!-- JiaThis Button END -->
+    <!-- UJian Button BEGIN -->
+    <div class="ujian-hook"></div>
+    <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+    <!-- UJian Button END -->
+    
+    <br><br>
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/09/21/chrome-plugin/" title="Previous Post: chrome插件">&laquo; chrome插件</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/11/27/upload-photo/" title="Next Post: jquery上传插件">jquery上传插件 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/05/21/circle-path/">元素任意路径运动</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/21/svg-img/">SVG实现任意形状相框</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/11/octopress/">超简单windows下octopress环境搭建</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/27/upload-photo/">jquery上传插件</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/09/21/maven-startup/">maven入门</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+<h1>分类</h1>
+<span class='categories_tag'> <a href='/blog/categories/android' style='font-size: 126.66666666666667%'>Android(2)</a>  <a href='/blog/categories/chrome' style='font-size: 113.33333333333333%'>Chrome(1)</a>  <a href='/blog/categories/github' style='font-size: 113.33333333333333%'>Github(1)</a>  <a href='/blog/categories/helloworld' style='font-size: 113.33333333333333%'>Helloworld(1)</a>  <a href='/blog/categories/jamendo' style='font-size: 113.33333333333333%'>Jamendo(1)</a>  <a href='/blog/categories/java' style='font-size: 126.66666666666667%'>Java(2)</a>  <a href='/blog/categories/javascript' style='font-size: 140.0%'>Javascript(3)</a>  <a href='/blog/categories/maven' style='font-size: 113.33333333333333%'>Maven(1)</a>  <a href='/blog/categories/mootools' style='font-size: 113.33333333333333%'>Mootools(1)</a>  <a href='/blog/categories/music' style='font-size: 113.33333333333333%'>Music(1)</a>  <a href='/blog/categories/octopress' style='font-size: 113.33333333333333%'>Octopress(1)</a>  <a href='/blog/categories/project' style='font-size: 113.33333333333333%'>Project(1)</a>  <a href='/blog/categories/sony' style='font-size: 113.33333333333333%'>Sony(1)</a>  <a href='/blog/categories/sr45h' style='font-size: 113.33333333333333%'>Sr45h(1)</a>  <a href='/blog/categories/封装' style='font-size: 113.33333333333333%'>封装(1)</a>  <a href='/blog/categories/拆机' style='font-size: 113.33333333333333%'>拆机(1)</a>  <a href='/blog/categories/环境搭建' style='font-size: 126.66666666666667%'>环境搭建(2)</a>  <a href='/blog/categories/算法' style='font-size: 113.33333333333333%'>算法(1)</a> </span>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/feeloc">@feeloc</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'feeloc',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+<section>
+  <h1></h1>
+  <p>
+    <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=300&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=0&uid=1721691142&verifier=813d76ea&dpc=1"></iframe>
+  </p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - feeloc -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'feeloc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://feeloc.github.io/blog/2012/09/21/maven-startup/';
+        var disqus_url = 'http://feeloc.github.io/blog/2012/09/21/maven-startup/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

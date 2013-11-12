@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[["Octopress", "javascript", "Android", "GitHub", "Helloworld", "jamendo", "music", "mootools", "java", "maven", "project", "chrome", "随笔", "面试", "环境搭建", "封装", "算法"]android | feeloc's 杂货铺]]></title>
+  <link href="http://feeloc.github.io/blog/categories/android/atom.xml" rel="self"/>
+  <link href="http://feeloc.github.io/"/>
+  <updated>2013-11-12T18:59:58+08:00</updated>
+  <id>http://feeloc.github.io/</id>
+  <author>
+    <name><![CDATA[feeloc]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[android开源音乐播放器Jamendo学习及二次开发]]></title>
+    <link href="http://feeloc.github.io/blog/2012/08/02/android-musicplayer/"/>
+    <updated>2012-08-02T19:13:00+08:00</updated>
+    <id>http://feeloc.github.io/blog/2012/08/02/android-musicplayer</id>
+    <content type="html"><![CDATA[<p><img src="http://www.feeloc.cn/downloads/images/2012-08-02/14.png"></p>
+
+<blockquote><p>音乐播放器是我天天都会用到的，不管是电脑的，还是手机的，还是播放器的，既然这么需要，正好在研究android程序，那就以播放器做研究吧
+上网看了一下，开源的音乐播放器有很多，jamendo是其中一个做得比较全的，先看看，学习一下别人的编码风格吧！！</p></blockquote>
+
+<!-- more -->
+
+
+<h2>一、建立项目</h2>
+
+<ul>
+<li>jamendo的源码托管在github上，执行<code>git clone https://github.com/telecapoland/jamendo-android.git musicplayer</code></li>
+<li>将clone下的项目导入到eclipse里</li>
+<li>导入相应的android SDK，在项目上右键，选择属性，在属性页选择Android，选择SDK
+<img src="http://www.feeloc.cn/downloads/images/2012-08-02/15.png" width="500"></li>
+<li>试着运行该项目，配置run configuration，run，不出意外会执行成功
+<img src="http://www.feeloc.cn/downloads/images/2012-08-02/16.png" width="500"></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[android开发环境搭建]]></title>
+    <link href="http://feeloc.github.io/blog/2012/08/02/interview-one/"/>
+    <updated>2012-08-02T19:12:00+08:00</updated>
+    <id>http://feeloc.github.io/blog/2012/08/02/interview-one</id>
+    <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/2012-08-02/1.png"></p>
+
+<blockquote><p>换了安卓手机也很长一段时间了，作为一个程序员竟然不想在自己的手机上做一些开发，真是不应该啊，正好也可以学习一些android开发，说干就干，
+先把环境搭建好。</p></blockquote>
+
+<!-- more -->
+
+
+<h2>一、JAVA环境</h2>
+
+<ul>
+<li>java环境简单说明
+
+<ul>
+<li>下载<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" title="下载JDK">JDK</a></li>
+<li>配置环境变量</li>
+<li>下载<a href="http://www.eclipse.org/downloads/" title="下载eclipse">eclipse</a>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>CLASSPATH .;%JAVA_HOME%\lib;
+</span><span class='line'>JAVA_HOME D:\java\jdk6
+</span><span class='line'>JRE_HOME D:\java\jdk6\jre
+</span><span class='line'>Path %JAVA_HOME%\bin;%JRE_HOME%\bin;</span></code></pre></td></tr></table></div></figure></notextile></div></li>
+</ul>
+</li>
+</ul>
+
+
+<blockquote><p>小技巧：可以创建一个文件夹，名字叫android，在下面创建三个文件夹sdk，workspace，ide，这样以后换机器，
+只要将android文件夹拷贝，简单配置环境变量就行，比较方便。</p></blockquote>
+
+<h2>二、android环境</h2>
+
+<ul>
+<li>android sdk安装
+
+<ul>
+<li>下载 <a href="http://developer.android.com/sdk/index.html" title="下载安卓SDK">android SDK</a></li>
+<li>安装sdk，基本上一路next</li>
+</ul>
+</li>
+<li>安装eclipse android 开发插件
+
+<ul>
+<li>打开Eclipse, 在菜单栏上选择 help->Install New SoftWare， add后添加上name:<code>android</code>，location:<code>https://dl-ssl.google.com/android/eclipse/</code>
+<img src="http://feeloc.cn/downloads/images/2012-08-02/2.png" width="500"></li>
+<li>next后AndroidDDMS和AndroidDevelopment Tools是必选
+<img src="http://feeloc.cn/downloads/images/2012-08-02/3.png" width="500"></li>
+<li>安装成功后会要求重新启动eclipse
+<img src="http://feeloc.cn/downloads/images/2012-08-02/4.png" width="500"></li>
+</ul>
+</li>
+<li>点击SDKManager，在SDK的安装目录或者eclispe里面，下载所需要的android SDK版本，<code>tools</code>和<code>extras</code>要选上。下载速度可能会比较慢
+<img src="http://feeloc.cn/downloads/images/2012-08-02/5.png" width="500"></li>
+<li>配置android sdk，点击菜单window->preferences，填写sdk的位置
+<img src="http://feeloc.cn/downloads/images/2012-08-02/6.png" width="500"></li>
+<li>创建AVD,在eclipse的工具栏或者是window目录下
+<img src="http://feeloc.cn/downloads/images/2012-08-02/7.png" width="500"></li>
+<li>新建一个模拟器,相当参数见图，包括模拟器名字，SDK版本，SD卡大小
+<img src="http://feeloc.cn/downloads/images/2012-08-02/8.png" width="500"></li>
+</ul>
+
+
+<h2>三、依旧是helloworld测试开发环境</h2>
+
+<ul>
+<li>创建工程，new->other，选择andorid application project
+<img src="http://feeloc.cn/downloads/images/2012-08-02/9.png" width="500"></li>
+<li>填写相关参数，包括项目名称之类的，选择相应版本的SDK
+<img src="http://feeloc.cn/downloads/images/2012-08-02/10.png" width="500"></li>
+<li>一路NEXT，最后会有一个让填写程序标题的，可以修改下。</li>
+<li>运行第一个android程序,右键项目->Runas -> Run Configuration 进入如下界面，点击Browse按钮，选择你要运行的项目
+<img src="http://feeloc.cn/downloads/images/2012-08-02/11.png" width="500"></li>
+<li>选择Target切换到以下界面，选择运行的AVD，将AVD前面的方框设置为选择状态
+<img src="http://feeloc.cn/downloads/images/2012-08-02/12.png" width="500"></li>
+<li>右键项目名称->runas ->Android Application，看到模拟器上的程序运行成功
+<img src="http://feeloc.cn/downloads/images/2012-08-02/13.png" width="500"></li>
+</ul>
+
+
+<h2>四、使用真机开发调试</h2>
+
+<ul>
+<li>手机通过USB线连接电脑，在手机上开启USB高度模式
+<img src="http://feeloc.cn/downloads/images/2012-07-30/6.png" width="500">
+<img src="http://feeloc.cn/downloads/images/2012-07-30/7.png" width="500"></li>
+<li>在电脑上cmd中进入platform-tools，执行adb devices，查看手机是否正确连接
+<img src="http://feeloc.cn/downloads/images/2012-07-30/8.png" width="500"></li>
+<li>注意：测试前退出豌豆荚或91助手等程序，否则会出错，因为这些程序会占用连接
+<img src="http://feeloc.cn/downloads/images/2012-07-30/9.png" width="500"></li>
+<li>在测试项目的run configuration的target中，将虚拟设备的勾去掉，会自动选择真机运行。
+<img src="http://feeloc.cn/downloads/images/2012-07-30/10.png" width="500">
+<img src="http://feeloc.cn/downloads/images/2012-07-30/11.png" width="500"></li>
+<li>在自己的手机中将会看到程序执行的界面，并自动安装到了手机中
+<img src="http://feeloc.cn/downloads/images/2012-07-30/12.png" width="500">
+<img src="http://feeloc.cn/downloads/images/2012-07-30/13.png" width="500"></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

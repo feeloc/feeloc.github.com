@@ -1,0 +1,419 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>元素任意路径运动 - feeloc's 杂货铺</title>
+  <meta name="author" content="feeloc">
+
+  
+  <meta name="description" content="元素运动很常见，这次总结一些运动轨迹，其实就是复习下各种数学公式，先从圆形运动开始全文。 一、圆形运动 圆形运动比较简单，就是圆心，弧度，正弦，余弦，复习下概念 弧度，弧度是角的度量单位，弧长等于半径的弧，其所对的圆心角为1弧度。(即两条射线从圆心向圆周射出，形成一个夹角和夹角正对的一段弧。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://feeloc.github.io/blog/2013/05/21/circle-path">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="feeloc's 杂货铺" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">feeloc's 杂货铺</a></h1>
+  
+    <h2>一切有意思的事</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:feeloc.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">主页</a></li>
+  <li><a href="/blog/archives">文章</a></li>
+  <li><a href="/about">关于我</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">元素任意路径运动</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-21T18:58:00+08:00" pubdate data-updated="true">May 21<span>st</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><img src="http://www.feeloc.cn/downloads/images/2013-05-21/path.jpg" width="800"></p>
+
+<blockquote><p>元素运动很常见，这次总结一些运动轨迹，其实就是复习下各种数学公式，先从圆形运动开始全文。</p></blockquote>
+
+<!-- more -->
+
+
+<h2>一、圆形运动</h2>
+
+<ul>
+<li>圆形运动比较简单，就是圆心，弧度，正弦，余弦，复习下概念
+
+<ul>
+<li>弧度，<code>弧度是角的度量单位</code>，弧长等于半径的弧，其所对的圆心角为1弧度。(即两条射线从圆心向圆周射出，形成一个夹角和夹角正对的一段弧。当这段弧长正好等于圆的半径时，两条射线的夹角的弧度为1)。</li>
+<li>根据定义，一周的弧度数为2πr/r=2π，360°角=2π弧度，因此，1弧度约为57.3°，即57°17’44.806”，<code>1°为π/180弧度</code>，近似值为0.01745弧度，周角为2π弧度，平角（即180°角）为π弧度，直角为π/2弧度。</li>
+<li><code>弧长=n2πr/360</code> （在这里n就是角度数，即圆心角n所对应的弧长。）</li>
+<li>正弦值：弦值是在直角三角形中,对边的长比上斜边的长的值。</li>
+<li><code>Math.sin(x)</code> : X 必需。一个以弧度表示的角。将角度乘以 0.017453293 （2PI/360）即可转换为弧度。</li>
+<li>余弦值:是指直角三角形锐角邻边与斜边的比值。</li>
+<li><code>Math.sin(x)</code> : X 必需。一个以弧度表示的角。将角度乘以 0.017453293 （2PI/360）即可转换为弧度。</li>
+</ul>
+</li>
+<li>静态圆形元素</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>main.js </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">//中心点横坐标</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">dotLeft</span> <span class="o">=</span> <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-content&#39;</span><span class="p">).</span><span class="nx">width</span><span class="p">()</span> <span class="o">-</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-dot&#39;</span><span class="p">).</span><span class="nx">width</span><span class="p">())</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'><span class="c1">//中心点纵坐标</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">dotTop</span> <span class="o">=</span> <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-content&#39;</span><span class="p">).</span><span class="nx">height</span><span class="p">()</span> <span class="o">-</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-dot&#39;</span><span class="p">).</span><span class="nx">height</span><span class="p">())</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'><span class="c1">//半径</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">radius</span> <span class="o">=</span> <span class="mi">105</span><span class="p">;</span>
+</span><span class='line'><span class="c1">//每一个BOX对应的角度;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">avd</span> <span class="o">=</span> <span class="mi">360</span> <span class="o">/</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-box&#39;</span><span class="p">).</span><span class="nx">length</span><span class="p">;</span>
+</span><span class='line'><span class="c1">//每一个BOX对应的弧度;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">ahd</span> <span class="o">=</span> <span class="nx">avd</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span> <span class="o">/</span> <span class="mi">180</span><span class="p">;</span>
+</span><span class='line'><span class="c1">//设置圆的中心点的位置</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.select-dot&quot;</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span><span class="s1">&#39;left&#39;</span><span class="o">:</span> <span class="nx">dotLeft</span><span class="p">,</span> <span class="s1">&#39;top&#39;</span><span class="o">:</span> <span class="nx">dotTop</span><span class="p">});</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.select-box&quot;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span><span class="s2">&quot;left&quot;</span><span class="o">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">((</span><span class="mi">36</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span> <span class="o">/</span> <span class="mi">180</span> <span class="o">+</span> <span class="nx">ahd</span> <span class="o">*</span> <span class="nx">index</span><span class="p">))</span> <span class="o">*</span> <span class="nx">radius</span> <span class="o">+</span> <span class="nx">dotLeft</span><span class="p">,</span> <span class="s2">&quot;top&quot;</span><span class="o">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">((</span><span class="mi">36</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span> <span class="o">/</span> <span class="mi">180</span> <span class="o">+</span> <span class="nx">ahd</span> <span class="o">*</span> <span class="nx">index</span><span class="p">))</span> <span class="o">*</span> <span class="nx">radius</span> <span class="o">+</span> <span class="nx">dotTop</span><span class="p">});</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="nx">index</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>增加运动</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>main.js </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-box&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">$root</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">iCurrent</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">$root</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">));</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">iBig</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-box&#39;</span><span class="p">).</span><span class="nx">index</span><span class="p">(</span><span class="nx">$root</span><span class="p">);</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="mi">600</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-box&#39;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">path</span><span class="p">;</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">oldIndex</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">));</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">iCurrent</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">time</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">time</span> <span class="o">=</span> <span class="mi">600</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="nx">oldIndex</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="nx">iCurrent</span><span class="p">));</span>
+</span><span class='line'>        <span class="nx">path</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">path</span><span class="p">.</span><span class="nx">arc</span><span class="p">({</span>
+</span><span class='line'>            <span class="nx">center</span><span class="o">:</span> <span class="p">[</span><span class="nx">dotLeft</span><span class="p">,</span> <span class="nx">dotTop</span><span class="p">],</span>
+</span><span class='line'>            <span class="nx">radius</span><span class="o">:</span> <span class="nx">radius</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">start</span><span class="o">:</span> <span class="mi">36</span> <span class="o">+</span> <span class="nx">oldIndex</span> <span class="o">*</span> <span class="nx">avd</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">end</span><span class="o">:</span> <span class="mi">36</span> <span class="o">+</span> <span class="p">(</span><span class="nx">oldIndex</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="nx">iCurrent</span><span class="p">))</span> <span class="o">*</span> <span class="nx">avd</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">dir</span><span class="o">:</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">stop</span><span class="p">().</span><span class="nx">animate</span><span class="p">({</span><span class="nx">path</span><span class="o">:</span> <span class="nx">path</span><span class="p">},</span> <span class="mi">500</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<iframe src="http://www.feeloc.cn/demo/move/move.html" width="800px" height="370px"></iframe>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">feeloc</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-21T18:58:00+08:00" pubdate data-updated="true">May 21<span>st</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/path/'>path</a>, <a class='category' href='/blog/categories/yun-dong/'>运动</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+    
+    
+    
+    
+    <!-- JiaThis Button BEGIN -->
+    <style type="text/css">.flash-video{display: none;}</style>
+    <div class="jiathis_style_32x32">
+        <a class="jiathis_button_tsina"></a>
+        <a class="jiathis_button_renren"></a>
+        <a class="jiathis_button_tqq"></a>
+        <a class="jiathis_button_ydnote"></a>
+        <a class="jiathis_button_cqq"></a>
+        <a class="jiathis_button_weixin"></a>
+        <a class="jiathis_button_fav"></a>
+        <a class="jiathis_button_print"></a>
+        <a class="jiathis_button_douban"></a>
+        <a class="jiathis_button_baidu"></a>
+        <a class="jiathis_button_email"></a>
+        <a class="jiathis_button_twitter"></a>
+        <a class="jiathis_button_qzone"></a>
+        <a class="jiathis_button_ishare"></a>
+        <a class="jiathis_counter_style"></a>
+    </div>
+    <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1347255918068209" charset="utf-8"></script>
+    <!-- JiaThis Button END -->
+    <!-- UJian Button BEGIN -->
+    <div class="ujian-hook"></div>
+    <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js"></script>
+    <!-- UJian Button END -->
+    
+    <br><br>
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/05/21/svg-img/" title="Previous Post: SVG实现任意形状相框">&laquo; SVG实现任意形状相框</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/05/21/circle-path/">元素任意路径运动</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/21/svg-img/">SVG实现任意形状相框</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/11/octopress/">超简单windows下octopress环境搭建</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/27/upload-photo/">jquery上传插件</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/09/21/maven-startup/">maven入门</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+<h1>分类</h1>
+<span class='categories_tag'> <a href='/blog/categories/android' style='font-size: 126.66666666666667%'>Android(2)</a>  <a href='/blog/categories/chrome' style='font-size: 113.33333333333333%'>Chrome(1)</a>  <a href='/blog/categories/github' style='font-size: 113.33333333333333%'>Github(1)</a>  <a href='/blog/categories/helloworld' style='font-size: 113.33333333333333%'>Helloworld(1)</a>  <a href='/blog/categories/jamendo' style='font-size: 113.33333333333333%'>Jamendo(1)</a>  <a href='/blog/categories/java' style='font-size: 126.66666666666667%'>Java(2)</a>  <a href='/blog/categories/javascript' style='font-size: 140.0%'>Javascript(3)</a>  <a href='/blog/categories/maven' style='font-size: 113.33333333333333%'>Maven(1)</a>  <a href='/blog/categories/mootools' style='font-size: 113.33333333333333%'>Mootools(1)</a>  <a href='/blog/categories/music' style='font-size: 113.33333333333333%'>Music(1)</a>  <a href='/blog/categories/octopress' style='font-size: 113.33333333333333%'>Octopress(1)</a>  <a href='/blog/categories/project' style='font-size: 113.33333333333333%'>Project(1)</a>  <a href='/blog/categories/sony' style='font-size: 113.33333333333333%'>Sony(1)</a>  <a href='/blog/categories/sr45h' style='font-size: 113.33333333333333%'>Sr45h(1)</a>  <a href='/blog/categories/封装' style='font-size: 113.33333333333333%'>封装(1)</a>  <a href='/blog/categories/拆机' style='font-size: 113.33333333333333%'>拆机(1)</a>  <a href='/blog/categories/环境搭建' style='font-size: 126.66666666666667%'>环境搭建(2)</a>  <a href='/blog/categories/算法' style='font-size: 113.33333333333333%'>算法(1)</a> </span>
+</section>
+
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/feeloc">@feeloc</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'feeloc',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+<section>
+  <h1></h1>
+  <p>
+    <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=300&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=0&uid=1721691142&verifier=813d76ea&dpc=1"></iframe>
+  </p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - feeloc -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'feeloc';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://feeloc.github.io/blog/2013/05/21/circle-path/';
+        var disqus_url = 'http://feeloc.github.io/blog/2013/05/21/circle-path/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
