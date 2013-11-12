@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Slide Example 3</title>
+    <script src="source/moo.js"></script>
+    <script src="source/switchable.js"></script>
+	<link rel="stylesheet" href="reset.css" type="text/css" /> 
+</head>
+<body>
+    <div>
+        <p>
+            <h1>Slide Example 3:</h1>
+        </p>
+    </div>
+    <style>
+#Slide3 { position: relative; width: 680px; height: 290px; overflow: hidden; border:1px solid #000000;}
+#Slide3 .switchable-triggerBox { position: absolute; top: 1px; right: 1px; z-index: 99;width:138px; }
+#Slide3 .switchable-triggerBox li {
+        float: left;
+        width: 134px;
+        height: 52px;
+        line-height: 32px;
+        margin-bottom: 1px;
+        background-color: #000000;
+        color: #ffffff;
+        text-align: center;
+        cursor: pointer;
+		border:2px solid #cccccc
+
+    }
+#Slide3 .switchable-triggerBox li.last{
+		margin:0; 
+		height:56px;
+	} 
+#Slide3 .switchable-triggerBox li.active {
+        color: #FFF;
+        background-color: #505050;
+        font-weight: bold;
+		border-color:#f60;
+
+    }
+#Slide3 .switchable-content li { height: 290px; width: 680px; overflow: hidden; }
+    /* for countdown plugin */
+#Slide3 .switchable-triggerBox li,
+#Slide3 .content {
+        position: relative;
+    }
+#Slide3 .mask {
+        position: absolute;
+        right: 0;
+        width: 18px;
+        height: 18px;
+        background-color: #FF9415;
+        visibility: hidden
+    }
+#Slide3 .active .mask {
+        visibility: visible
+    }
+</style>
+
+<div id="Slide3" class="Auto_Widget" data-widget-type="Switchable" data-widget-config ="{autoplay:true,effect:'scrolly',duration:1000,interval:4000,activeClass:'active',circular:false,eventType:'mouse',lazyDataType:'img'}">
+    <ul class="switchable-content">
+        <li class=""><img alt="" src="assets/01.jpg"/></li>
+        <li class="hidden "><img alt="" src="assets/02.jpg"/></li>
+        <li class="hidden "><img alt="" src="assets/03.jpg"/></li>
+        <li class="hidden "><img alt="" img-lazyload="assets/04.jpg" src="assets/loading.gif"/></li>
+		<li class="hidden "><img alt="" img-lazyload="assets/05.jpg" src="assets/loading.gif"/></li>
+       
+    </ul>
+	<ul class="switchable-triggerBox">
+		<li class="active"><img alt="" src="assets/01.jpg" width="134" height="52" /></li>
+		<li class=""><img alt="" src="assets/02.jpg" width="134" height="52" /></li>
+		<li class=""><img alt="" src="assets/03.jpg" width="134" height="52" /></li>
+		<li class=""><img alt="" src="assets/04.jpg" width="134" height="52" /></li>
+		<li class="last"><img alt="" src="assets/05.jpg" width="134" height="56" /></li>
+	</ul>
+</div>
+<div class="code" style="margin-top:20px;">
+    <h2>Dom code:</h2>
+    <pre>
+&lt;div id="Slide3" class="Auto_Widget" data-widget-type="Switchable" data-widget-config ="{autoplay:true,effect:'scrolly',
+		duration:1000,interval:4000,activeClass:'active',circular:false,eventType:'mouse',lazyDataType:'img'}"&gt;
+    &lt;ul class="switchable-content"&gt;
+        &lt;li class=""&gt;&lt;img alt="" src="assets/01.jpg"/&gt;&lt;/li&gt;
+        &lt;li class="hidden "&gt;&lt;img alt="" src="assets/02.jpg"/&gt;&lt;/li&gt;
+        &lt;li class="hidden "&gt;&lt;img alt="" src="assets/03.jpg"/&gt;&lt;/li&gt;
+        &lt;li class="hidden "&gt;&lt;img alt="" img-lazyload="assets/04.jpg" src="assets/loading.gif"/&gt;&lt;/li&gt;
+		&lt;li class="hidden "&gt;&lt;img alt="" img-lazyload="assets/05.jpg" src="assets/loading.gif"/&gt;&lt;/li&gt;      
+    &lt;/ul&gt;
+	&lt;ul class="switchable-triggerBox"&gt;
+		&lt;li class="active"&gt;&lt;img alt="" src="assets/01.jpg" width="134" height="52" /&gt;&lt;/li&gt;
+		&lt;li class=""&gt;&lt;img alt="" src="assets/02.jpg" width="134" height="52" /&gt;&lt;/li&gt;
+		&lt;li class=""&gt;&lt;img alt="" src="assets/03.jpg" width="134" height="52" /&gt;&lt;/li&gt;
+		&lt;li class=""&gt;&lt;img alt="" src="assets/04.jpg" width="134" height="52" /&gt;&lt;/li&gt;
+		&lt;li class="last"&gt;&lt;img alt="" src="assets/05.jpg" width="134" height="56" /&gt;&lt;/li&gt;
+	&lt;/ul&gt;
+&lt;/div&gt;</pre>
+</div>
+
+
+
+<div class="code" style="margin-top:20px;">
+    <h2>Css code:</h2>
+<pre>
+#Slide3 { position: relative; width: 680px; height: 290px; overflow: hidden; border:1px solid #000000;}
+#Slide3 .switchable-triggerBox { position: absolute; top: 1px; right: 1px; z-index: 99;width:138px; }
+#Slide3 .switchable-triggerBox li {
+        float: left;
+        width: 134px;
+        height: 52px;
+        line-height: 32px;
+        margin-bottom: 1px;
+        background-color: #000000;
+        color: #ffffff;
+        text-align: center;
+        cursor: pointer;
+		border:2px solid #cccccc
+
+    }
+#Slide3 .switchable-triggerBox li.last{
+		margin:0; 
+		height:56px;
+	} 
+#Slide3 .switchable-triggerBox li.active {
+        color: #FFF;
+        background-color: #505050;
+        font-weight: bold;
+		border-color:#f60;
+
+    }
+#Slide3 .switchable-content li { height: 290px; width: 680px; overflow: hidden; }
+    /* for countdown plugin */
+#Slide3 .switchable-triggerBox li,
+#Slide3 .content {
+        position: relative;
+    }
+#Slide3 .mask {
+        position: absolute;
+        right: 0;
+        width: 18px;
+        height: 18px;
+        background-color: #FF9415;
+        visibility: hidden
+    }
+#Slide3 .active .mask {
+        visibility: visible
+    }
+</pre>
+</div>
+</body>
+</html>

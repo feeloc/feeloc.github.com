@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Slide Example 1</title>
+    <script src="source/moo.js"></script>
+    <script src="source/switchable.js"></script>
+	<link rel="stylesheet" href="reset.css" type="text/css" /> 
+</head>
+<body>
+    <div>
+        <p>
+            <h1>Slide Example 1:</h1>
+        </p>
+    </div>
+    <style>
+#Slide1 { position: relative; width: 540px; height: 290px; border: 1px solid #6ce26c; overflow: hidden; }
+#Slide1 .switchable-triggerBox { position: absolute; bottom: 5px; right: 5px; z-index: 99; }
+#Slide1 .switchable-triggerBox li {
+        float: left;
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        margin-left: 3px;
+        background-color: #cffcd4;
+        border: 1px solid #6ce26c;
+        color: #00e31b;
+        text-align: center;
+        cursor: pointer;
+    }
+#Slide1 .switchable-triggerBox li.active {
+        color: #FFF;
+        background-color: #96e496;
+        font-weight: bold;
+    }
+#Slide1 .switchable-content li { height: 290px; width: 540px; overflow: hidden; }
+    /* for countdown plugin */
+#Slide1 .switchable-triggerBox li,
+#Slide1 .content {
+        position: relative;
+    }
+#Slide1 .mask {
+        position: absolute;
+        right: 0;
+        width: 18px;
+        height: 18px;
+        background-color: #FF9415;
+        visibility: hidden
+    }
+#Slide1 .active .mask {
+        visibility: visible
+    }
+</style>
+
+<div id="Slide1" class="Auto_Widget" data-widget-type="Switchable" data-widget-config ="{autoplay:true,effect:'scrollx',duration:1000,interval:4000,activeClass:'active',circular:false,eventType:'click'}">
+    <ol class="switchable-content">
+        <li><img alt="" src="assets/01.jpg"/></li>
+        <li><img alt="" src="assets/02.jpg"/></li>
+        <li><img alt="" src="assets/03.jpg"/></li>
+        <li><img alt="" src="assets/04.jpg"/></li>
+		<li><img alt="" src="assets/05.jpg"/></li>
+       
+    </ol>
+	<ul class="switchable-triggerBox">
+		<li class="active">1</li>
+		<li class="">2</li>
+		<li class="">3</li>
+		<li class="">4</li>
+		<li class="">5</li>
+	</ul>
+</div>
+<div class="code" style="margin-top:20px;">
+    <h2>Dom code:</h2>
+    <pre>
+&lt;div id="Slide1" class="Auto_Widget"  data-widget-type="Switchable" data-widget-config="{autoplay:true,effect:'scrollx',duration:1000,<br />interval:4000,activeClass:'active',circular:false,eventType:'click'}"&gt; 
+	&lt;ol class="switchable-content"&gt;
+		&lt;li&gt;&lt;img alt="" src="assets/01.jpg"/&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;img alt="" src="assets/02.jpg"/&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;img alt="" src="assets/03.jpg"/&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;img alt="" src="assets/04.jpg"/&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;img alt="" src="assets/05.jpg"/&gt;&lt;/li&gt;   
+	&lt;/ol&gt;
+	&lt;ul class="switchable-triggerBox"&gt;
+			&lt;li class="active"&gt;1&lt;/li&gt;
+			&lt;li class=""&gt;2&lt;/li&gt;
+			&lt;li class=""&gt;3&lt;/li&gt;
+			&lt;li class=""&gt;4&lt;/li&gt;
+			&lt;li class=""&gt;5&lt;/li&gt;
+	&lt;/ul&gt;
+&lt;/div&gt;</pre>
+</div>
+
+
+
+<div class="code" style="margin-top:20px;">
+    <h2>Css code:</h2>
+<pre>
+#Slide1 { position: relative; width: 540px; height: 290px; border: 1px solid #6ce26c; overflow: hidden; }
+#Slide1 .switchable-triggerBox { position: absolute; bottom: 5px; right: 5px; z-index: 99; }
+#Slide1 .switchable-triggerBox li {
+        float: left;
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        margin-left: 3px;
+        background-color: #cffcd4;
+        border: 1px solid #6ce26c;
+        color: #00e31b;
+        text-align: center;
+        cursor: pointer;
+    }
+#Slide1 .switchable-triggerBox li.active {
+        color: #FFF;
+        background-color: #96e496;
+        font-weight: bold;
+    }
+#Slide1 .switchable-content li { height: 290px; width: 540px; overflow: hidden; }
+    /* for countdown plugin */
+#Slide1 .switchable-triggerBox li,
+#Slide1 .content {
+        position: relative;
+    }
+#Slide1 .mask {
+        position: absolute;
+        right: 0;
+        width: 18px;
+        height: 18px;
+        background-color: #FF9415;
+        visibility: hidden
+    }
+#Slide1 .active .mask {
+        visibility: visible
+    }
+</pre>
+</div>
+</body>
+</html>

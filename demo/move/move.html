@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>运动</title>
+    <style type="text/css">
+        body{
+            background: #d8e5f1;
+        }
+        .select-content{
+            position: relative;
+            margin: 40px 0 0 90px;
+            width: 300px;
+            height: 300px;
+        }
+        .select-content .select-dot{
+            position: absolute;
+            width: 87px;
+            height: 87px;
+            left: 90px;
+            top: 90px;
+            border-radius: 45px;
+            background: #c1babb;
+            overflow: hidden;
+            z-index: 9;
+        }
+        .select-content .select-box{
+            position: absolute;
+            width: 87px;
+            height: 87px;
+            border-radius: 45px;
+            overflow: hidden;
+            background: #c1babb;
+            cursor: pointer;
+        }
+        .select-content .select-box em{
+            display: none;
+            width: 87px;
+            height: 62px;
+            border-radius: 45px;
+            overflow: hidden;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: url(/bd/minisite/founder2013/images/circle-cover.png) no-repeat;
+            opacity: 0.6;
+            filter: alpha(opacity=60);
+            color: #FFF;
+            font: 16px/20px 'Microsoft YaHei';
+            text-align: center;
+            vertical-align: middle;
+            padding-top: 25px;
+            cursor: pointer;
+        }
+    </style>
+    <script type="text/javascript" src="http://upcdn.b0.upaiyun.com/libs/jquery/jquery-2.0.0.min.js"></script>
+    <script type="text/javascript" src="https://gist.github.com/feeloc/5619202/raw/e88f90609fd464392f5d48bbd4054a0bd67258b8/jquery.path.min.js"></script>
+    <script type="text/javascript">
+    $(function(){
+        //中心点横坐标
+        var dotLeft = ($('.select-content').width() - $('.select-dot').width()) / 2;
+        //中心点纵坐标
+        var dotTop = ($('.select-content').height() - $('.select-dot').height()) / 2;
+        //半径
+        var radius = 105;
+        //每一个BOX对应的角度;
+        var avd = 360 / $('.select-box').length;
+        //每一个BOX对应的弧度;
+        var ahd = avd * Math.PI / 180;
+        //设置圆的中心点的位置
+        $(".select-dot").css({'left': dotLeft, 'top': dotTop});
+        $(".select-box").each(function (index, element) {
+            $(this).css({"left": Math.sin((36 * Math.PI / 180 + ahd * index)) * radius + dotLeft, "top": Math.cos((36 * Math.PI / 180 + ahd * index)) * radius + dotTop});
+            $(this).attr('index', index);
+        });
+
+        $('.select-box').click(function () {
+            var $root = $(this);
+            var iCurrent = parseInt($root.attr('index'));
+            var iBig = $('.select-box').index($root);
+            var time = 600;
+            $('.select-box').each(function (index, element) {
+                var path;
+                var oldIndex = parseInt($(this).attr('index'));
+                if (iCurrent == 2) {
+                    time = 100;
+                } else {
+                    time = 600;
+                }
+                $(this).attr('index', oldIndex + (2 - iCurrent));
+                path = new $.path.arc({
+                    center: [dotLeft, dotTop],
+                    radius: radius,
+                    start: 36 + oldIndex * avd,
+                    end: 36 + (oldIndex + (2 - iCurrent)) * avd,
+                    dir: 1
+                });
+                $(this).stop().animate({path: path}, 500);
+            });
+        });
+    });
+    </script>
+</head>
+
+<body>
+<div class="select-content">
+    <div class="select-dot" aid="1">
+        <img width="87px" src="http://fs3u.dajie.com/2013/05/17/062/13687760621993564m.jpg"/>
+    </div>
+    <div class="select-box" aid="2">
+        <img width="87px" src="http://fs3u.dajie.com/2013/05/17/083/13687760837271499m.jpg"/>
+        <em>北大国际医院集团</em>
+    </div>
+    <div class="select-box" aid="3">
+        <img width="87px" src="http://fs3u.dajie.com/2013/05/17/062/13687760621993564m.jpg"/>
+        <em>北大国际医院集团</em>
+    </div>
+    <div class="select-box" aid="4">
+        <img width="87px" src="http://fs3u.dajie.com/2013/05/17/196/13687759967586548m.jpg"/>
+        <em>北大国际医院集团</em>
+    </div>
+    <div class="select-box" aid="5">
+        <img width="87px" src="http://fs3u.dajie.com/2013/05/17/122/13687761226173546m.jpg"/>
+        <em>北大国际医院集团</em>
+    </div>
+    <div class="select-box" aid="6">
+        <img width="87px" src="http://fs3u.dajie.com/2013/05/17/105/13687761052241216m.jpg"/>
+        <em>北大国际医院集团</em>
+    </div>
+</div>
+</body>
+</html>

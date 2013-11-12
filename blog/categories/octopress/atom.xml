@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[["Octopress", "javascript", "Android", "GitHub", "Helloworld", "jamendo", "music", "mootools", "java", "maven", "project", "chrome", "随笔", "面试", "环境搭建", "封装", "算法"]octopress | feeloc's 杂货铺]]></title>
+  <link href="http://feeloc.github.io/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://feeloc.github.io/"/>
+  <updated>2013-11-12T18:59:58+08:00</updated>
+  <id>http://feeloc.github.io/</id>
+  <author>
+    <name><![CDATA[feeloc]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[超简单windows下octopress环境搭建]]></title>
+    <link href="http://feeloc.github.io/blog/2013/01/11/octopress/"/>
+    <updated>2013-01-11T23:29:00+08:00</updated>
+    <id>http://feeloc.github.io/blog/2013/01/11/octopress</id>
+    <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/2012-09-21/1.png"></p>
+
+<blockquote><p>octopress博客无论是markdown的写作方式，还是简洁的界面我都非常喜欢，但windows下搭建ruby环境真的是一个很蛋疼的问题，
+特别是在64位环境下，一度想改成<a href="https://github.com/tommy351/hexo" title="hexo github">hexo</a>去写博客，最近发现windows
+下有更简单的ruby环境搭建方法，在此分享给大家，简化windows下的octopress环境搭建。</p></blockquote>
+
+<!-- more -->
+
+
+<h2>一、准备工作</h2>
+
+<ul>
+<li>下载及安装<a href="http://railsinstaller.org/" title="下载railinstaller">railsinstaller</a>，基本一路next。<code>最好安装railsinstaller全部模块，以免发生不可预料错误</code></li>
+<li>配置git环境，连接上github，在些就不重复说明了，详见<a href="http://www.feeloc.cn/blog/2012/07/30/my-first-blog/" title="开始使用Octopress写博客">开始使用Octopress写博客</a></li>
+<li>配置环境变量，<code>LANG</code>和<code>LC_ALL</code>，值均为<code>zh_CN.UTF-8</code>
+
+<h2>二、安装octopress</h2></li>
+<li>安装octopress
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>1. 克隆 Octopress&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>$ cd d:
+</span><span class='line'>$ git clone git://github.com/imathis/octopress.git sinosmond.github.com myblog
+</span><span class='line'>$ cd myblog
+</span><span class='line'>
+</span><span class='line'>&lt;h1>2. 修改 Octopress 的 GEM 源&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>$ vi Gemfile 或 notepad Gemfile
+</span><span class='line'>将行 ： source "http://rubygems.org/"
+</span><span class='line'>改为 ： source "http://ruby.taobao.org/"
+</span><span class='line'>
+</span><span class='line'>&lt;h1>3. 安装 Octopress 所需的GEM组件&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>$ bundle install
+</span><span class='line'>
+</span><span class='line'>&lt;h1>4. 生成Octopress 的模版文件&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;p>bundle update    #防止出现rake aborted!最好每次修改完Gemfile都更新下
+</span><span class='line'>rake install</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+<li>下面就可以快乐得进行octopress写博客了</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[开始使用Octopress写博客]]></title>
+    <link href="http://feeloc.github.io/blog/2012/07/30/my-first-blog/"/>
+    <updated>2012-07-30T13:10:00+08:00</updated>
+    <id>http://feeloc.github.io/blog/2012/07/30/my-first-blog</id>
+    <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/1.jpg"></p>
+
+<blockquote><p>多么渴求知识的喵星人啊，最近看了Octopress配合GitHub搭建个人博客的文章，觉得正是我想要的那种非常简约的博客风格，不仅是样式简约大气，
+写作方式也非常舒服，markdown方式让人写技术文章也能像码字写小说一样舒服。</p></blockquote>
+
+<!-- more -->
+
+
+<p>下面记录下我配置博客的全部过程</p>
+
+<h2>一、环境搭建</h2>
+
+<ul>
+<li>python环境
+
+<ul>
+<li>Octopress 使用 Python 编写的代码加亮系统<code>pygments</code>，需要安装 <a href="http://www.python.org/getit/" title="下载python相应版本">python</a></li>
+</ul>
+</li>
+<li>ruby环境
+
+<ul>
+<li>Octopress 是 ruby 应用程序，需要安装 <a href="http://rubyforge.org/frs/download.php/75127/rubyinstaller-1.9.2-p290.exe" title="下载ruby相应版本">ruby 1.9.2</a></li>
+<li>安装后设置ruby的bin目录在环境变量path中</li>
+<li>设置gem更新源
+
+<ul>
+<li><code>gem sources --remove http://rubygems.org/</code></li>
+<li><code>gem sources -a http://ruby.taobao.org/</code></li>
+<li><code>gem sources -l # 请确保只有 http://ruby.taobao.org 一行输出</code></li>
+</ul>
+</li>
+<li>安装rdoc和bundler
+
+<ul>
+<li><code>gem install rdoc bundler</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ruby 的模块工具 gem 在生成本地模块时需要用到编译环境
+
+<ul>
+<li>下载 <a href="https://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe" title="下载编译环境">DevKit</a></li>
+<li>安装DevKit
+
+<ul>
+<li>将 DevKit 自解压包释放到 <code>D:\DevKit</code></li>
+<li>在 cmd 窗口中执行 <code>ruby dk.rb init</code></li>
+<li>在 cmd 窗口中执行 <code>ruby dk.rb install</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>二、设置环境变量</h2>
+
+<ul>
+<li>在 Windows 的 “高级系统设置” 中设置两个环境变量
+
+<ul>
+<li>设置 <code>LANG</code> 和 <code>LC_ALL</code> 两个环境变量，其值均设置为 <code>zh_CN.UTF-8</code></li>
+<li>在 CMD 窗口中测试： <code>echo %LANG% %LC_ALL%</code></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>三、安装 Octopress</h2>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>1. 克隆 Octopress&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;p>$ cd d:
+</span><span class='line'>$ git clone git://github.com/imathis/octopress.git sinosmond.github.com myblog
+</span><span class='line'>$ cd myblog&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>2. 修改 Octopress 的 GEM 源&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;p>$ vi Gemfile 或 notepad Gemfile
+</span><span class='line'>将行 ： source "http://rubygems.org/"
+</span><span class='line'>改为 ： source "http://ruby.taobao.org/"&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>3. 安装 Octopress 所需的GEM组件&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;p>$ bundle install&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>4. 生成Octopress 的模版文件&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;p>bundle update    #防止出现rake aborted!最好每次修改完Gemfile都更新下
+</span><span class='line'>rake install</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>四、安装Git，并用git管理github</h2>
+
+<ul>
+<li>创建 github 账号和仓库
+
+<ul>
+<li>下面的操作假定您注册了 <code>&lt;USERNAME&gt;</code> 的账号</li>
+<li>下面的操作假定您创建了 <code>&lt;USERNAME&gt;.github.com</code> 的仓库   <em>注意：一定是<code>&lt;USERNAME&gt;.github.com</code></em>的仓库，这样才能在master分支</li>
+</ul>
+</li>
+<li>安装git
+
+<ul>
+<li>安装git的过程很简单，下面三个图显示了需要注意的地方
+<img src="http://feeloc.cn/downloads/images/2012-07-30/1.png" width="500" title="'选Simple context menu (Registry based)'" >
+<img src="http://feeloc.cn/downloads/images/2012-07-30/2.png" width="500" title="'选择第二项'" >
+<img src="http://feeloc.cn/downloads/images/2012-07-30/3.png" width="500" title="'选择第三项'" ></li>
+</ul>
+</li>
+<li>导入SSH KEY进github
+
+<ul>
+<li>输入github的用户名，邮箱，生成key
+<img src="http://feeloc.cn/downloads/images/2012-07-30/4.png" width="500" title="'生成KEY'" ></li>
+<li>将生成的key导入到github的SSH KEYS
+<img src="http://feeloc.cn/downloads/images/2012-07-30/5.png" width="500" title="'导入KEY'" ></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>五、配置和使用 Octopress</h2>
+
+<ul>
+<li>编辑<code>_config.yml</code>文件，保存为UTF-8格式
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>url:                # For rewriting urls for RSS, etc
+</span><span class='line'>title:              # Used in the header and title tags
+</span><span class='line'>subtitle:           # A description used in the header
+</span><span class='line'>author:             # Your name, for RSS, Copyright, Metadata
+</span><span class='line'>simple_search:      # Search engine for simple site search
+</span><span class='line'>description:        # A default meta description for your site
+</span><span class='line'>subscribe_rss:      # Url for your blog's feed, defauts to /atom.xml
+</span><span class='line'>subscribe_email:    # Url to subscribe by email (service required)
+</span><span class='line'>email:              # Email address for the RSS feed if you want it.</span></code></pre></td></tr></table></div></figure></notextile></div></li>
+<li>生成新的markdown页面
+
+<ul>
+<li><code>rake new_post["article name"]</code>  #生成指定的 Blog页面</li>
+<li><code>rake new_page["page name"]</code>    #生成指定的静态页面</li>
+</ul>
+</li>
+<li>编辑博客内容
+
+<ul>
+<li>根据markdown语法，自由编辑页面吧</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>六、首次提交到Github</h2>
+
+<ul>
+<li><code>rake setup_github_pages</code>   #输入仓库的SSH地址，即git@github.com:<code>&lt;USERNAME&gt;</code>/<code>&lt;USERNAME&gt;</code>.github.com.git</li>
+<li><code>rake generate</code> #生成静态文件</li>
+<li><code>rake preview</code>  #本地4000商品预览</li>
+<li><code>rake deploy</code>   #发布到github</li>
+</ul>
+
+
+<blockquote><p>如果没出错，现在访问<code>&lt;USERNAME&gt;</code>.github.com，应该可以看到你的博客了，尽情积累自己的一切吧！！</p></blockquote>
+]]></content>
+  </entry>
+  
+</feed>

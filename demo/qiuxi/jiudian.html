@@ -1,0 +1,519 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>酒店模板</title>
+		<meta name="author" content="feeloc" />
+		<style>
+			tr{height: 25px;}
+			input[type="text"]{width:600px;}
+			ul{list-style: none;}
+			li{list-style: none;padding: 5px 0;}
+			li span{cursor: default;}
+			li span.no,li span.yesno{margin-left: 15px;}
+		</style>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			$(function(){
+				var city = { "整图城市": "包头、长春、佛山、贵阳、海口、邯郸、济宁、嘉兴、金华、昆明、昆山、兰州、南昌、南宁、南通、绍兴、太原、温州、芜湖、徐州、烟台、扬州、中山、淄博，深圳、常州、焦作", 
+							 "s" : "北京、上海",
+							 "a" : "南京、杭州、武汉、重庆、成都、西安、天津、深圳、广州",
+							 "b" : "无锡、常州、苏州、宁波、哈尔滨、沈阳、大连、济南、青岛、郑州、石家庄、长沙、合肥、东莞、厦门、福州、济宁、吉林"};
+				$('#price,#cool,#scheme,#shopName,#mPrice,#yPrice,#liangdian1,#liangdian2').change(function(){
+					var title1 = '';
+					var cool = '';
+					if ($('#cool').find('option:selected').text()=='空白') {
+						cool = '';
+					}else{
+						cool = $('#cool').find('option:selected').text();
+					}
+					if ($('#tongyong').attr("checked")==true||$('#tongyong').attr("checked")=='checked'||$('#tongyong').attr("checked")=='true') {
+						title1 = '仅售'+$('#mPrice').val()+'元！'+$('#price').find('option:selected').text()+$('#yPrice').val()+'元的'+$('#shopName').val()+
+									$('#scheme').val()+'，x店/x店通用，'+$('#liangdian1').val()+$('#liangdian2').val()+cool+'。';
+					}else{
+						title1 = '仅售'+$('#mPrice').val()+'元！'+$('#price').find('option:selected').text()+$('#yPrice').val()+'元的'+$('#shopName').val()+
+									$('#scheme').val()+'，'+$('#liangdian1').val()+$('#liangdian2').val()+cool+'。';
+					}
+					var title2 = $('#scheme').val()+'，'+cool;
+					var content = '在美团网仅需'+$('#mPrice').val()+'元即可享受'+$('#price').find('option:selected').text()+$('#yPrice').val()+'元的'+$('#shopName').val()+$('#scheme').val()+'。';
+					var title3 = $('#street').val()+$('#shopName').val()+$('#scheme').val();
+					$('#title1').val(title1);
+					$('#title2').val(title2);
+					$('#title3').val(title3);
+					$('#main').val(content);
+				});
+				function change(){
+					if(city.s.indexOf($('#city').val())>=0){
+						$('#designer').val($('#date').val()+'-'+$('#city').val()+'-'+$('#shopName').val()+$('#scheme').val()+'-陈秋西-S（2点）');
+						$('#link').val($('#date').val()+'-'+$('#city').val()+'-'+$('#shopName').val()+$('#scheme').val()+'--陈秋西'+'-'+$('#url').val()+'-S（2点）');
+					}else if(city.a.indexOf($('#city').val())>=0){
+						$('#designer').val($('#date').val()+'-'+$('#city').val()+'-'+$('#shopName').val()+$('#scheme').val()+'-陈秋西-A（2点）');
+						$('#link').val($('#date').val()+'-'+$('#city').val()+'-'+$('#shopName').val()+$('#scheme').val()+'--陈秋西'+'-'+$('#url').val()+'-A（2点）');
+					}else if(city.b.indexOf($('#city').val())>=0){
+						$('#designer').val($('#date').val()+'-'+$('#city').val()+'-'+$('#shopName').val()+$('#scheme').val()+'-陈秋西-S（5点）');
+						$('#link').val($('#date').val()+'-'+$('#city').val()+'-'+$('#shopName').val()+$('#scheme').val()+'--陈秋西'+'-'+$('#url').val()+'-S（5点）');
+					}else{
+						$('#designer').val($('#date').val()+'-'+$('#city').val()+'-'+$('#shopName').val()+$('#scheme').val()+'-陈秋西');
+						$('#link').val($('#date').val()+'-'+$('#city').val()+'-'+$('#shopName').val()+$('#scheme').val()+'--陈秋西'+'-'+$('#url').val());
+					}
+					$('#txtname').val($('#date').val()+$('#city').val()+' '+$('#shopName').val()+$('#scheme').val()+' 陈秋西 '+$('#des').find('option:selected').text());
+				}
+				$('#city').change(function(){
+					if(city.整图城市.indexOf($(this).val())>=0){
+						$('.caika:last').trigger('click');
+					}
+					change();
+				});
+				$('#date,#shopName,#scheme,#des').change(function(){
+					change();
+				});
+				function genxin(){
+					var xiangmu = '';
+					var caidan = '';
+					var xiangqingtu = '';
+					$('.xiangmu').each(function(index,value){
+						if(index==0){
+							xiangmu += $(this).val();
+							caidan += $(this).val();
+							if($(this).parent().find('.ifimg').attr('checked')=='checked'){
+								xiangqingtu += $(this).val();
+							}
+						}else{
+							xiangmu += '+'+$(this).val();
+							caidan += ' '+$(this).val();
+							if($(this).parent().find('.ifimg').attr('checked')=='checked'){
+								xiangqingtu += ' '+$(this).val();
+							}
+						}
+					});
+					if (xiangmu[xiangmu.length]=='+') {};
+					var out = '首字：'+$('#shopName').val()+'\r\n'+'升级：'+$('#liangdian1').val()+'\r\n'+'赠送：'+$('#liangdian2').val()+'\r\n'+
+								'logo：'+$('.logo:checked').val()+'\r\n'+'角标：'+$('.jiaobiao:checked').val()+'\r\n'+'彩卡：'+$('.caika:checked').val()+'\r\n'+
+								'详情：'+$('.ifimg:checked').length+'张项目图'+'+'+$('#huanjintu').val()+'张环境图'+'\r\n'+'水印：'+$('.shuiying:checked').val()+'\r\n'+
+								'首图特殊要求：'+$('#shoutu').val()+'\r\n'+'方案：'+$('#scheme').val()+'\r\n'+
+								xiangmu;
+					
+					$('#textdoc').val(out);
+					$('#caidan').val(caidan);
+					$('#xiangqingtu').val(xiangqingtu);
+				};
+				$('.caika,.logo,.shuiying,#shoutu,.jiaobiao').change(function(){
+					genxin();
+				});
+				function tubiao(){
+					var html = '';
+					var yesyes = 0;
+					var yesno = 0;
+					var no = 0;
+					html += '<table width="100%" border="0">\r\n';
+					$('li input').each(function(index,value){
+						if(index==0||index==13||index==27){
+							html += '<tr>\r\n';
+						}
+						if($(value).attr('checked')=='checked'){
+							html += '<td><sup title="'+$(value).val().split('|')[1]+'"><img src="'+$(value).val().split('|')[0]+'" /></sup></td>\r\n';
+							if($(value).parent().attr('class').indexOf('yesyes')>=0){
+								yesyes++;
+							}
+							if($(value).parent().attr('class').indexOf('yesno')>=0){
+								yesno++;
+							}
+							if($(value).parent().attr('class').indexOf('no')>=0){
+								no++;
+							}
+						}
+						console.log(index);
+						if(index==12||index==26||index==39){
+							html += '</tr>\r\n';
+						}
+					});
+					html += '</table>\r\n<p align="right">\r\n';
+					if(yesyes!=0){
+						html += '<span style="padding:3px 6px;color:#fff;background-color:#1a75bb;-webkit-border-radius:3px;-moz-border-radius:3px;"><b> 提供服务 </b></span>\r\n'
+					}
+					html += ' &nbsp;<span style="padding:3px 6px;color:#fff;background-color:#37adb1;-webkit-border-radius:3px;-moz-border-radius:3px;"><b> 免费服务 </b></span>\r\n'
+					if(yesno!=0){
+						html += ' &nbsp;<span style="padding:3px 6px;color:#fff;background-color:#bf1e2e;-webkit-border-radius:3px;-moz-border-radius:3px;"><b> 收费服务 </b></span>\r\n'
+					}
+					if(no!=0){
+						html += ' &nbsp;<span style="padding:3px 6px;color:#fff;background-color:#999999;-webkit-border-radius:3px;-moz-border-radius:3px;"><b> 无此服务 </b></span>\r\n'
+					}
+					html += '</p>';
+					$('.tubiaoqiang').val(html);
+				}
+				$('.yes,.no,.yesno').click(function(){
+					$(this).find('input').attr('checked','checked');
+					tubiao();
+				});
+				$('.yes input,.no input,.yesno input').click(function(){
+					tubiao();
+				});
+				$('.tubiaoqiang,#textdoc').mouseover(function(){
+					$(this).select();;
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<form>
+		<table width="700px">
+			<title>美发套餐模板</title>
+			<thead>
+				<tr>
+					<td width="100px">标签</td>
+					<td>内容</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>URL</td>
+					<td><input type="text" id="url" /></td>
+				</tr>
+				<tr>
+					<td>设计师</td>
+					<td>
+						<select id="des">
+							<option>王金燕</option>
+							<option>周宇楠</option>
+							<option>韩瑞虹</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>城市</td>
+					<td><input type="text" id="city" /></td>
+				</tr>
+				<tr>
+					<td>商家名</td>
+					<td><input type="text" id="shopName" /></td>
+				</tr>
+				<tr>
+					<td>价值</td>
+					<td><input type="text" id="yPrice" /></td>
+				</tr>
+				<tr>
+					<td>美团价</td>
+					<td><input type="text" id="mPrice" /></td>
+				</tr>
+				<tr>
+					<td>日期</td>
+					<td><input type="text" id="date" /></td>
+				</tr>
+				<tr>
+					<td>街道名</td>
+					<td><input type="text" id="street" /></td>
+				</tr>
+				<tr>
+					<td>价值</td>
+					<td>
+						<select id="price">
+							<option>价值</option>
+							<option>最高价值</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>两店</td>
+					<td>
+						<input type="checkbox" id="tongyong">是否两店通用
+					</td>
+				</tr>
+				<tr>
+					<td>方案名</td>
+					<td>
+						<input type="text" id="scheme" />
+					</td>
+				</tr>
+				<tr>
+					<td>亮点</td>
+					<td>
+						<select id="cool">
+							<option>美团券可叠加使用，节假日通用</option>
+							<option>美团券可叠加使用</option>
+							<option>节假日通用</option>
+							<option>空白</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>图标墙</td>
+					<td>
+						<ul>
+							<li>
+								<span class="yes">
+									<input type="radio" name="danrenchuang" class="danrenchuang" value="http://p1.meituan.net/deal/201112/30/01_1230174127.jpg|单人床" /> 提供单价床
+								</span>
+								<span class="no">
+									<input type="radio" name="danrenchuang" class="danrenchuang" value="http://p0.meituan.net/deal/201112/30/02_1230174132.jpg|单人床" /> 不提供单人床
+								</span>
+							</li>
+							<li>
+								<span class="yes">
+									<input type="radio" name="shuangrenchuang" class="shuangrenchuang" value="http://p0.meituan.net/deal/201112/30/01_1230174137.jpg|双人床" /> 提供 双 人床
+								</span>
+								<span class="no">
+									<input type="radio" name="shuangrenchuang" class="shuangrenchuang" value="http://p0.meituan.net/deal/201112/30/02_1230174131.jpg|双人床" /> 不提供双人床
+								</span>
+							</li>
+							<li>
+								<span class="yes yesyes">
+									<input type="radio" name="kongtiao" class="kongtiao" value="http://p0.meituan.net/deal/201206/25/1_0625191202.jpg|空调" /> 提供空调
+								</span>
+								<span class="no">
+									<input type="radio" name="kongtiao" class="kongtiao" value="http://p0.meituan.net/deal/201112/30/02_1230174142.jpg|空调" /> 不提供空调
+								</span>
+							</li>
+							<li>
+								<span class="yes">
+									<input type="radio" name="tv" class="tv" value="http://p1.meituan.net/deal/201112/30/01_1230174153.jpg|电视机" /> 提供电视机
+								</span>
+								<span class="no">
+									<input type="radio" name="tv" class="tv" value="http://p0.meituan.net/deal/201201/11/02_0111134343.jpg|电视机" /> 不提供电视机
+								</span>
+							</li>
+							<li>
+								<span class="yes yesyes">
+									<input type="radio" name="phone" class="phone" value="http://p0.meituan.net/deal/201206/25/2_0625191202.jpg|电话" /> 提供电话
+								</span>
+								<span class="no">
+									<input type="radio" name="phone" class="phone" value="http://p0.meituan.net/deal/201112/30/02_1230174146.jpg|电话" /> 不提供电话
+								</span>
+							</li>
+							<li>
+								<span class="yes">
+									<input type="radio" name="zao" class="zao" value="http://p0.meituan.net/deal/201112/30/01_1230174128.jpg|早餐" /> 提供早餐（免费）
+								</span>
+								<span class="yesno">
+									<input type="radio" name="zao" class="zao" value="http://p0.meituan.net/deal/201112/30/03_1230174202.jpg|早餐" /> 提供早餐（需付费）
+								</span>
+								<span class="no">
+									<input type="radio" name="zao" class="zao" value="http://p1.meituan.net/deal/201112/30/02_1230174204.jpg|早餐" /> 不提供早餐
+								</span>
+							</li>
+							<li>
+								<span class="yes">
+									<input type="radio" name="water" class="water" value="http://p1.meituan.net/deal/201112/30/01_1230174206.jpg|热水洗浴" /> 提提供热水洗浴（免费）
+								</span>
+								<span class="no">
+									<input type="radio" name="water" class="water" value="http://p1.meituan.net/deal/201112/30/02_1230174127.jpg|热水洗浴" /> 不提供热水洗浴
+								</span>
+							</li>
+							<li>
+								<span class="yes">
+									<input type="radio" name="drink" class="drink" value="http://p1.meituan.net/deal/201112/30/01_1230174148.jpg|饮用热水" /> 提供饮用热水（免费）
+								</span>
+								<span class="no">
+									<input type="radio" name="drink" class="drink" value="http://p0.meituan.net/deal/201112/30/02_1230174144.jpg|饮用热水" /> 不提供饮用热水
+								</span>
+							</li>
+							<li>
+								<span class="yes">
+									<input type="radio" name="xishu" class="xishu" value="http://p0.meituan.net/deal/201112/30/01_1230174144.jpg|洗漱用具" /> 提供洗漱用具（免费）
+								</span>
+								<span class="no">
+									<input type="radio" name="xishu" class="xishu" value="http://p1.meituan.net/deal/201112/30/02_1230174139.jpg|洗漱用具" /> 不提供洗漱用具
+								</span>
+							</li>
+							<li>
+								<span class="yes">
+									<input type="radio" name="tuoxie" class="tuoxie" value="http://p1.meituan.net/deal/201112/30/01_1230174154.jpg|拖鞋" /> 提供拖鞋（免费）
+								</span>
+								<span class="no">
+									<input type="radio" name="tuoxie" class="tuoxie" value="http://p1.meituan.net/deal/201112/30/02_1230174151.jpg|拖鞋" /> 不提供拖鞋
+								</span>
+							</li>
+							<li>
+								<span class="yes">
+									<input type="radio" name="net" class="net" value="http://p1.meituan.net/deal/201112/30/01_1230174152.jpg|宽带上网" /> 提供宽带（免费）
+								</span>
+								<span class="yesno">
+									<input type="radio" name="net" class="net" value="http://p0.meituan.net/deal/201112/30/03_1230174200.jpg|宽带上网" /> 提供宽带（需付费）
+								</span>
+								<span class="no">
+									<input type="radio" name="net" class="net" value="http://p1.meituan.net/deal/201112/30/02_1230174157.jpg|宽带上网" /> 不提供宽带
+								</span>
+							</li>
+							<li>
+								<span class="yes">
+									<input type="radio" name="wifi" class="wifi" value="http://p0.meituan.net/deal/201112/30/wifi01.jpg|无线网络" /> 提供WiFi（免费）
+								</span>
+								<span class="yesno">
+									<input type="radio" name="wifi" class="wifi" value="http://p0.meituan.net/deal/201112/30/wifi03.jpg|无线网络" /> 提供WiFi（需付费）
+								</span>
+								<span class="no">
+									<input type="radio" name="wifi" class="wifi" value="http://p0.meituan.net/deal/201112/30/wifi02.jpg|无线网络" /> 不提供WiFi
+								</span>
+							</li>
+							<li>
+								<span class="yes">
+									<input type="radio" name="baoxian" class="baoxian" value="http://p1.meituan.net/deal/201206/25/3_0625191202.jpg|保险箱" /> 提供保险箱（免费）
+								</span>
+								<span class="no">
+									<input type="radio" name="baoxian" class="baoxian" value="http://p1.meituan.net/deal/201206/25/6_0625191202.jpg|保险箱" /> 不提供保险箱
+								</span>
+							</li>
+							<li>
+								<span class="yes">
+									<input type="radio" name="park" class="park" value="http://p1.meituan.net/deal/201112/30/01_1230174205.jpg|停车位" /> 停车位（免费）
+								</span>
+								<span class="yesno">
+									<input type="radio" name="park" class="park" value="http://p1.meituan.net/deal/201112/30/03_1230174158.jpg|停车位" /> 停车位（需付费）
+								</span>
+								<span class="no">
+									<input type="radio" name="park" class="park" value="http://p1.meituan.net/deal/201112/30/02_1230174203.jpg|停车位" /> 不提供停车位
+								</span>
+							</li>
+							<li>
+								<span class="yes">
+									<input type="radio" name="chui" class="chui" value="http://p0.meituan.net/deal/201206/25/4_0625191202.jpg|吹风机" /> 提供吹风机（免费）
+								</span>
+								<span class="no">
+									<input type="radio" name="chui" class="chui" value="http://p0.meituan.net/deal/201206/25/7_0625191201.jpg|吹风机" /> 不提供吹风机
+								</span>
+							</li>
+							<li>
+								<span class="yes">
+									<input type="radio" name="xingli" class="xingli" value="http://p0.meituan.net/deal/201112/30/01_1230174133.jpg|行李寄存" /> 提供行李寄存（免费）
+								</span>
+								<span class="no">
+									<input type="radio" name="xingli" class="xingli" value="http://p1.meituan.net/deal/201112/30/02_1230174156.jpg|行李寄存" /> 不提供行李寄存
+								</span>
+							</li>
+							<li>
+								<span class="yes">
+									<input type="radio" name="daishou" class="daishou" value="http://p1.meituan.net/deal/201202/02/01.jpg|代收邮件" /> 提供代收服务（免费，包括邮件、快递）
+								</span>
+								<span class="no">
+									<input type="radio" name="daishou" class="daishou" value="http://p1.meituan.net/deal/201202/06/02_0206104618.jpg|代收邮件" /> 不提供代收服务（邮件、快递）
+								</span>
+							</li>
+							<li>
+								<span class="yes">
+									<input type="radio" name="kuangquanshui" class="kuangquanshui" value="http://p1.meituan.net/deal/201206/25/5_0625191202.jpg|矿泉水" /> 提供矿泉水（免费）
+								</span>
+								<span class="no">
+									<input type="radio" name="kuangquanshui" class="kuangquanshui" value="http://p0.meituan.net/deal/201206/25/8_0625191202.jpg|矿泉水" /> 不提供矿泉水
+								</span>
+							</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<td>升级</td>
+					<td><input type="text" id="liangdian1" value="2张美团券可升级" /></td>
+				</tr>
+				<tr>
+					<td>赠送</td>
+					<td><input type="text" id="liangdian2" value="赠送XXX" /></td>
+				</tr>
+				<tr>
+					<td>logo</td>
+					<td>
+						<div><input type="radio" class="logo" name="logo" value="有" />有</div>
+						<div><input type="radio" class="logo" name="logo" value="无" />无</div>
+					</td>
+				</tr>
+				<tr>
+					<td>角标</td>
+					<td style="border-top: 1px solid #ccc;">
+						<div><input type="radio" class="jiaobiao" name="jiaobiao" value="有" />有</div>
+						<div><input type="radio" class="jiaobiao" name="jiaobiao" value="无" />无</div>
+						<div><input type="radio" class="jiaobiao" name="jiaobiao" value="同方案名" />同方案名</div>
+					</td>
+				</tr>
+				<tr>
+					<td>彩卡</td>
+					<td style="border-top: 1px solid #ccc;">
+						<div><input type="radio" class="caika" name="caika" value="有" />有</div>
+						<div><input type="radio" class="caika" name="caika" value="无" />无</div>
+						<div><input type="radio" class="caika" name="caika" value="为整图城市" />为整图城市</div>
+					</td>
+				</tr>
+				<tr>
+					<td>环境图</td>
+					<td><input type="text" id="huanjintu" style="width: 50px;" />张</td>
+				</tr>
+				<tr>
+					<td>水印</td>
+					<td style="border-top: 1px solid #ccc;">
+						<div><input type="radio" class="shuiying" name="shuiying" value="加" />加</div>
+						<div><input type="radio" class="shuiying" name="shuiying" value="不加" />不加</div>
+					</td>
+				</tr>
+				<tr>
+					<td>首图特殊要求</td>
+					<td><input type="text" id="shoutu" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="border-top: 1px solid #ccc;font-weight: bold">自动生成</td>
+				</tr>
+				<tr>
+					<td>设计师图片</td>
+					<td><input type="text" id="designer" /></td>
+				</tr>
+				<tr>
+					<td>txt名称</td>
+					<td><input type="text" id="txtname" /></td>
+				</tr>
+				<tr>
+					<td>txt文档</td>
+					<td>
+						<textarea id="textdoc" cols="50" rows="8"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>标题一</td>
+					<td><input type="text" id="title1" /></td>
+				</tr>
+				<tr>
+					<td>标题二</td>
+					<td><input type="text" id="title2" /></td>
+				</tr>
+				<tr>
+					<td>标题三</td>
+					<td><input type="text" id="title3" /></td>
+				</tr>
+				<tr>
+					<td>彩条</td>
+					<td>
+						<div>美丽从头开始</div>
+						<div>丝丝柔顺，点点心动</div>
+						<div>改变，就在瞬间</div>
+						<div>魅力绽放，闪亮每一天</div>
+						<div>秀发，女人骄傲的资本</div>
+						<div>美食齐分享</div>
+						<div>不一样的美食，不一样的心情</div>
+					</td>
+				</tr>
+				<tr>
+					<td>生成图标墙</td>
+					<td>
+						<textarea class="tubiaoqiang" cols="65" rows="8"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>引入语</td>
+					<td><input type="text" id="main" /></td>
+				</tr>
+				<tr>
+					<td>丢链接</td>
+					<td><input type="text" id="link" /></td>
+				</tr>
+				<tr>
+					<td>菜单项目</td>
+					<td><input type="text" id="caidan" /></td>
+				</tr>
+				<tr>
+					<td>详情图项目</td>
+					<td><input type="text" id="xiangqingtu" /></td>
+				</tr>
+				<tr>
+					<td><input type="reset" value="一键清空" /></td>
+				</tr>
+			</tbody>
+		</table>
+		</form>
+	</body>
+</html>

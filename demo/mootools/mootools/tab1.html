@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Tab Example 1</title>
+    <script src="source/moo.js"></script>
+    <script src="source/switchable.js"></script>
+	<link rel="stylesheet" href="reset.css" type="text/css" /> 
+</head>
+<body>
+    <div>
+        <p>
+            <h1>Tab Example 1:</h1>
+        </p>
+    </div>
+    <style>
+    #Tabs1 { position: relative; width: 750px;padding-top:36px}
+    #Tabs1 .switchable-triggerBox { position: absolute;top:0;left:0; z-index: 99; }
+    #Tabs1 .switchable-triggerBox li {
+        float: left;
+        width: 130px;
+        height: 35px;
+        line-height: 35px;
+        text-align: center;
+        background:#ffffff;
+        margin-right: 3px;
+        cursor: pointer;
+		border:1px solid #cccccc;
+    }
+    #Tabs1 .switchable-triggerBox li.active { cursor: pointer;background:#cccccc; }
+    #Tabs1 .switchable-content {
+        position: relative;
+        height: 120px;
+        padding: 20px;
+        border: 1px solid #AEC7E5;
+    }
+    </style>
+<div id="Tabs1" class="Auto_Widget" data-widget-type="Tabs" data-widget-config="{autoplay:true,effect:'scrolly',interval:2000}">
+    <ul class="switchable-triggerBox">
+        <li class="active"><span>郎朗春意</span></li>
+        <li>夏日炎炎</li>
+        <li>秋高气爽</li>
+        <li>冬至寒风</li>
+    </ul>
+    <div class="switchable-content">
+			<div class="switchable-panel">
+				郎朗春意，焕发着春天的气息
+
+				<p>  - 在当前 trigger 中 mouseover/mouseout, click, focus, 不触发<br />
+				  - 鼠标快速滑过非当前 trigger, 不触发<br />
+				  - mouseover 到非当前 trigger, 停留时间到达延迟时，触发<br />
+				  - click 或 Tab 切换到 trigger, 立即触发<br />
+				  - beforeSwitch/onSwitch 事件的触发<br />
+				  - 延迟的内容能正确加载
+				</P>
+			</div>
+			<div class="switchable-panel" style="display: none;">这夏天，出门是烤箱，进门是冰箱</div>
+			<div class="switchable-panel" style="display: none;">秋天还真的挺凉爽</div>
+			<div class="switchable-panel" style="display: none;">冬天来了，雪花飘了</div>
+    </div>
+</div>
+
+<div class="code" style="margin-top:20px;">
+    <h2>Dom code:</h2>
+    <pre>
+&lt;div id="Tabs1" class="Auto_Widget" data-widget-type="Tabs" data-widget-config="{autoplay:true,effect:'scrolly',interval:2000}"&gt;
+    &lt;ul class="switchable-triggerBox"&gt;
+        &lt;li class="active"&gt;&lt;span&gt;郎朗春意&lt;/span&gt;&lt;/li&gt;
+        &lt;li&gt;夏日炎炎&lt;/li&gt;
+        &lt;li&gt;秋高气爽&lt;/li&gt;
+        &lt;li&gt;冬至寒风&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;div class="switchable-content"&gt;
+			&lt;div class="switchable-panel"&gt;
+               郎朗春意，焕发着春天的气息
+
+				&lt;p&gt;  - 在当前 trigger 中 mouseover/mouseout, click, focus, 不触发&lt;br /&gt;
+				  - 鼠标快速滑过非当前 trigger, 不触发&lt;br /&gt;
+				  - mouseover 到非当前 trigger, 停留时间到达延迟时，触发&lt;br /&gt;
+				  - click 或 Tab 切换到 trigger, 立即触发&lt;br /&gt;
+				  - beforeSwitch/onSwitch 事件的触发&lt;br /&gt;
+				  - 延迟的内容能正确加载
+				&lt;/P&gt;
+			&lt;/div&gt;
+			&lt;div class="switchable-panel" style="display: none;"&gt;这夏天，出门是烤箱，进门是冰箱&lt;/div&gt;
+			&lt;div class="switchable-panel" style="display: none;"&gt;秋天还真的挺凉爽&lt;/div&gt;
+			&lt;div class="switchable-panel" style="display: none;"&gt;冬天来了，雪花飘了&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+</div>
+
+<div class="code" style="margin-top:20px;">
+    <h2>Css code:</h2>
+<pre>
+#Tabs1 { position: relative; width: 750px;padding-top:36px}
+#Tabs1 .switchable-triggerBox { position: absolute;top:0;left:0; z-index: 99; }
+#Tabs1 .switchable-triggerBox li {
+        float: left;
+        width: 130px;
+        height: 35px;
+        line-height: 35px;
+        text-align: center;
+        background:#ffffff;
+        margin-right: 3px;
+        cursor: pointer;
+		border:1px solid #cccccc;
+    }
+#Tabs1 .switchable-triggerBox li.active { cursor: pointer;background:#cccccc; }
+#Tabs1 .switchable-content {
+        position: relative;
+        height: 120px;
+        padding: 20px;
+        border: 1px solid #AEC7E5;
+    }
+</pre>
+</div>
+
+</body>
+</html>

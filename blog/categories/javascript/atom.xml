@@ -1,0 +1,1144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[["Octopress", "javascript", "Android", "GitHub", "Helloworld", "jamendo", "music", "mootools", "java", "maven", "project", "chrome", "随笔", "面试", "环境搭建", "封装", "算法"]javascript | feeloc's 杂货铺]]></title>
+  <link href="http://feeloc.github.io/blog/categories/javascript/atom.xml" rel="self"/>
+  <link href="http://feeloc.github.io/"/>
+  <updated>2013-11-12T18:59:58+08:00</updated>
+  <id>http://feeloc.github.io/</id>
+  <author>
+    <name><![CDATA[feeloc]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[元素任意路径运动]]></title>
+    <link href="http://feeloc.github.io/blog/2013/05/21/circle-path/"/>
+    <updated>2013-05-21T18:58:00+08:00</updated>
+    <id>http://feeloc.github.io/blog/2013/05/21/circle-path</id>
+    <content type="html"><![CDATA[<p><img src="http://www.feeloc.cn/downloads/images/2013-05-21/path.jpg" width="800"></p>
+
+<blockquote><p>元素运动很常见，这次总结一些运动轨迹，其实就是复习下各种数学公式，先从圆形运动开始全文。</p></blockquote>
+
+<!-- more -->
+
+
+<h2>一、圆形运动</h2>
+
+<ul>
+<li>圆形运动比较简单，就是圆心，弧度，正弦，余弦，复习下概念
+
+<ul>
+<li>弧度，<code>弧度是角的度量单位</code>，弧长等于半径的弧，其所对的圆心角为1弧度。(即两条射线从圆心向圆周射出，形成一个夹角和夹角正对的一段弧。当这段弧长正好等于圆的半径时，两条射线的夹角的弧度为1)。</li>
+<li>根据定义，一周的弧度数为2πr/r=2π，360°角=2π弧度，因此，1弧度约为57.3°，即57°17’44.806”，<code>1°为π/180弧度</code>，近似值为0.01745弧度，周角为2π弧度，平角（即180°角）为π弧度，直角为π/2弧度。</li>
+<li><code>弧长=n2πr/360</code> （在这里n就是角度数，即圆心角n所对应的弧长。）</li>
+<li>正弦值：弦值是在直角三角形中,对边的长比上斜边的长的值。</li>
+<li><code>Math.sin(x)</code> : X 必需。一个以弧度表示的角。将角度乘以 0.017453293 （2PI/360）即可转换为弧度。</li>
+<li>余弦值:是指直角三角形锐角邻边与斜边的比值。</li>
+<li><code>Math.sin(x)</code> : X 必需。一个以弧度表示的角。将角度乘以 0.017453293 （2PI/360）即可转换为弧度。</li>
+</ul>
+</li>
+<li>静态圆形元素
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>main.js </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">//中心点横坐标</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">dotLeft</span> <span class="o">=</span> <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-content&#39;</span><span class="p">).</span><span class="nx">width</span><span class="p">()</span> <span class="o">-</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-dot&#39;</span><span class="p">).</span><span class="nx">width</span><span class="p">())</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'><span class="c1">//中心点纵坐标</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">dotTop</span> <span class="o">=</span> <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-content&#39;</span><span class="p">).</span><span class="nx">height</span><span class="p">()</span> <span class="o">-</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-dot&#39;</span><span class="p">).</span><span class="nx">height</span><span class="p">())</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'><span class="c1">//半径</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">radius</span> <span class="o">=</span> <span class="mi">105</span><span class="p">;</span>
+</span><span class='line'><span class="c1">//每一个BOX对应的角度;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">avd</span> <span class="o">=</span> <span class="mi">360</span> <span class="o">/</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-box&#39;</span><span class="p">).</span><span class="nx">length</span><span class="p">;</span>
+</span><span class='line'><span class="c1">//每一个BOX对应的弧度;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">ahd</span> <span class="o">=</span> <span class="nx">avd</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span> <span class="o">/</span> <span class="mi">180</span><span class="p">;</span>
+</span><span class='line'><span class="c1">//设置圆的中心点的位置</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.select-dot&quot;</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span><span class="s1">&#39;left&#39;</span><span class="o">:</span> <span class="nx">dotLeft</span><span class="p">,</span> <span class="s1">&#39;top&#39;</span><span class="o">:</span> <span class="nx">dotTop</span><span class="p">});</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.select-box&quot;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span><span class="s2">&quot;left&quot;</span><span class="o">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">((</span><span class="mi">36</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span> <span class="o">/</span> <span class="mi">180</span> <span class="o">+</span> <span class="nx">ahd</span> <span class="o">*</span> <span class="nx">index</span><span class="p">))</span> <span class="o">*</span> <span class="nx">radius</span> <span class="o">+</span> <span class="nx">dotLeft</span><span class="p">,</span> <span class="s2">&quot;top&quot;</span><span class="o">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">((</span><span class="mi">36</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span> <span class="o">/</span> <span class="mi">180</span> <span class="o">+</span> <span class="nx">ahd</span> <span class="o">*</span> <span class="nx">index</span><span class="p">))</span> <span class="o">*</span> <span class="nx">radius</span> <span class="o">+</span> <span class="nx">dotTop</span><span class="p">});</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="nx">index</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></li>
+<li>增加运动
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>main.js </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-box&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">$root</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">iCurrent</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">$root</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">));</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">iBig</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-box&#39;</span><span class="p">).</span><span class="nx">index</span><span class="p">(</span><span class="nx">$root</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="mi">600</span><span class="p">;</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-box&#39;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="kd">var</span> <span class="nx">path</span><span class="p">;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">oldIndex</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">));</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">iCurrent</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">time</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">time</span> <span class="o">=</span> <span class="mi">600</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="nx">oldIndex</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="nx">iCurrent</span><span class="p">));</span>
+</span><span class='line'><span class="nx">path</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">path</span><span class="p">.</span><span class="nx">arc</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">center</span><span class="o">:</span> <span class="p">[</span><span class="nx">dotLeft</span><span class="p">,</span> <span class="nx">dotTop</span><span class="p">],</span>
+</span><span class='line'>    <span class="nx">radius</span><span class="o">:</span> <span class="nx">radius</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">start</span><span class="o">:</span> <span class="mi">36</span> <span class="o">+</span> <span class="nx">oldIndex</span> <span class="o">*</span> <span class="nx">avd</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">end</span><span class="o">:</span> <span class="mi">36</span> <span class="o">+</span> <span class="p">(</span><span class="nx">oldIndex</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="nx">iCurrent</span><span class="p">))</span> <span class="o">*</span> <span class="nx">avd</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">dir</span><span class="o">:</span> <span class="mi">1</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">stop</span><span class="p">().</span><span class="nx">animate</span><span class="p">({</span><span class="nx">path</span><span class="o">:</span> <span class="nx">path</span><span class="p">},</span> <span class="mi">500</span><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+</ul>
+
+
+<iframe src="http://www.feeloc.cn/demo/move/move.html" width="800px" height="370px"></iframe>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[SVG实现任意形状相框]]></title>
+    <link href="http://feeloc.github.io/blog/2013/05/21/svg-img/"/>
+    <updated>2013-05-21T16:54:00+08:00</updated>
+    <id>http://feeloc.github.io/blog/2013/05/21/svg-img</id>
+    <content type="html"><![CDATA[<p><img src="http://www.feeloc.cn/downloads/images/2013-05-21/idea.png" width="800"></p>
+
+<blockquote><p>SVG是可缩放矢量图形（Scalable Vector Graphics，SVG）是基于可扩展标记语言（XML），用于描述二维矢量图形的一种图形格式。本文不具体讨论SVG，只是
+利用SVG做任意开关的相框，方便平时去做一些样式，不用去做背景图，方便些。</p></blockquote>
+
+<!-- more -->
+
+
+<h2>一、实现思路</h2>
+
+<ul>
+<li>将需要加相框的图片做为一个定宽定高的DIV的背景</li>
+<li>在此DIV上覆盖一个用SVG做的相框，边框宽度足够大，能够覆盖住图片的其它部位就行，所以DIV一定要是<code>overflow: hidden</code>的</li>
+</ul>
+
+
+<br>
+
+
+<h2>二、代码</h2>
+
+<ul>
+<li>在此，我们利用一个svg插件，方便去做svg画图，<a href="http://raphaeljs.com/">raphael-min.js</a>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>main.html </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;/li&gt;</span>
+</span><span class='line'><span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;photo&quot;</span> <span class="na">id=</span><span class="s">&quot;photo&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>main.css </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nc">.photo</span><span class="p">{</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">width</span><span class="o">:</span> <span class="m">120px</span><span class="p">;</span>
+</span><span class='line'><span class="k">height</span><span class="o">:</span> <span class="m">120px</span><span class="p">;</span>
+</span><span class='line'><span class="k">overflow</span><span class="o">:</span> <span class="k">hidden</span><span class="p">;</span>
+</span><span class='line'><span class="k">background</span><span class="o">:</span> <span class="sx">url(&quot;http://fs3u.dajie.com/2013/05/17/101/13687605014653364m.png&quot;)</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>main.js </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">Raphael</span><span class="p">(</span><span class="s2">&quot;photo&quot;</span><span class="p">,</span> <span class="mi">121</span><span class="p">,</span> <span class="mi">121</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">Raphael</span><span class="p">.</span><span class="nx">getColor</span><span class="p">();</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">color</span> <span class="o">=</span> <span class="s1">&#39;#d8e5f1&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">r</span><span class="p">.</span><span class="nx">circle</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">82</span><span class="p">).</span><span class="nx">attr</span><span class="p">({</span><span class="nx">stroke</span><span class="o">:</span> <span class="nx">c</span><span class="p">,</span> <span class="nx">transform</span><span class="o">:</span> <span class="s1">&#39;r0 320 240&#39;</span><span class="p">,</span> <span class="s2">&quot;fill-opacity&quot;</span><span class="o">:</span> <span class="p">.</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;stroke-width&#39;</span><span class="o">:</span> <span class="mi">46</span><span class="p">,</span> <span class="s1">&#39;stroke&#39;</span><span class="o">:</span> <span class="nx">color</span><span class="p">}).</span><span class="nx">mouseover</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="k">this</span><span class="p">.</span><span class="nx">stop</span><span class="p">().</span><span class="nx">animate</span><span class="p">({</span><span class="s2">&quot;fill&quot;</span><span class="o">:</span> <span class="s1">&#39;#d8e5f1&#39;</span><span class="p">,</span> <span class="s2">&quot;fill-opacity&quot;</span><span class="o">:</span> <span class="p">.</span><span class="mi">7</span><span class="p">},</span> <span class="mi">300</span><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">}).</span><span class="nx">mouseout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="k">this</span><span class="p">.</span><span class="nx">stop</span><span class="p">().</span><span class="nx">animate</span><span class="p">({</span><span class="s2">&quot;fill&quot;</span><span class="o">:</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="s2">&quot;fill-opacity&quot;</span><span class="o">:</span> <span class="p">.</span><span class="mi">1</span><span class="p">},</span> <span class="mi">300</span><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">});</span>
+</span><span class='line'><span class="nx">r</span><span class="p">.</span><span class="nx">circle</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">58</span><span class="p">).</span><span class="nx">attr</span><span class="p">({</span><span class="nx">stroke</span><span class="o">:</span> <span class="nx">c</span><span class="p">,</span> <span class="nx">transform</span><span class="o">:</span> <span class="s1">&#39;r0 320 240&#39;</span><span class="p">,</span> <span class="s2">&quot;fill-opacity&quot;</span><span class="o">:</span> <span class="p">.</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;stroke-width&#39;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;stroke&#39;</span><span class="o">:</span> <span class="s1">&#39;#a1b3c4&#39;</span><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>三、demo</h2>
+
+<iframe src="http://www.feeloc.cn/demo/svg/svg-bg.html" width="800px" height="150px"></iframe>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jquery上传插件]]></title>
+    <link href="http://feeloc.github.io/blog/2012/11/27/upload-photo/"/>
+    <updated>2012-11-27T23:29:00+08:00</updated>
+    <id>http://feeloc.github.io/blog/2012/11/27/upload-photo</id>
+    <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/1.jpg"></p>
+
+<blockquote><p>上传功能在WEB网站中经常需要使用到，整理下以前写的上传插件。</p></blockquote>
+
+<!-- more -->
+
+
+<h2>首先看例子</h2>
+
+<p><div><script src='https://gist.github.com/5539213.js'></script>
+<noscript><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head prefix=&quot;og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# githubog: http://ogp.me/ns/fb/githubog#&quot;&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;&gt;
+
+  &lt;title&gt;jquery upload plugin&lt;/title&gt;
+
+  &lt;meta content=&quot;authenticity_token&quot; name=&quot;csrf-param&quot; /&gt;
+&lt;meta content=&quot;fePGdGkDBMVAu3XYvQ9fqn202vjYa0cUx6AjOH7w5o8=&quot; name=&quot;csrf-token&quot; /&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=960&quot;&gt;
+
+
+  &lt;link type=&quot;text/plain&quot; rel=&quot;author&quot; href=&quot;https://github.com/humans.txt&quot; /&gt;
+  &lt;meta content=&quot;gist&quot; name=&quot;octolytics-app-id&quot; /&gt;&lt;meta content=&quot;collector.githubapp.com&quot; name=&quot;octolytics-host&quot; /&gt;&lt;meta content=&quot;collector-cdn.github.com&quot; name=&quot;octolytics-script-host&quot; /&gt;
+
+  &lt;link href=&quot;/assets/application-40431a953a4fe71f7abb47ce95f23da2.css&quot; media=&quot;screen, print&quot; rel=&quot;stylesheet&quot; /&gt;
+  &lt;script src=&quot;/assets/application-ef934eddf8f7b5930eb6630337249c2d.js&quot;&gt;&lt;/script&gt;
+
+    &lt;meta name=&quot;twitter:card&quot; content=&quot;summary&quot;&gt;
+  &lt;meta name=&quot;twitter:site&quot; content=&quot;@github&quot;&gt;
+  &lt;meta property=&quot;og:title&quot; content=&quot;feeloc/jquery.upload.js&quot;&gt;
+  &lt;meta property=&quot;og:type&quot; content=&quot;githubog:gist&quot;&gt;
+  &lt;meta property=&quot;og:url&quot; content=&quot;https://gist.github.com//feeloc/5539213&quot;&gt;
+  &lt;meta property=&quot;og:image&quot; content=&quot;https://0.gravatar.com/avatar/986ce31a5c3faa11d72f2a4efb80fb50?d=https%3A%2F%2Fidenticons.github.com%2Fd8eddaf5914d2764ba6e1e55ca5d1df3.png&amp;amp;s=140&quot;&gt;
+  &lt;meta property=&quot;og:site_name&quot; content=&quot;GitHub Gists&quot;&gt;
+  &lt;meta property=&quot;og:description&quot; content=&quot;jquery upload plugin - Gist is a simple way to share snippets of text and code with others.&quot;&gt;
+  &lt;meta name=&quot;description&quot; content=&quot;jquery upload plugin - Gist is a simple way to share snippets of text and code with others.&quot;&gt;
+
+&lt;/head&gt;
+
+&lt;body class=&quot; &quot;&gt;
+
+  &lt;div id=&quot;wrapper&quot;&gt;
+    
+
+    &lt;div id=&quot;header&quot; class=&quot;header header-logged-out&quot;&gt;
+      &lt;div class=&quot;container&quot; class=&quot;clearfix&quot;&gt;
+        &lt;a class=&quot;header-logo-wordmark&quot; href=&quot;https://gist.github.com/&quot;&gt;
+          &lt;span class=&quot;octicon octicon-logo-github&quot;&gt;&lt;/span&gt;
+          &lt;span class=&quot;octicon-logo octicon-logo-gist&quot;&gt;&lt;/span&gt;
+        &lt;/a&gt;
+
+        &lt;div class=&quot;header-actions&quot;&gt;
+          &lt;a class=&quot;button primary&quot; href=&quot;https://github.com/signup?return_to=gist&quot;&gt;Sign up for a GitHub Account&lt;/a&gt;
+          &lt;a class=&quot;button&quot; href=&quot;https://gist.github.com/login?return_to=/feeloc/5539213&quot; data-skip-pjax&gt;Sign in&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;site-content&quot; id=&quot;js-pjax-container&quot; data-pjax-container&gt;
+      &lt;div class=&quot; site-container js-site-container&quot; data-url=&quot;/feeloc/5539213&quot;&gt;
+  
+  &lt;meta content=&quot;true&quot; name=&quot;octolytics-dimension-public&quot; /&gt;&lt;meta content=&quot;5539213&quot; name=&quot;octolytics-dimension-gist_id&quot; /&gt;&lt;meta content=&quot;5539213&quot; name=&quot;octolytics-dimension-gist_name&quot; /&gt;&lt;meta content=&quot;false&quot; name=&quot;octolytics-dimension-anonymous&quot; /&gt;&lt;meta content=&quot;1651250&quot; name=&quot;octolytics-dimension-owner_id&quot; /&gt;&lt;meta content=&quot;feeloc&quot; name=&quot;octolytics-dimension-owner_login&quot; /&gt;&lt;meta content=&quot;false&quot; name=&quot;octolytics-dimension-forked&quot; /&gt;
+
+&lt;div class=&quot;pagehead repohead&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;title-actions-bar&quot;&gt;
+      &lt;ul class=&quot;pagehead-actions&quot;&gt;
+      &lt;/ul&gt;
+      &lt;h1 itemscope itemtype=&quot;http://data-vocabulary.org/Breadcrumb&quot; class=&quot;entry-title public&quot;&gt;
+        &lt;span class=&quot;repo-label&quot;&gt;&lt;span&gt;public&lt;/span&gt;&lt;/span&gt;
+        &lt;span class=&quot;mega-octicon octicon-gist&quot; &gt;&lt;/span&gt;
+        &lt;div class=&quot;meta&quot;&gt;
+          &lt;div class=&quot;gist-author&quot;&gt;
+            &lt;img src=&quot;https://0.gravatar.com/avatar/986ce31a5c3faa11d72f2a4efb80fb50?d=https%3A%2F%2Fidenticons.github.com%2Fd8eddaf5914d2764ba6e1e55ca5d1df3.png&amp;s=140&quot; width=&quot;26&quot; height=&quot;26&quot;&gt;
+            &lt;span class=&quot;author vcard&quot;&gt;
+                &lt;span itemprop=&quot;title&quot;&gt;&lt;a href=&quot;/feeloc&quot;&gt;feeloc&lt;/a&gt;&lt;/span&gt;
+            &lt;/span&gt; /
+            &lt;strong&gt;&lt;a href=&quot;/feeloc/5539213&quot; class=&quot;js-current-repository&quot;&gt;jquery.upload.js&lt;/a&gt;&lt;/strong&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;gist-timestamp&quot;&gt;
+              &lt;span class=&quot;datetime&quot;&gt;Last active &lt;time class=&quot;js-relative-date&quot; title=&quot;2013-05-08T10:36:23Z&quot; datetime=&quot;2013-05-08T10:36:23Z&quot;&gt;2013-05-08&lt;/time&gt;&lt;/span&gt;
+          &lt;/div&gt;
+      &lt;/h1&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+
+&lt;div class=&quot;gist-description container&quot;&gt;
+  &lt;p&gt;jquery upload plugin&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;gist container js-gist-container&quot; data-version=&quot;9cae6cfc8bf43a8a0b2d13956ee317cf16d5d1f2&quot;&gt;
+    &lt;div class=&quot;root-pane&quot;&gt;
+  &lt;div class=&quot;menu-container&quot;&gt;
+    &lt;ul class=&quot;menu gisttabs&quot;&gt;
+      &lt;li&gt;
+        &lt;a href=&quot;/feeloc/5539213&quot; class=&quot;selected&quot;&gt;
+          Gist Detail
+        &lt;/a&gt;
+      &lt;/li&gt;
+
+        &lt;li class=&quot;revision-count&quot;&gt;
+          &lt;a href=&quot;/feeloc/5539213/revisions&quot; &gt;
+            Revisions
+            &lt;span class=&quot;counter&quot;&gt;8&lt;/span&gt;
+          &lt;/a&gt;
+        &lt;/li&gt;
+
+
+    &lt;/ul&gt;
+  &lt;/div&gt;
+
+  &lt;ul class=&quot;export-references&quot;&gt;
+    &lt;li&gt;
+      &lt;a href=&quot;/feeloc/5539213/download&quot; class=&quot;minibutton&quot; data-skip-pjax=&quot;true&quot; rel=&quot;nofollow&quot;&gt;&lt;span class=&quot;octicon octicon-cloud-download&quot;&gt;&lt;/span&gt;Download Gist&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;label for=&quot;url-field&quot;&gt;&lt;strong&gt;Clone&lt;/strong&gt; this gist&lt;/label&gt;
+      &lt;input type=&quot;text&quot; readonly spellcheck=&quot;false&quot; class=&quot;url-field js-url-field js-cptoggle&quot; name=&quot;url-field&quot; value=&quot;https://gist.github.com/5539213.git&quot; data-cptoggle-display=&quot;/feeloc/5539213&quot;&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;label for=&quot;embed-field&quot;&gt;&lt;strong&gt;Embed&lt;/strong&gt; this gist&lt;/label&gt;
+      &lt;input type=&quot;text&quot; readonly spellcheck=&quot;false&quot; class=&quot;url-field js-url-field&quot; name=&quot;embed-field&quot; value=&quot;&amp;lt;script src=&amp;quot;https://gist.github.com/feeloc/5539213.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&quot;&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;label for=&quot;link-field&quot;&gt;&lt;strong&gt;Link to&lt;/strong&gt; this gist&lt;/label&gt;
+      &lt;input type=&quot;text&quot; readonly spellcheck=&quot;false&quot; class=&quot;url-field js-url-field&quot; name=&quot;link-field&quot; value=&quot;https://gist.github.com/feeloc/5539213&quot;&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+
+  &lt;div class=&quot;column files&quot;&gt;
+        &lt;div id=&quot;file-jquery-upload-js&quot; class=&quot;bubble&quot;&gt;
+          &lt;div class=&quot;file-box &quot;&gt;
+            &lt;div class=&quot;meta&quot;&gt;
+              &lt;div class=&quot;file-info&quot;&gt;
+                &lt;span class=&quot;file-type-icon&quot;&gt;&lt;span class=&quot;octicon octicon-gist&quot;&gt;&lt;/span&gt;&lt;/span&gt;
+                &lt;strong class=&quot;file-name js-selectable-text&quot;&gt;jquery.upload.js&lt;/strong&gt;
+              &lt;/div&gt;
+              &lt;div class=&quot;file-actions&quot;&gt;
+                &lt;span class=&quot;file-language&quot;&gt;JavaScript&lt;/span&gt;
+                &lt;ul class=&quot;button-group&quot;&gt;
+                  &lt;li&gt;&lt;a title=&quot;Permalink&quot; href=&quot;#file-jquery-upload-js&quot; class=&quot;file-actions-button tooltipped downwards permalink&quot;&gt;&lt;span class=&quot;octicon octicon-link&quot;&gt;&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a title=&quot;View Raw&quot; href=&quot;/feeloc/5539213/raw/7d03d1147e1141a84f09eb697184b182cdb1a461/jquery.upload.js&quot; data-skip-pjax class=&quot;file-actions-button tooltipped downwards raw-url&quot;&gt;&lt;span class=&quot;octicon octicon-code&quot;&gt;&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;suppressed&quot;&gt;
+              &lt;a class=&quot;js-show-suppressed-file&quot;&gt;File suppressed. Click to show.&lt;/a&gt;
+            &lt;/div&gt;
+            
+
+
+
+    &lt;div class=&quot;file-data&quot;&gt;
+      &lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; class=&quot;lines highlight&quot;&gt;
+        &lt;tr&gt;
+          &lt;td class=&quot;line-numbers&quot;&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L1&quot; rel=&quot;file-jquery-upload-js-L1&quot;&gt;1&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L2&quot; rel=&quot;file-jquery-upload-js-L2&quot;&gt;2&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L3&quot; rel=&quot;file-jquery-upload-js-L3&quot;&gt;3&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L4&quot; rel=&quot;file-jquery-upload-js-L4&quot;&gt;4&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L5&quot; rel=&quot;file-jquery-upload-js-L5&quot;&gt;5&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L6&quot; rel=&quot;file-jquery-upload-js-L6&quot;&gt;6&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L7&quot; rel=&quot;file-jquery-upload-js-L7&quot;&gt;7&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L8&quot; rel=&quot;file-jquery-upload-js-L8&quot;&gt;8&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L9&quot; rel=&quot;file-jquery-upload-js-L9&quot;&gt;9&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L10&quot; rel=&quot;file-jquery-upload-js-L10&quot;&gt;10&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L11&quot; rel=&quot;file-jquery-upload-js-L11&quot;&gt;11&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L12&quot; rel=&quot;file-jquery-upload-js-L12&quot;&gt;12&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L13&quot; rel=&quot;file-jquery-upload-js-L13&quot;&gt;13&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L14&quot; rel=&quot;file-jquery-upload-js-L14&quot;&gt;14&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L15&quot; rel=&quot;file-jquery-upload-js-L15&quot;&gt;15&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L16&quot; rel=&quot;file-jquery-upload-js-L16&quot;&gt;16&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L17&quot; rel=&quot;file-jquery-upload-js-L17&quot;&gt;17&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L18&quot; rel=&quot;file-jquery-upload-js-L18&quot;&gt;18&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L19&quot; rel=&quot;file-jquery-upload-js-L19&quot;&gt;19&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L20&quot; rel=&quot;file-jquery-upload-js-L20&quot;&gt;20&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L21&quot; rel=&quot;file-jquery-upload-js-L21&quot;&gt;21&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L22&quot; rel=&quot;file-jquery-upload-js-L22&quot;&gt;22&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L23&quot; rel=&quot;file-jquery-upload-js-L23&quot;&gt;23&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L24&quot; rel=&quot;file-jquery-upload-js-L24&quot;&gt;24&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L25&quot; rel=&quot;file-jquery-upload-js-L25&quot;&gt;25&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L26&quot; rel=&quot;file-jquery-upload-js-L26&quot;&gt;26&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L27&quot; rel=&quot;file-jquery-upload-js-L27&quot;&gt;27&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L28&quot; rel=&quot;file-jquery-upload-js-L28&quot;&gt;28&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L29&quot; rel=&quot;file-jquery-upload-js-L29&quot;&gt;29&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L30&quot; rel=&quot;file-jquery-upload-js-L30&quot;&gt;30&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L31&quot; rel=&quot;file-jquery-upload-js-L31&quot;&gt;31&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L32&quot; rel=&quot;file-jquery-upload-js-L32&quot;&gt;32&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L33&quot; rel=&quot;file-jquery-upload-js-L33&quot;&gt;33&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L34&quot; rel=&quot;file-jquery-upload-js-L34&quot;&gt;34&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L35&quot; rel=&quot;file-jquery-upload-js-L35&quot;&gt;35&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L36&quot; rel=&quot;file-jquery-upload-js-L36&quot;&gt;36&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L37&quot; rel=&quot;file-jquery-upload-js-L37&quot;&gt;37&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L38&quot; rel=&quot;file-jquery-upload-js-L38&quot;&gt;38&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L39&quot; rel=&quot;file-jquery-upload-js-L39&quot;&gt;39&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L40&quot; rel=&quot;file-jquery-upload-js-L40&quot;&gt;40&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L41&quot; rel=&quot;file-jquery-upload-js-L41&quot;&gt;41&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L42&quot; rel=&quot;file-jquery-upload-js-L42&quot;&gt;42&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L43&quot; rel=&quot;file-jquery-upload-js-L43&quot;&gt;43&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L44&quot; rel=&quot;file-jquery-upload-js-L44&quot;&gt;44&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L45&quot; rel=&quot;file-jquery-upload-js-L45&quot;&gt;45&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L46&quot; rel=&quot;file-jquery-upload-js-L46&quot;&gt;46&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L47&quot; rel=&quot;file-jquery-upload-js-L47&quot;&gt;47&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L48&quot; rel=&quot;file-jquery-upload-js-L48&quot;&gt;48&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L49&quot; rel=&quot;file-jquery-upload-js-L49&quot;&gt;49&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L50&quot; rel=&quot;file-jquery-upload-js-L50&quot;&gt;50&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L51&quot; rel=&quot;file-jquery-upload-js-L51&quot;&gt;51&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L52&quot; rel=&quot;file-jquery-upload-js-L52&quot;&gt;52&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L53&quot; rel=&quot;file-jquery-upload-js-L53&quot;&gt;53&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L54&quot; rel=&quot;file-jquery-upload-js-L54&quot;&gt;54&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L55&quot; rel=&quot;file-jquery-upload-js-L55&quot;&gt;55&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L56&quot; rel=&quot;file-jquery-upload-js-L56&quot;&gt;56&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L57&quot; rel=&quot;file-jquery-upload-js-L57&quot;&gt;57&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L58&quot; rel=&quot;file-jquery-upload-js-L58&quot;&gt;58&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L59&quot; rel=&quot;file-jquery-upload-js-L59&quot;&gt;59&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L60&quot; rel=&quot;file-jquery-upload-js-L60&quot;&gt;60&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L61&quot; rel=&quot;file-jquery-upload-js-L61&quot;&gt;61&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L62&quot; rel=&quot;file-jquery-upload-js-L62&quot;&gt;62&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L63&quot; rel=&quot;file-jquery-upload-js-L63&quot;&gt;63&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L64&quot; rel=&quot;file-jquery-upload-js-L64&quot;&gt;64&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L65&quot; rel=&quot;file-jquery-upload-js-L65&quot;&gt;65&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L66&quot; rel=&quot;file-jquery-upload-js-L66&quot;&gt;66&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L67&quot; rel=&quot;file-jquery-upload-js-L67&quot;&gt;67&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L68&quot; rel=&quot;file-jquery-upload-js-L68&quot;&gt;68&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L69&quot; rel=&quot;file-jquery-upload-js-L69&quot;&gt;69&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L70&quot; rel=&quot;file-jquery-upload-js-L70&quot;&gt;70&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L71&quot; rel=&quot;file-jquery-upload-js-L71&quot;&gt;71&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L72&quot; rel=&quot;file-jquery-upload-js-L72&quot;&gt;72&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L73&quot; rel=&quot;file-jquery-upload-js-L73&quot;&gt;73&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L74&quot; rel=&quot;file-jquery-upload-js-L74&quot;&gt;74&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L75&quot; rel=&quot;file-jquery-upload-js-L75&quot;&gt;75&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L76&quot; rel=&quot;file-jquery-upload-js-L76&quot;&gt;76&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L77&quot; rel=&quot;file-jquery-upload-js-L77&quot;&gt;77&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L78&quot; rel=&quot;file-jquery-upload-js-L78&quot;&gt;78&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L79&quot; rel=&quot;file-jquery-upload-js-L79&quot;&gt;79&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L80&quot; rel=&quot;file-jquery-upload-js-L80&quot;&gt;80&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L81&quot; rel=&quot;file-jquery-upload-js-L81&quot;&gt;81&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L82&quot; rel=&quot;file-jquery-upload-js-L82&quot;&gt;82&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L83&quot; rel=&quot;file-jquery-upload-js-L83&quot;&gt;83&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L84&quot; rel=&quot;file-jquery-upload-js-L84&quot;&gt;84&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L85&quot; rel=&quot;file-jquery-upload-js-L85&quot;&gt;85&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L86&quot; rel=&quot;file-jquery-upload-js-L86&quot;&gt;86&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L87&quot; rel=&quot;file-jquery-upload-js-L87&quot;&gt;87&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L88&quot; rel=&quot;file-jquery-upload-js-L88&quot;&gt;88&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L89&quot; rel=&quot;file-jquery-upload-js-L89&quot;&gt;89&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L90&quot; rel=&quot;file-jquery-upload-js-L90&quot;&gt;90&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L91&quot; rel=&quot;file-jquery-upload-js-L91&quot;&gt;91&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L92&quot; rel=&quot;file-jquery-upload-js-L92&quot;&gt;92&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L93&quot; rel=&quot;file-jquery-upload-js-L93&quot;&gt;93&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L94&quot; rel=&quot;file-jquery-upload-js-L94&quot;&gt;94&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L95&quot; rel=&quot;file-jquery-upload-js-L95&quot;&gt;95&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L96&quot; rel=&quot;file-jquery-upload-js-L96&quot;&gt;96&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L97&quot; rel=&quot;file-jquery-upload-js-L97&quot;&gt;97&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L98&quot; rel=&quot;file-jquery-upload-js-L98&quot;&gt;98&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L99&quot; rel=&quot;file-jquery-upload-js-L99&quot;&gt;99&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L100&quot; rel=&quot;file-jquery-upload-js-L100&quot;&gt;100&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L101&quot; rel=&quot;file-jquery-upload-js-L101&quot;&gt;101&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L102&quot; rel=&quot;file-jquery-upload-js-L102&quot;&gt;102&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L103&quot; rel=&quot;file-jquery-upload-js-L103&quot;&gt;103&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L104&quot; rel=&quot;file-jquery-upload-js-L104&quot;&gt;104&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L105&quot; rel=&quot;file-jquery-upload-js-L105&quot;&gt;105&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L106&quot; rel=&quot;file-jquery-upload-js-L106&quot;&gt;106&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L107&quot; rel=&quot;file-jquery-upload-js-L107&quot;&gt;107&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L108&quot; rel=&quot;file-jquery-upload-js-L108&quot;&gt;108&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L109&quot; rel=&quot;file-jquery-upload-js-L109&quot;&gt;109&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L110&quot; rel=&quot;file-jquery-upload-js-L110&quot;&gt;110&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L111&quot; rel=&quot;file-jquery-upload-js-L111&quot;&gt;111&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L112&quot; rel=&quot;file-jquery-upload-js-L112&quot;&gt;112&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L113&quot; rel=&quot;file-jquery-upload-js-L113&quot;&gt;113&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L114&quot; rel=&quot;file-jquery-upload-js-L114&quot;&gt;114&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L115&quot; rel=&quot;file-jquery-upload-js-L115&quot;&gt;115&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L116&quot; rel=&quot;file-jquery-upload-js-L116&quot;&gt;116&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L117&quot; rel=&quot;file-jquery-upload-js-L117&quot;&gt;117&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L118&quot; rel=&quot;file-jquery-upload-js-L118&quot;&gt;118&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L119&quot; rel=&quot;file-jquery-upload-js-L119&quot;&gt;119&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L120&quot; rel=&quot;file-jquery-upload-js-L120&quot;&gt;120&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L121&quot; rel=&quot;file-jquery-upload-js-L121&quot;&gt;121&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L122&quot; rel=&quot;file-jquery-upload-js-L122&quot;&gt;122&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L123&quot; rel=&quot;file-jquery-upload-js-L123&quot;&gt;123&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L124&quot; rel=&quot;file-jquery-upload-js-L124&quot;&gt;124&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L125&quot; rel=&quot;file-jquery-upload-js-L125&quot;&gt;125&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L126&quot; rel=&quot;file-jquery-upload-js-L126&quot;&gt;126&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L127&quot; rel=&quot;file-jquery-upload-js-L127&quot;&gt;127&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L128&quot; rel=&quot;file-jquery-upload-js-L128&quot;&gt;128&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L129&quot; rel=&quot;file-jquery-upload-js-L129&quot;&gt;129&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L130&quot; rel=&quot;file-jquery-upload-js-L130&quot;&gt;130&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L131&quot; rel=&quot;file-jquery-upload-js-L131&quot;&gt;131&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L132&quot; rel=&quot;file-jquery-upload-js-L132&quot;&gt;132&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L133&quot; rel=&quot;file-jquery-upload-js-L133&quot;&gt;133&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L134&quot; rel=&quot;file-jquery-upload-js-L134&quot;&gt;134&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L135&quot; rel=&quot;file-jquery-upload-js-L135&quot;&gt;135&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L136&quot; rel=&quot;file-jquery-upload-js-L136&quot;&gt;136&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L137&quot; rel=&quot;file-jquery-upload-js-L137&quot;&gt;137&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L138&quot; rel=&quot;file-jquery-upload-js-L138&quot;&gt;138&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L139&quot; rel=&quot;file-jquery-upload-js-L139&quot;&gt;139&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L140&quot; rel=&quot;file-jquery-upload-js-L140&quot;&gt;140&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L141&quot; rel=&quot;file-jquery-upload-js-L141&quot;&gt;141&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L142&quot; rel=&quot;file-jquery-upload-js-L142&quot;&gt;142&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L143&quot; rel=&quot;file-jquery-upload-js-L143&quot;&gt;143&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L144&quot; rel=&quot;file-jquery-upload-js-L144&quot;&gt;144&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L145&quot; rel=&quot;file-jquery-upload-js-L145&quot;&gt;145&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L146&quot; rel=&quot;file-jquery-upload-js-L146&quot;&gt;146&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L147&quot; rel=&quot;file-jquery-upload-js-L147&quot;&gt;147&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L148&quot; rel=&quot;file-jquery-upload-js-L148&quot;&gt;148&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L149&quot; rel=&quot;file-jquery-upload-js-L149&quot;&gt;149&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L150&quot; rel=&quot;file-jquery-upload-js-L150&quot;&gt;150&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L151&quot; rel=&quot;file-jquery-upload-js-L151&quot;&gt;151&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L152&quot; rel=&quot;file-jquery-upload-js-L152&quot;&gt;152&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L153&quot; rel=&quot;file-jquery-upload-js-L153&quot;&gt;153&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L154&quot; rel=&quot;file-jquery-upload-js-L154&quot;&gt;154&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-jquery-upload-js-L155&quot; rel=&quot;file-jquery-upload-js-L155&quot;&gt;155&lt;/span&gt;
+          &lt;/td&gt;
+          &lt;td class=&quot;line-data&quot;&gt;
+            &lt;pre class=&quot;line-pre&quot;&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC1&quot;&gt;&lt;span class=&quot;cm&quot;&gt;/**&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC2&quot;&gt;&lt;span class=&quot;cm&quot;&gt; * 异步上传插件，支持任意dom&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC3&quot;&gt;&lt;span class=&quot;cm&quot;&gt; * jsonp回调&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC4&quot;&gt;&lt;span class=&quot;cm&quot;&gt; */&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC5&quot;&gt;&lt;span class=&quot;p&quot;&gt;;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC6&quot;&gt;    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;argument&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC7&quot;&gt;        &lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt;  		&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;//上传图片地址&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC8&quot;&gt;        &lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt;		&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;avatar&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//预设的上传类型&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC9&quot;&gt;        &lt;span class=&quot;nx&quot;&gt;reg&lt;/span&gt;         &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;sr&quot;&gt;/(.jpeg|.jpg|.png|.bmp|.gif)$/gi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//前端后缀检测&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC10&quot;&gt;        &lt;span class=&quot;nx&quot;&gt;ontypeerror&lt;/span&gt;	&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 上传类型、大小错误&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC11&quot;&gt;        &lt;span class=&quot;nx&quot;&gt;onstart&lt;/span&gt;		&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 开始上传&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC12&quot;&gt;        &lt;span class=&quot;nx&quot;&gt;onerror&lt;/span&gt;		&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 服务器出错&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC13&quot;&gt;        &lt;span class=&quot;nx&quot;&gt;oncomplete&lt;/span&gt;	&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 上传成功并返回图片地址&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC14&quot;&gt;    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC15&quot;&gt;&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC16&quot;&gt;    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fileType&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC17&quot;&gt;        &lt;span class=&quot;s1&quot;&gt;&amp;#39;avatar&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 上传头像&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC18&quot;&gt;            &lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC19&quot;&gt;            &lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;avatar&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC20&quot;&gt;            &lt;span class=&quot;nx&quot;&gt;reg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/(.jpeg|.jpg|.png|.bmp)$/gi&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC21&quot;&gt;        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC22&quot;&gt;    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC23&quot;&gt;    &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC24&quot;&gt;        &lt;span class=&quot;nx&quot;&gt;upload&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC25&quot;&gt;            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({},&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;argument&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fileType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;type&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;argument&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC26&quot;&gt;            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC27&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;$this&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC28&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;str_form&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;lt;form action=&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;#39; method=&amp;#39;post&amp;#39; enctype=&amp;#39;multipart/form-data&amp;#39;&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC29&quot;&gt;                    &lt;span class=&quot;s2&quot;&gt;&amp;quot;id=&amp;#39;imageForm&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;#39; target=&amp;#39;imageFrame&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;#39;&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC30&quot;&gt;                    &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;lt;span  id=&amp;#39;inputWrap&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;#39;&amp;gt;&amp;lt;input type=&amp;#39;file&amp;#39; name=&amp;#39;file&amp;#39; id=&amp;#39;inputFile&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;#39;&amp;gt;&amp;lt;/span&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC31&quot;&gt;                    &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;lt;input type=&amp;#39;hidden&amp;#39; value=&amp;#39;UPLOAD_CALLBACK_&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;#39; name=&amp;#39;callback&amp;#39; &amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC32&quot;&gt;                    &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;lt;input type=&amp;#39;hidden&amp;#39; value=&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;#39; name=&amp;#39;type&amp;#39; &amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC33&quot;&gt;                    &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;lt;/form&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC34&quot;&gt;                    &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;lt;iframe style=&amp;#39;display:none;&amp;#39; name=&amp;#39;imageFrame&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;#39; id=&amp;#39;J_UploadFrame&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;#39;&amp;gt;&amp;lt;/iframe&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC35&quot;&gt;&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC36&quot;&gt;            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;form&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;str_form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC37&quot;&gt;            &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC38&quot;&gt;            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;wrap&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#inputWrap&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC39&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;input&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#inputFile&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC40&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;handle&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;browser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;msie&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;onpropertychange&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;change&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC41&quot;&gt;            &lt;span class=&quot;nx&quot;&gt;wrap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;css&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC42&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;absolute&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC43&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;height&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC44&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;width&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC45&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;overflow&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;hidden&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC46&quot;&gt;                &lt;span class=&quot;s1&quot;&gt;&amp;#39;z-index&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;999999&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC47&quot;&gt;            &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC48&quot;&gt;            &lt;span class=&quot;nx&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;css&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC49&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;position&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;absolute&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC50&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;right&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC51&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;top&lt;/span&gt;      &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC52&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;cursor&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;pointer&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC53&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;opacity&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC54&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;filter&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;alpha(opacity = 0)&amp;#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC55&quot;&gt;            &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC56&quot;&gt;&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC57&quot;&gt;            &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bindButton&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC58&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;$this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;mousemove&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;moveHandle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC59&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;wrap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;css&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC60&quot;&gt;                    &lt;span class=&quot;s1&quot;&gt;&amp;#39;left&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;-100px&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC61&quot;&gt;                    &lt;span class=&quot;s1&quot;&gt;&amp;#39;top&amp;#39;&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;-100px&amp;#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC62&quot;&gt;                &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC63&quot;&gt;            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC64&quot;&gt;            &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;unbindButton&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC65&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;$this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;unbind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;mousemove&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;moveHandle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC66&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;wrap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;css&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC67&quot;&gt;                    &lt;span class=&quot;s1&quot;&gt;&amp;#39;left&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;-100px&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC68&quot;&gt;                    &lt;span class=&quot;s1&quot;&gt;&amp;#39;top&amp;#39;&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;-100px&amp;#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC69&quot;&gt;                &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC70&quot;&gt;            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC71&quot;&gt;            &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;moveHandle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC72&quot;&gt;                &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;st&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pageYOffset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;||&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;documentElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;scrollTop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;scrollTop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC73&quot;&gt;                    &lt;span class=&quot;nx&quot;&gt;sl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pageXOffset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;||&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;documentElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;scrollLeft&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;scrollLeft&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC74&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;wrap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;css&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC75&quot;&gt;                    &lt;span class=&quot;s1&quot;&gt;&amp;#39;left&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;clientX&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sl&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;px&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC76&quot;&gt;                    &lt;span class=&quot;s1&quot;&gt;&amp;#39;top&amp;#39;&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;clientY&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;st&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;px&amp;#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC77&quot;&gt;                &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC78&quot;&gt;            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC79&quot;&gt;            &lt;span class=&quot;nx&quot;&gt;bindButton&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC80&quot;&gt;            &lt;span class=&quot;nx&quot;&gt;$this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;photoUpLoadAbort&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC81&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;resetIframe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC82&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;unbindButton&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC83&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;bindButton&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC84&quot;&gt;            &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC85&quot;&gt;&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC86&quot;&gt;            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;browser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;msie&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC87&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;handle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC88&quot;&gt;            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC89&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;handle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC90&quot;&gt;            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC91&quot;&gt;            &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC92&quot;&gt;                &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC93&quot;&gt;                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC94&quot;&gt;                    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ext&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;reg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;reg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC95&quot;&gt;                    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC96&quot;&gt;                        &lt;span class=&quot;nx&quot;&gt;ext&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;substr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC97&quot;&gt;                    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC98&quot;&gt;                    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ext&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;reg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;ext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;match&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;reg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC99&quot;&gt;                        &lt;span class=&quot;nx&quot;&gt;init_upload_form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC100&quot;&gt;                        &lt;span class=&quot;k&quot;&gt;typeof&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;ontypeerror&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;function&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;ontypeerror&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;call&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;请上传正确的图片&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC101&quot;&gt;                        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC102&quot;&gt;                    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC103&quot;&gt;&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC104&quot;&gt;                    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;typeof&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;onstart&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;function&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC105&quot;&gt;                        &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;inputVal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC106&quot;&gt;                        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;browser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;msie&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC107&quot;&gt;                            &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;v&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#inputFile&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC108&quot;&gt;                                &lt;span class=&quot;nx&quot;&gt;point&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lastIndexOf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;\\&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC109&quot;&gt;                            &lt;span class=&quot;nx&quot;&gt;inputVal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;substr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC110&quot;&gt;                            &lt;span class=&quot;c1&quot;&gt;//inputVal = data.reg&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC111&quot;&gt;                        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC112&quot;&gt;                            &lt;span class=&quot;nx&quot;&gt;inputVal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#inputFile&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC113&quot;&gt;                        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC114&quot;&gt;                        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;onstart&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;call&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;inputValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;inputVal&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC115&quot;&gt;                            &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;#imageForm&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;submit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC116&quot;&gt;                            &lt;span class=&quot;nx&quot;&gt;unbindButton&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC117&quot;&gt;                        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC118&quot;&gt;                    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC119&quot;&gt;                        &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;#imageForm&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;submit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC120&quot;&gt;                        &lt;span class=&quot;nx&quot;&gt;unbindButton&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC121&quot;&gt;                    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC122&quot;&gt;                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC123&quot;&gt;            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC124&quot;&gt;&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC125&quot;&gt;            &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;init_upload_form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC126&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;unbind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;handle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC127&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;#imageForm&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;reset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC128&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;handle&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC129&quot;&gt;            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC130&quot;&gt;            &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;resetIframe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC131&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;init_upload_form&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC132&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#J_UploadFrame&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;remove&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC133&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;body&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;lt;iframe style=&amp;#39;display:none;&amp;#39; name=&amp;#39;imageFrame&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;#39; id=&amp;#39;J_UploadFrame&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;#39;&amp;gt;&amp;lt;/iframe&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC134&quot;&gt;            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC135&quot;&gt;            &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;UPLOAD_CALLBACK_&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC136&quot;&gt;                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;substr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;1&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC137&quot;&gt;                    &lt;span class=&quot;k&quot;&gt;typeof&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;onerror&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;function&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;onerror&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;](&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;substr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC138&quot;&gt;                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC139&quot;&gt;                    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;inputVal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC140&quot;&gt;                    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;browser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;msie&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC141&quot;&gt;                        &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;v&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#inputFile&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC142&quot;&gt;                            &lt;span class=&quot;nx&quot;&gt;point&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lastIndexOf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;\\&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC143&quot;&gt;                        &lt;span class=&quot;nx&quot;&gt;inputVal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;substr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC144&quot;&gt;                    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC145&quot;&gt;                        &lt;span class=&quot;nx&quot;&gt;inputVal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#inputFile&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC146&quot;&gt;                    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC147&quot;&gt;                    &lt;span class=&quot;k&quot;&gt;typeof&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;oncomplete&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;function&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;oncomplete&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;](&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;inputValue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;inputVal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC148&quot;&gt;                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC149&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;resetIframe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC150&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;unbindButton&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC151&quot;&gt;                &lt;span class=&quot;nx&quot;&gt;bindButton&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC152&quot;&gt;            &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC153&quot;&gt;        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC154&quot;&gt;    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-jquery-upload-js-LC155&quot;&gt;&lt;span class=&quot;p&quot;&gt;})(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;jQuery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+
+          &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;div id=&quot;comments&quot; class=&quot;new-comments&quot;&gt;
+      
+    &lt;/div&gt;
+      &lt;p class=&quot;uncommentable&quot;&gt;&lt;span class=&quot;octicon octicon-alert&quot;&gt;&lt;/span&gt; Please &lt;a href=&quot;/login?return_to=/feeloc/5539213&quot; rel=&quot;nofollow&quot;&gt;sign in&lt;/a&gt; to comment on this gist.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+  &lt;div class=&quot;context-overlay&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class=&quot;slow-loading-overlay&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div id=&quot;ajax-error-message&quot; class=&quot;flash flash-error&quot;&gt;
+    &lt;div class=&quot;container&quot;&gt;
+      &lt;span class=&quot;octicon octicon-alert&quot;&gt;&lt;/span&gt;
+      Something went wrong with that request. Please try again.
+      &lt;a href=&quot;#&quot; class=&quot;octicon octicon-remove-close ajax-error-dismiss&quot;&gt;&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;footer&gt;
+    &lt;div id=&quot;footer&quot;&gt;
+  &lt;div class=&quot;container clearfix&quot;&gt;
+
+    &lt;!-- Served fresh by github-fe103-cp1-prd.iad.github.net --&gt;
+    &lt;p class=&quot;right&quot;&gt;&amp;copy; 2013 GitHub Inc. All rights reserved.&lt;/p&gt;
+    &lt;a class=&quot;left&quot; href=&quot;/&quot;&gt;
+      &lt;span class=&quot;mega-octicon octicon-mark-github&quot;&gt;&lt;/span&gt;
+    &lt;/a&gt;
+    &lt;ul id=&quot;legal&quot;&gt;
+      &lt;li&gt;&lt;a href=&quot;https://github.com/blog&quot;&gt;The GitHub Blog&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;mailto:support@github.com&quot;&gt;Support&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;https://github.com/contact&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+
+  &lt;/div&gt;&lt;!-- /.container --&gt;
+&lt;/div&gt;&lt;!-- /.#footer --&gt;
+
+  &lt;/footer&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></noscript></div>
+</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[chrome插件]]></title>
+    <link href="http://feeloc.github.io/blog/2012/09/21/chrome-plugin/"/>
+    <updated>2012-09-21T00:50:00+08:00</updated>
+    <id>http://feeloc.github.io/blog/2012/09/21/chrome-plugin</id>
+    <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/2012-09-21/1.png"></p>
+
+<blockquote><p>前阵子遇到一些繁琐的操作，需要在页面上重复填写表单，需要将数据从一个地方粘贴到表单里，数据量非常之大，此等重复劳动的工作哪是一个程序员该做的事情，
+想到了用chrome插件去帮我实现这些操作，chrome插件其实就是压缩在一起的一组文件，包括HTML，CSS，Javascript脚本，图片文件，还有其它任何需要的文件。
+应用（扩展）本质上来说就是web页面，它们可以使用所有的浏览器提供的API，从XMLHttpRequest到JSON到HTML5全都有。</p></blockquote>
+
+<!-- more -->
+
+
+<p>chrome extension有三种形式，下面着重第二种（即弹出气泡形式）去讲解一下插件的开发过程，抛砖引玉吧。</p>
+
+<h2>一、图标形插件</h2>
+
+<ul>
+<li>这个gmail提醒应用使用了browser action，它在工具栏上增加一个图标
+<img src="http://img.qihoo.com/images/2008/360chrome/img/open/gmail.png" width="700" title="'图标形插件'" >
+
+<h2>二、气泡形插件</h2></li>
+<li>这个新闻阅读应用也使用了browser action，当点击时会弹出一个气泡窗口
+<img src="http://feeloc.cn/downloads/images/2012-10-09/1.png" width="700" title="'气泡形插件'" >
+
+<h2>三、脚本形插件</h2></li>
+<li>这个地图应用使用了page action和content script（注入到页面内执行的脚本）
+<img src="http://img.qihoo.com/images/2008/360chrome/img/open/rss.png" width="700" title="'气泡形插件'" >
+
+<h2>三、插件开发过程</h2></li>
+<li>标准插件结构
+<img src="http://feeloc.cn/downloads/images/2012-10-09/2.png" width="700" title="'插件目录结构'" >
+
+<ul>
+<li>首先是manifest.json
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>配置文件-manifest.json </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span><span class="err">&lt;br/&gt;</span>
+</span><span class='line'><span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;strong&gt;&lt;strong&gt;&quot;</span><span class="p">,</span>
+</span><span class='line'><span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.1&quot;</span><span class="p">,</span>
+</span><span class='line'><span class="nt">&quot;manifest_version&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>    <span class="err">//这是chrome新版插件必须要加上的</span>
+</span><span class='line'><span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;/strong&gt;&lt;/strong&gt;&quot;</span><span class="p">,</span>
+</span><span class='line'><span class="nt">&quot;permissions&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;tabs&quot;</span><span class="p">,</span> <span class="s2">&quot;http://&lt;em&gt;/&lt;/em&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;https://&lt;em&gt;/&lt;/em&gt;&quot;</span><span class="p">],</span> <span class="err">//对该</span> <span class="err">类型的全部注入脚本</span>
+</span><span class='line'><span class="nt">&quot;browser_action&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'><span class="nt">&quot;default_icon&quot;</span><span class="p">:</span> <span class="s2">&quot;images/icon.png&quot;</span> <span class="p">,</span> <span class="err">//小图标</span>
+</span><span class='line'><span class="nt">&quot;default_title&quot;</span><span class="p">:</span> <span class="s2">&quot;***&quot;</span><span class="p">,</span>
+</span><span class='line'><span class="nt">&quot;default_popup&quot;</span><span class="p">:</span> <span class="s2">&quot;popup.html&quot;</span>   <span class="err">//弹出的气泡页面</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></li>
+<li>在该插件中弹出的页面是一个非常简单的，包含一个文本框，一个checkbox，和一个按钮，<code>注意：不需要包含完整的html结构</code>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>弹出窗口-popup.html </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=utf-8&quot;</span> <span class="nt">/&gt;&lt;/li&gt;</span>
+</span><span class='line'><span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'><span class="nt">&lt;/li&gt;</span>
+</span><span class='line'><span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;javascript/background.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;textarea</span> <span class="na">id=</span><span class="s">&quot;excel&quot;</span> <span class="na">rows=</span><span class="s">&quot;30&quot;</span><span class="nt">&gt;&lt;/textarea&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;submit&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span> <span class="na">id=</span><span class="s">&quot;laogong&quot;</span> <span class="na">value=</span><span class="s">&quot;爽一下&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">id=</span><span class="s">&quot;paixu&quot;</span> <span class="nt">/&gt;</span>给我排
+</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<pre><code>*   从弹出窗口的页面可以看出引入了一个js文件，这个js文件是整个插件的入口，定义了需要注入到页面的脚本 代码，还有页面上的交互事件，就是些chrome提供的接口和原生js操作
+</code></pre>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>background.js </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">click</span><span class="p">()</span> <span class="p">{</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">tabs</span><span class="p">.</span><span class="nx">getSelected</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">tab</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">port</span> <span class="o">=</span> <span class="nx">chrome</span><span class="p">.</span><span class="nx">tabs</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">tab</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">name</span> <span class="o">:</span> <span class="s2">&quot;excel&quot;</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>    <span class="nx">port</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">({</span>
+</span><span class='line'>        <span class="nx">excel</span> <span class="o">:</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;excel&#39;</span><span class="p">).</span><span class="nx">value</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">paixu</span> <span class="o">:</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;paixu&#39;</span><span class="p">).</span><span class="nx">checked</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'><span class="c1">// window.close();</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;DOMContentLoaded&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;laogong&#39;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="nx">click</span><span class="p">);</span>
+</span><span class='line'><span class="nx">chrome</span><span class="p">.</span><span class="nx">tabs</span><span class="p">.</span><span class="nx">executeScript</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">file</span> <span class="o">:</span> <span class="s2">&quot;javascript/function.js&quot;</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<pre><code>*   从backgrond.js中可以看出向页面中注入了function.js文件，该文件中包含详细的用户交互过程，主要是插件和网站页面间的交互。
+</code></pre>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>background.js </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">chrome</span><span class="p">.</span><span class="nx">extension</span><span class="p">.</span><span class="nx">onConnect</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">port</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">port</span><span class="p">.</span><span class="nx">onMessage</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">lines</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">excel</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/(^\s*)|(\s*$)/g</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">).</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;\n&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="err">……省略若干代码……</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<pre><code>*   该 插件主要涉及的就是插件向页面发送数据，但用户点击了按钮，插件就会用刚才创建的通道，传送两个灵气给页面上注入的js文件，该 js文件实现了一个监听器，该 监听器收到 消息后就可以像在页面上写js代码一样方便操作了
+</code></pre>
+
+<ul>
+<li>了解了这些，加上配合chrome extension，再加上大家丰富的想像力就可以 写出各种有用的方便我们工作生活的插件了，比如火车票定标插件，比如360的夺宝岛插件……</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[排序算法总结]]></title>
+    <link href="http://feeloc.github.io/blog/2012/08/03/algorithm/"/>
+    <updated>2012-08-03T20:56:00+08:00</updated>
+    <id>http://feeloc.github.io/blog/2012/08/03/algorithm</id>
+    <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/1.jpg"></p>
+
+<blockquote><p>排序算法是经常会用的，但有天晚上突然想起，大学时候学了好多的排序算法，但后来大部分都忘记了，
+只记得了一堆的名字，决定去复习下各种排序算法。</p></blockquote>
+
+<!-- more -->
+
+
+<h2>一、冒泡排序</h2>
+
+<ul>
+<li>基本思想：就是像泡泡一样，从下往上冒，相邻两个数依次进行比较和调整
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>冒泡排序-bubbleSort.java </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">bubbleSort</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">array</span><span class="o">[]</span> <span class="o">=</span> <span class="o">{</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">21</span><span class="o">,</span> <span class="mi">89</span><span class="o">,</span> <span class="mi">30</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">22</span><span class="o">,</span> <span class="mi">43</span><span class="o">,</span> <span class="mi">11</span><span class="o">,</span> <span class="mi">9</span><span class="o">,</span> <span class="mi">19</span><span class="o">,</span> <span class="mi">3</span> <span class="o">};</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">array</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">&amp;</span><span class="n">gt</span><span class="o">;=</span> <span class="n">array</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">])</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">temp</span> <span class="o">=</span> <span class="n">array</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+</span><span class='line'>        <span class="n">array</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">array</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">];</span>
+</span><span class='line'>        <span class="n">array</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">temp</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">array</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">a</span> <span class="o">+</span> <span class="s">&quot;,&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+</ul>
+
+
+<h2>二、快速排序</h2>
+
+<ul>
+<li>基本思想：选择一个基准元素,通常选择第一个元素或者最后一个元素,通过一趟扫描，将待排序列分成两部分,一部分比基准元素小,一部分大于等于基准元素,此时基准元素在其排好序后的正确位置,然后再用同样的方法递归地排序划分的两部分。
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>快速排序-QuickSort.java </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">QuickSort</span> <span class="o">{</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">a</span><span class="o">[]</span> <span class="o">=</span> <span class="o">{</span> <span class="mi">49</span><span class="o">,</span> <span class="mi">38</span><span class="o">,</span> <span class="mi">65</span><span class="o">,</span> <span class="mi">97</span><span class="o">,</span> <span class="mi">76</span><span class="o">,</span> <span class="mi">13</span><span class="o">,</span> <span class="mi">27</span><span class="o">,</span> <span class="mi">49</span><span class="o">,</span> <span class="mi">78</span><span class="o">,</span> <span class="mi">34</span><span class="o">,</span> <span class="mi">12</span><span class="o">,</span> <span class="mi">64</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">62</span><span class="o">,</span> <span class="mi">99</span><span class="o">,</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="mi">98</span><span class="o">,</span> <span class="mi">54</span><span class="o">,</span> <span class="mi">56</span><span class="o">,</span> <span class="mi">17</span><span class="o">,</span> <span class="mi">18</span><span class="o">,</span> <span class="mi">23</span><span class="o">,</span> <span class="mi">34</span><span class="o">,</span> <span class="mi">15</span><span class="o">,</span> <span class="mi">35</span><span class="o">,</span> <span class="mi">25</span><span class="o">,</span> <span class="mi">53</span><span class="o">,</span> <span class="mi">51</span> <span class="o">};</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="nf">QuickSort</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">quick</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+</span><span class='line'><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;\n&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">temp</span> <span class="o">:</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">temp</span> <span class="o">+</span> <span class="s">&quot;,&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kt">int</span> <span class="n">getMiddle</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">list</span><span class="o">,</span> <span class="kt">int</span> <span class="n">low</span><span class="o">,</span> <span class="kt">int</span> <span class="n">high</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">list</span><span class="o">[</span><span class="n">low</span><span class="o">];</span> <span class="c1">// 数组的第一个作为中轴</span>
+</span><span class='line'><span class="k">while</span> <span class="o">(</span><span class="n">low</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span> <span class="n">high</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">while</span> <span class="o">(</span><span class="n">low</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span> <span class="n">high</span> <span class="o">&amp;</span><span class="n">amp</span><span class="o">;&amp;</span><span class="n">amp</span><span class="o">;</span> <span class="n">list</span><span class="o">[</span><span class="n">high</span><span class="o">]</span> <span class="o">&amp;</span><span class="n">gt</span><span class="o">;=</span> <span class="n">tmp</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">high</span><span class="o">--;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">list</span><span class="o">[</span><span class="n">low</span><span class="o">]</span> <span class="o">=</span> <span class="n">list</span><span class="o">[</span><span class="n">high</span><span class="o">];</span> <span class="c1">// 比中轴小的记录移到低端</span>
+</span><span class='line'>    <span class="k">while</span> <span class="o">(</span><span class="n">low</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span> <span class="n">high</span> <span class="o">&amp;</span><span class="n">amp</span><span class="o">;&amp;</span><span class="n">amp</span><span class="o">;</span> <span class="n">list</span><span class="o">[</span><span class="n">low</span><span class="o">]</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;=</span> <span class="n">tmp</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">low</span><span class="o">++;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">list</span><span class="o">[</span><span class="n">high</span><span class="o">]</span> <span class="o">=</span> <span class="n">list</span><span class="o">[</span><span class="n">low</span><span class="o">];</span> <span class="c1">// 比中轴大的记录移到高端</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="n">list</span><span class="o">[</span><span class="n">low</span><span class="o">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">;</span> <span class="c1">// 中轴记录到尾</span>
+</span><span class='line'><span class="k">return</span> <span class="n">low</span><span class="o">;</span> <span class="c1">// 返回中轴的位置</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kt">void</span> <span class="n">_quickSort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">list</span><span class="o">,</span> <span class="kt">int</span> <span class="n">low</span><span class="o">,</span> <span class="kt">int</span> <span class="n">high</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">(</span><span class="n">low</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span> <span class="n">high</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">middle</span> <span class="o">=</span> <span class="n">getMiddle</span><span class="o">(</span><span class="n">list</span><span class="o">,</span> <span class="n">low</span><span class="o">,</span> <span class="n">high</span><span class="o">);</span> <span class="c1">// 将list数组进行一分为二</span>
+</span><span class='line'>    <span class="n">_quickSort</span><span class="o">(</span><span class="n">list</span><span class="o">,</span> <span class="n">low</span><span class="o">,</span> <span class="n">middle</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span> <span class="c1">// 对低字表进行递归排序</span>
+</span><span class='line'>    <span class="n">_quickSort</span><span class="o">(</span><span class="n">list</span><span class="o">,</span> <span class="n">middle</span> <span class="o">+</span> <span class="mi">1</span><span class="o">,</span> <span class="n">high</span><span class="o">);</span> <span class="c1">// 对高字表进行递归排序</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kt">void</span> <span class="n">quick</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">a2</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">(</span><span class="n">a2</span><span class="o">.</span><span class="na">length</span> <span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// 查看数组是否为空</span>
+</span><span class='line'>    <span class="n">_quickSort</span><span class="o">(</span><span class="n">a2</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">a2</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+</ul>
+
+
+<h2>三、归并排序</h2>
+
+<ul>
+<li>基本排序：归并（Merge）排序法是将两个（或两个以上）有序表合并成一个新的有序表，即把待排序序列分为若干个子序列，每个子序列是有序的。然后再把有序子序列合并为整体有序序列。
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>MergingSort.java</span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.util.Arrays</span><span class="o">;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MergingSort</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kt">int</span> <span class="n">a</span><span class="o">[]</span> <span class="o">=</span> <span class="o">{</span> <span class="mi">49</span><span class="o">,</span> <span class="mi">38</span><span class="o">,</span> <span class="mi">65</span><span class="o">,</span> <span class="mi">97</span><span class="o">,</span> <span class="mi">76</span><span class="o">,</span> <span class="mi">13</span><span class="o">,</span> <span class="mi">27</span><span class="o">,</span> <span class="mi">49</span><span class="o">,</span> <span class="mi">78</span><span class="o">,</span> <span class="mi">34</span><span class="o">,</span> <span class="mi">12</span><span class="o">,</span> <span class="mi">64</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">62</span><span class="o">,</span> <span class="mi">99</span><span class="o">,</span>
+</span><span class='line'>        <span class="mi">98</span><span class="o">,</span> <span class="mi">54</span><span class="o">,</span> <span class="mi">56</span><span class="o">,</span> <span class="mi">17</span><span class="o">,</span> <span class="mi">18</span><span class="o">,</span> <span class="mi">23</span><span class="o">,</span> <span class="mi">34</span><span class="o">,</span> <span class="mi">15</span><span class="o">,</span> <span class="mi">35</span><span class="o">,</span> <span class="mi">25</span><span class="o">,</span> <span class="mi">53</span><span class="o">,</span> <span class="mi">51</span> <span class="o">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="nf">MergingSort</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;\n&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]+</span><span class="s">&quot;,&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">data</span><span class="o">,</span> <span class="kt">int</span> <span class="n">left</span><span class="o">,</span> <span class="kt">int</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">left</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// 找出中间索引</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">center</span> <span class="o">=</span> <span class="o">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+</span><span class='line'>        <span class="c1">// 对左边数组进行递归</span>
+</span><span class='line'>        <span class="n">sort</span><span class="o">(</span><span class="n">data</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">center</span><span class="o">);</span>
+</span><span class='line'>        <span class="c1">// 对右边数组进行递归</span>
+</span><span class='line'>        <span class="n">sort</span><span class="o">(</span><span class="n">data</span><span class="o">,</span> <span class="n">center</span> <span class="o">+</span> <span class="mi">1</span><span class="o">,</span> <span class="n">right</span><span class="o">);</span>
+</span><span class='line'>        <span class="c1">// 合并</span>
+</span><span class='line'>        <span class="n">merge</span><span class="o">(</span><span class="n">data</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">center</span><span class="o">,</span> <span class="n">right</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">merge</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">data</span><span class="o">,</span> <span class="kt">int</span> <span class="n">left</span><span class="o">,</span> <span class="kt">int</span> <span class="n">center</span><span class="o">,</span> <span class="kt">int</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">int</span><span class="o">[]</span> <span class="n">tmpArr</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">data</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">center</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>    <span class="c1">// third记录中间数组的索引</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">third</span> <span class="o">=</span> <span class="n">left</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">left</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">while</span> <span class="o">(</span><span class="n">left</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;=</span> <span class="n">center</span> <span class="o">&amp;</span><span class="n">amp</span><span class="o">;&amp;</span><span class="n">amp</span><span class="o">;</span> <span class="n">mid</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;=</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// 从两个数组中取出最小的放入中间数组</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">data</span><span class="o">[</span><span class="n">left</span><span class="o">]</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;=</span> <span class="n">data</span><span class="o">[</span><span class="n">mid</span><span class="o">])</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">tmpArr</span><span class="o">[</span><span class="n">third</span><span class="o">++]</span> <span class="o">=</span> <span class="n">data</span><span class="o">[</span><span class="n">left</span><span class="o">++];</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">tmpArr</span><span class="o">[</span><span class="n">third</span><span class="o">++]</span> <span class="o">=</span> <span class="n">data</span><span class="o">[</span><span class="n">mid</span><span class="o">++];</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="c1">// 剩余部分依次放入中间数组</span>
+</span><span class='line'>    <span class="k">while</span> <span class="o">(</span><span class="n">mid</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;=</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">tmpArr</span><span class="o">[</span><span class="n">third</span><span class="o">++]</span> <span class="o">=</span> <span class="n">data</span><span class="o">[</span><span class="n">mid</span><span class="o">++];</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">while</span> <span class="o">(</span><span class="n">left</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;=</span> <span class="n">center</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">tmpArr</span><span class="o">[</span><span class="n">third</span><span class="o">++]</span> <span class="o">=</span> <span class="n">data</span><span class="o">[</span><span class="n">left</span><span class="o">++];</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="c1">// 将中间数组中的内容复制回原数组</span>
+</span><span class='line'>    <span class="k">while</span> <span class="o">(</span><span class="n">tmp</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;=</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">data</span><span class="o">[</span><span class="n">tmp</span><span class="o">]</span> <span class="o">=</span> <span class="n">tmpArr</span><span class="o">[</span><span class="n">tmp</span><span class="o">++];</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+</feed>

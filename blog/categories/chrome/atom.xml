@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[["Octopress", "javascript", "Android", "GitHub", "Helloworld", "jamendo", "music", "mootools", "java", "maven", "project", "chrome", "随笔", "面试", "环境搭建", "封装", "算法"]chrome | feeloc's 杂货铺]]></title>
+  <link href="http://feeloc.github.io/blog/categories/chrome/atom.xml" rel="self"/>
+  <link href="http://feeloc.github.io/"/>
+  <updated>2013-11-12T18:59:58+08:00</updated>
+  <id>http://feeloc.github.io/</id>
+  <author>
+    <name><![CDATA[feeloc]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[chrome插件]]></title>
+    <link href="http://feeloc.github.io/blog/2012/09/21/chrome-plugin/"/>
+    <updated>2012-09-21T00:50:00+08:00</updated>
+    <id>http://feeloc.github.io/blog/2012/09/21/chrome-plugin</id>
+    <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/2012-09-21/1.png"></p>
+
+<blockquote><p>前阵子遇到一些繁琐的操作，需要在页面上重复填写表单，需要将数据从一个地方粘贴到表单里，数据量非常之大，此等重复劳动的工作哪是一个程序员该做的事情，
+想到了用chrome插件去帮我实现这些操作，chrome插件其实就是压缩在一起的一组文件，包括HTML，CSS，Javascript脚本，图片文件，还有其它任何需要的文件。
+应用（扩展）本质上来说就是web页面，它们可以使用所有的浏览器提供的API，从XMLHttpRequest到JSON到HTML5全都有。</p></blockquote>
+
+<!-- more -->
+
+
+<p>chrome extension有三种形式，下面着重第二种（即弹出气泡形式）去讲解一下插件的开发过程，抛砖引玉吧。</p>
+
+<h2>一、图标形插件</h2>
+
+<ul>
+<li>这个gmail提醒应用使用了browser action，它在工具栏上增加一个图标
+<img src="http://img.qihoo.com/images/2008/360chrome/img/open/gmail.png" width="700" title="'图标形插件'" >
+
+<h2>二、气泡形插件</h2></li>
+<li>这个新闻阅读应用也使用了browser action，当点击时会弹出一个气泡窗口
+<img src="http://feeloc.cn/downloads/images/2012-10-09/1.png" width="700" title="'气泡形插件'" >
+
+<h2>三、脚本形插件</h2></li>
+<li>这个地图应用使用了page action和content script（注入到页面内执行的脚本）
+<img src="http://img.qihoo.com/images/2008/360chrome/img/open/rss.png" width="700" title="'气泡形插件'" >
+
+<h2>三、插件开发过程</h2></li>
+<li>标准插件结构
+<img src="http://feeloc.cn/downloads/images/2012-10-09/2.png" width="700" title="'插件目录结构'" >
+
+<ul>
+<li>首先是manifest.json
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>配置文件-manifest.json </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span><span class="err">&lt;br/&gt;</span>
+</span><span class='line'><span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;strong&gt;&lt;strong&gt;&quot;</span><span class="p">,</span>
+</span><span class='line'><span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.1&quot;</span><span class="p">,</span>
+</span><span class='line'><span class="nt">&quot;manifest_version&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>    <span class="err">//这是chrome新版插件必须要加上的</span>
+</span><span class='line'><span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;/strong&gt;&lt;/strong&gt;&quot;</span><span class="p">,</span>
+</span><span class='line'><span class="nt">&quot;permissions&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;tabs&quot;</span><span class="p">,</span> <span class="s2">&quot;http://&lt;em&gt;/&lt;/em&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;https://&lt;em&gt;/&lt;/em&gt;&quot;</span><span class="p">],</span> <span class="err">//对该</span> <span class="err">类型的全部注入脚本</span>
+</span><span class='line'><span class="nt">&quot;browser_action&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'><span class="nt">&quot;default_icon&quot;</span><span class="p">:</span> <span class="s2">&quot;images/icon.png&quot;</span> <span class="p">,</span> <span class="err">//小图标</span>
+</span><span class='line'><span class="nt">&quot;default_title&quot;</span><span class="p">:</span> <span class="s2">&quot;***&quot;</span><span class="p">,</span>
+</span><span class='line'><span class="nt">&quot;default_popup&quot;</span><span class="p">:</span> <span class="s2">&quot;popup.html&quot;</span>   <span class="err">//弹出的气泡页面</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></li>
+<li>在该插件中弹出的页面是一个非常简单的，包含一个文本框，一个checkbox，和一个按钮，<code>注意：不需要包含完整的html结构</code>
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>弹出窗口-popup.html </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=utf-8&quot;</span> <span class="nt">/&gt;&lt;/li&gt;</span>
+</span><span class='line'><span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'><span class="nt">&lt;/li&gt;</span>
+</span><span class='line'><span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;javascript/background.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;content&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;textarea</span> <span class="na">id=</span><span class="s">&quot;excel&quot;</span> <span class="na">rows=</span><span class="s">&quot;30&quot;</span><span class="nt">&gt;&lt;/textarea&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;submit&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span> <span class="na">id=</span><span class="s">&quot;laogong&quot;</span> <span class="na">value=</span><span class="s">&quot;爽一下&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">id=</span><span class="s">&quot;paixu&quot;</span> <span class="nt">/&gt;</span>给我排
+</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<pre><code>*   从弹出窗口的页面可以看出引入了一个js文件，这个js文件是整个插件的入口，定义了需要注入到页面的脚本 代码，还有页面上的交互事件，就是些chrome提供的接口和原生js操作
+</code></pre>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>background.js </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">click</span><span class="p">()</span> <span class="p">{</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">tabs</span><span class="p">.</span><span class="nx">getSelected</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">tab</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">port</span> <span class="o">=</span> <span class="nx">chrome</span><span class="p">.</span><span class="nx">tabs</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">tab</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">name</span> <span class="o">:</span> <span class="s2">&quot;excel&quot;</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>    <span class="nx">port</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">({</span>
+</span><span class='line'>        <span class="nx">excel</span> <span class="o">:</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;excel&#39;</span><span class="p">).</span><span class="nx">value</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">paixu</span> <span class="o">:</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;paixu&#39;</span><span class="p">).</span><span class="nx">checked</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'><span class="c1">// window.close();</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;DOMContentLoaded&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;laogong&#39;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="nx">click</span><span class="p">);</span>
+</span><span class='line'><span class="nx">chrome</span><span class="p">.</span><span class="nx">tabs</span><span class="p">.</span><span class="nx">executeScript</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">file</span> <span class="o">:</span> <span class="s2">&quot;javascript/function.js&quot;</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<pre><code>*   从backgrond.js中可以看出向页面中注入了function.js文件，该文件中包含详细的用户交互过程，主要是插件和网站页面间的交互。
+</code></pre>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>background.js </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">chrome</span><span class="p">.</span><span class="nx">extension</span><span class="p">.</span><span class="nx">onConnect</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">port</span><span class="p">)</span> <span class="p">{</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">port</span><span class="p">.</span><span class="nx">onMessage</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">lines</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">excel</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/(^\s*)|(\s*$)/g</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">).</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;\n&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="err">……省略若干代码……</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<pre><code>*   该 插件主要涉及的就是插件向页面发送数据，但用户点击了按钮，插件就会用刚才创建的通道，传送两个灵气给页面上注入的js文件，该 js文件实现了一个监听器，该 监听器收到 消息后就可以像在页面上写js代码一样方便操作了
+</code></pre>
+
+<ul>
+<li>了解了这些，加上配合chrome extension，再加上大家丰富的想像力就可以 写出各种有用的方便我们工作生活的插件了，比如火车票定标插件，比如360的夺宝岛插件……</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

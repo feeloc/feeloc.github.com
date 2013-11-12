@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Popup</title>
+    <script src="source/moo.js"></script>
+    <script src="source/switchable.js"></script>
+	<link rel="stylesheet" href="reset.css" type="text/css" /> 
+</head>
+<body>
+    <style>
+        body{margin:20px;}
+        .popup-container {position: absolute; margin: 0; padding: 0; z-index:65531; background-color:#FFFFFF; display:none;}
+.popup-body {border: 1px solid #999; background: #FFF; box-shadow: 0 0 8px 1px #aaa;-webkit-box-shadow: 0 0 8px 1px #aaa;-moz-box-shadow: 0 0 8px 0 #aaa;}
+.popup-header {background: #F0F0F0 /* url(repeatX.png) repeat-x 0 0 */;border:1px solid #fff;height:20px; line-height:20px; color: #333333; padding:1px; overflow:hidden; _zoom:1; background-image:linear-gradient(0% 50% 270deg, #F3F3F3,#EBEBEB);background-image: -webkit-gradient(linear,0% 0%, 0% 100%, from(#F3F3F3), to(#EBEBEB));background-image:-webkit-linear-gradient(0% 50% 270deg, #F3F3F3,#EBEBEB);background-image:-moz-linear-gradient(0% 50% 270deg, #F3F3F3,#EBEBEB);filter:progid:DXImageTransform.Microsoft.gradient(enabled='true',startColorstr='#FFf3f3f3', endColorstr='#FFebebeb')\9;}
+.popup-header h2 {padding-left:6px;margin:0;float:left; font-size:14px;white-space:normal;overflow:hidden; text-shadow:1px 1px 0 #fff;-moz-text-shadow:1px 1px 0 #fff;-webkit-text-shadow:1px 1px 0 #fff;}
+.popup-header span{display:block;float:right; _width:48px; _text-align:right; _zoom:1;}
+.popup-header span button{cursor:pointer;border:0 none; padding:0; margin:0; height:16px; width:16px; overflow:hidden; text-indent:-26px;}
+.popup-header button.popup-btn-close {margin:2px 2px 0 0; background:url(icons.png) no-repeat;}
+.popup-header button.popup-btn-maximize {margin:2px 2px 0 0; background:url(icons.png) no-repeat -16px 0;}
+.popup-content {padding:5px;border-top:1px solid #ddd;}
+.popup-content .loading {text-align:center; line-height:22px; background:url(loading.gif) no-repeat center bottom; height:55px; display:block;}
+.popup-modalMask {height: 100%; width: 100%; position: absolute; left: 0; top: 0; filter: alpha(opacity=30); opacity:0.3; background: #777; z-index:65530; display:none;}
+.popup-content .spec-pic { width:95px;float:left; margin:0 5px 0 0; text-align:center }
+.popup-content .spec-pic img { height:84px; width:80px;margin-bottom:6px}
+.popup-content .goods-spec .content-curr { display:block; background:#efefef; z-index:20; border-color:#333; width:175px; margin-top:30px; *margin-top:-4px;}
+.popup-content .buybtn{clear:both;overflow:hidden;}
+
+
+    </style>
+    <div>
+        <p>
+            <h1>Popup:</h1>
+        </p>
+    </div>
+    <div id="demo5">
+        <a class="trigger" href="#">弹开窗口</a>
+        <div class="Auto_Widget" data-widget-type="Popup" data-widget-config="{trigger:'.trigger',width:200,modal:true}" style="display:none;">
+            <div class="dialog">
+                demo
+            </div>
+        </div>
+    </div>
+<div class="code" style="margin-top:20px;">
+    <h2>code:</h2>
+    <pre>
+&lt;div class="Auto_Widget"  data-widget-type="Popup" data-widget-config="{trigger:'.trigger',width:200,modal:true}"&gt;
+    &lt;!--  code  -- &gt; 
+&lt;/div&gt; 
+    </pre>
+</div>
+</body>
+</html>

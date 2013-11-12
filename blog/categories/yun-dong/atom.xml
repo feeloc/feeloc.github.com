@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[["Octopress", "javascript", "Android", "GitHub", "Helloworld", "jamendo", "music", "mootools", "java", "maven", "project", "chrome", "随笔", "面试", "环境搭建", "封装", "算法"]运动 | feeloc's 杂货铺]]></title>
+  <link href="http://feeloc.github.io/blog/categories/yun-dong/atom.xml" rel="self"/>
+  <link href="http://feeloc.github.io/"/>
+  <updated>2013-11-12T18:59:58+08:00</updated>
+  <id>http://feeloc.github.io/</id>
+  <author>
+    <name><![CDATA[feeloc]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[元素任意路径运动]]></title>
+    <link href="http://feeloc.github.io/blog/2013/05/21/circle-path/"/>
+    <updated>2013-05-21T18:58:00+08:00</updated>
+    <id>http://feeloc.github.io/blog/2013/05/21/circle-path</id>
+    <content type="html"><![CDATA[<p><img src="http://www.feeloc.cn/downloads/images/2013-05-21/path.jpg" width="800"></p>
+
+<blockquote><p>元素运动很常见，这次总结一些运动轨迹，其实就是复习下各种数学公式，先从圆形运动开始全文。</p></blockquote>
+
+<!-- more -->
+
+
+<h2>一、圆形运动</h2>
+
+<ul>
+<li>圆形运动比较简单，就是圆心，弧度，正弦，余弦，复习下概念
+
+<ul>
+<li>弧度，<code>弧度是角的度量单位</code>，弧长等于半径的弧，其所对的圆心角为1弧度。(即两条射线从圆心向圆周射出，形成一个夹角和夹角正对的一段弧。当这段弧长正好等于圆的半径时，两条射线的夹角的弧度为1)。</li>
+<li>根据定义，一周的弧度数为2πr/r=2π，360°角=2π弧度，因此，1弧度约为57.3°，即57°17’44.806”，<code>1°为π/180弧度</code>，近似值为0.01745弧度，周角为2π弧度，平角（即180°角）为π弧度，直角为π/2弧度。</li>
+<li><code>弧长=n2πr/360</code> （在这里n就是角度数，即圆心角n所对应的弧长。）</li>
+<li>正弦值：弦值是在直角三角形中,对边的长比上斜边的长的值。</li>
+<li><code>Math.sin(x)</code> : X 必需。一个以弧度表示的角。将角度乘以 0.017453293 （2PI/360）即可转换为弧度。</li>
+<li>余弦值:是指直角三角形锐角邻边与斜边的比值。</li>
+<li><code>Math.sin(x)</code> : X 必需。一个以弧度表示的角。将角度乘以 0.017453293 （2PI/360）即可转换为弧度。</li>
+</ul>
+</li>
+<li>静态圆形元素
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>main.js </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">//中心点横坐标</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">dotLeft</span> <span class="o">=</span> <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-content&#39;</span><span class="p">).</span><span class="nx">width</span><span class="p">()</span> <span class="o">-</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-dot&#39;</span><span class="p">).</span><span class="nx">width</span><span class="p">())</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'><span class="c1">//中心点纵坐标</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">dotTop</span> <span class="o">=</span> <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-content&#39;</span><span class="p">).</span><span class="nx">height</span><span class="p">()</span> <span class="o">-</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-dot&#39;</span><span class="p">).</span><span class="nx">height</span><span class="p">())</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'><span class="c1">//半径</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">radius</span> <span class="o">=</span> <span class="mi">105</span><span class="p">;</span>
+</span><span class='line'><span class="c1">//每一个BOX对应的角度;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">avd</span> <span class="o">=</span> <span class="mi">360</span> <span class="o">/</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-box&#39;</span><span class="p">).</span><span class="nx">length</span><span class="p">;</span>
+</span><span class='line'><span class="c1">//每一个BOX对应的弧度;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">ahd</span> <span class="o">=</span> <span class="nx">avd</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span> <span class="o">/</span> <span class="mi">180</span><span class="p">;</span>
+</span><span class='line'><span class="c1">//设置圆的中心点的位置</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.select-dot&quot;</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span><span class="s1">&#39;left&#39;</span><span class="o">:</span> <span class="nx">dotLeft</span><span class="p">,</span> <span class="s1">&#39;top&#39;</span><span class="o">:</span> <span class="nx">dotTop</span><span class="p">});</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.select-box&quot;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span><span class="s2">&quot;left&quot;</span><span class="o">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">((</span><span class="mi">36</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span> <span class="o">/</span> <span class="mi">180</span> <span class="o">+</span> <span class="nx">ahd</span> <span class="o">*</span> <span class="nx">index</span><span class="p">))</span> <span class="o">*</span> <span class="nx">radius</span> <span class="o">+</span> <span class="nx">dotLeft</span><span class="p">,</span> <span class="s2">&quot;top&quot;</span><span class="o">:</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">((</span><span class="mi">36</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span> <span class="o">/</span> <span class="mi">180</span> <span class="o">+</span> <span class="nx">ahd</span> <span class="o">*</span> <span class="nx">index</span><span class="p">))</span> <span class="o">*</span> <span class="nx">radius</span> <span class="o">+</span> <span class="nx">dotTop</span><span class="p">});</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="nx">index</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></li>
+<li>增加运动
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>main.js </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-box&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">$root</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">iCurrent</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">$root</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">));</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">iBig</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-box&#39;</span><span class="p">).</span><span class="nx">index</span><span class="p">(</span><span class="nx">$root</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="mi">600</span><span class="p">;</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.select-box&#39;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="kd">var</span> <span class="nx">path</span><span class="p">;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">oldIndex</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">));</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">iCurrent</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">time</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">time</span> <span class="o">=</span> <span class="mi">600</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="nx">oldIndex</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="nx">iCurrent</span><span class="p">));</span>
+</span><span class='line'><span class="nx">path</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">path</span><span class="p">.</span><span class="nx">arc</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">center</span><span class="o">:</span> <span class="p">[</span><span class="nx">dotLeft</span><span class="p">,</span> <span class="nx">dotTop</span><span class="p">],</span>
+</span><span class='line'>    <span class="nx">radius</span><span class="o">:</span> <span class="nx">radius</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">start</span><span class="o">:</span> <span class="mi">36</span> <span class="o">+</span> <span class="nx">oldIndex</span> <span class="o">*</span> <span class="nx">avd</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">end</span><span class="o">:</span> <span class="mi">36</span> <span class="o">+</span> <span class="p">(</span><span class="nx">oldIndex</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">-</span> <span class="nx">iCurrent</span><span class="p">))</span> <span class="o">*</span> <span class="nx">avd</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">dir</span><span class="o">:</span> <span class="mi">1</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">stop</span><span class="p">().</span><span class="nx">animate</span><span class="p">({</span><span class="nx">path</span><span class="o">:</span> <span class="nx">path</span><span class="p">},</span> <span class="mi">500</span><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+</ul>
+
+
+<iframe src="http://www.feeloc.cn/demo/move/move.html" width="800px" height="370px"></iframe>
+
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Accordion Example 3</title>
+    <script src="source/moo.js"></script>
+    <script src="source/switchable.js"></script>
+	<link rel="stylesheet" href="reset.css" type="text/css" /> 
+</head>
+<body>
+    <div>
+        <p>
+            <h1>Accordion Example 3:</h1>
+        </p>
+    </div>
+<style>
+#accordion3 .switchable-trigger{width:17px;height:84px;background:url(assets/icon.gif) no-repeat 0 -30px;text-align:center;padding:20px 5px 10px;cursor:pointer;}
+#accordion3 .title .selected{width:150px;height:23px;line-height:23px;padding:0;background-position:0 0;}
+#accordion3 .switchable-panel{width:148px;border:1px solid #990000;border-top:none;}
+#accordion3 .switchable-panel li{text-align:center;}
+</style>
+<div id="accordion3" class="Auto_Widget" data-widget-type="Accordion" data-widget-config="{
+		triggers:'.switchable-trigger',
+		panel:'.switchable-panel',
+		onlyTrigger:true	
+}">
+        
+		<div class="title">
+		    <h3 class="switchable-trigger selected">在线客服</h3>
+		</div>
+		<ul class="switchable-panel ">
+				<li>客服01</li>
+				<li>客服02</li>
+				<li>客服03</li>
+				<li>客服04</li>
+				<li>客服05</li>
+				<li>客服06</li>
+				<li>客服11</li>
+				<li>客服22</li>
+				<li>客服33</li>
+				<li>客服44</li>
+				<li>客服55</li>
+				<li>客服66</li>
+				<li>客服21</li>
+				<li>客服22</li>
+				<li>客服23</li>
+				<li>客服24</li>
+				<li>客服25</li>
+				<li>客服26</li>
+				<li>客服31</li>
+				<li>客服32</li>
+				<li>客服33</li>
+				<li>客服34</li>
+				<li>客服35</li>
+				<li>客服36</li>
+		</ul>
+</div>
+<div class="code" style="margin-top:20px;">
+    <h2>Dom code:</h2>
+<pre>
+&lt;div id="accordion3" class="Auto_Widget" data-widget-type="Accordion" data-widget-config="{
+		triggers:'.switchable-trigger',
+		panel:'.switchable-panel',
+		onlyTrigger:true	
+	}"&gt;      
+		&lt;div class="title"&gt;
+		    &lt;h3 class="switchable-trigger selected"&gt;在线客服&lt;/h3&gt;
+		&lt;/div&gt;
+		&lt;ul class="switchable-panel "&gt;
+			&lt;li&gt;客服01&lt;/li&gt;
+			&lt;li&gt;客服02&lt;/li&gt;
+			&lt;!--  省去N个客服  --&gt;
+			&lt;li&gt;客服33&lt;/li&gt;
+			&lt;li&gt;客服34&lt;/li&gt;
+			&lt;li&gt;客服35&lt;/li&gt;
+			&lt;li&gt;客服36&lt;/li&gt;
+		&lt;/ul&gt;
+&lt;/div&gt;</pre>
+</div>
+
+
+<div class="code" style="margin-top:20px;">
+    <h2>CSS code:</h2>
+    <pre>
+#accordion3 .switchable-trigger{
+		width:17px;
+		height:84px;
+		background:url(assets/icon.gif) no-repeat 0 -30px;
+		text-align:center;
+		padding:20px 5px 10px
+		;cursor:pointer;
+	}
+#accordion3 .title .selected{
+		width:150px;
+		height:23px;
+		line-height:23px;
+		padding:0;
+		background-position:0 0;
+	}
+#accordion3 .switchable-panel{
+		width:148px;
+		border:1px solid #990000;
+		border-top:none;
+	}
+#accordion3 .switchable-panel li{text-align:center;}
+</pre>
+</div>
+</html>

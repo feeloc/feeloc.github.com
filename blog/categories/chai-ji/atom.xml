@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[["Octopress", "javascript", "Android", "GitHub", "Helloworld", "jamendo", "music", "mootools", "java", "maven", "project", "chrome", "随笔", "面试", "环境搭建", "封装", "算法"]拆机 | feeloc's 杂货铺]]></title>
+  <link href="http://feeloc.github.io/blog/categories/chai-ji/atom.xml" rel="self"/>
+  <link href="http://feeloc.github.io/"/>
+  <updated>2013-11-12T18:59:58+08:00</updated>
+  <id>http://feeloc.github.io/</id>
+  <author>
+    <name><![CDATA[feeloc]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[sony sr45h 拆机清灰]]></title>
+    <link href="http://feeloc.github.io/blog/2012/08/08/snoy-sr45h/"/>
+    <updated>2012-08-08T22:49:00+08:00</updated>
+    <id>http://feeloc.github.io/blog/2012/08/08/snoy-sr45h</id>
+    <content type="html"><![CDATA[<p><img src="http://www.feeloc.cn/downloads/images/1.jpg"></p>
+
+<blockquote><p>今天需要拆SONY SR45H/B型笔记本，好久没有清灰了，夏天经常温度太高，手放在排风口，基本上感觉不到风吹出来，一定是长年累积的
+灰尘堵住了通风口，google，百度了好久的拆机图都没有找到，到处是跪求拆机图的，只有自己动手，丰衣足食了。因为这款机器并不是像
+许多机器一样，可以很方便得从背部拆下风扇，所以我将过程记录下来，方便需要拆这款笔记本的童鞋们，现在就看下SONY SR45H/B 拆机图</p></blockquote>
+
+<!-- more -->
+
+
+<h2>一、取出硬盘和光驱</h2>
+
+<ul>
+<li>按照经验嘛，先从背面把硬盘和光驱拆下来，需要注意的是，大部分电脑拆光驱只要一个螺丝，而这款机器需要拆两个，该步一共拆8个螺丝
+<img src="http://www.feeloc.cn/downloads/images/2012-08-08/1.png">
+<img src="http://www.feeloc.cn/downloads/images/2012-08-08/2.png"></li>
+</ul>
+
+
+<h2>二、摸索拆机</h2>
+
+<ul>
+<li>因为不同机器的拆机过程不一样，有的需要从下面把键盘折下，然后往下拆，有的是从背部，开始，我并不知道SR45H该怎么拆，只有摸索，
+经过几次探索，知道了应该是背部整体将机壳取下，关键知道要卸15颗螺丝
+<img src="http://www.feeloc.cn/downloads/images/2012-08-08/3.png">
+<img src="http://www.feeloc.cn/downloads/images/2012-08-08/4.png"></li>
+</ul>
+
+
+<h2>三、不清灰的机器真脏，哈哈</h2>
+
+<ul>
+<li>下面来看看为什么它散热不好，排风口全被堵了，能好吗
+<img src="http://www.feeloc.cn/downloads/images/2012-08-08/5.png">
+<img src="http://www.feeloc.cn/downloads/images/2012-08-08/6.png"></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

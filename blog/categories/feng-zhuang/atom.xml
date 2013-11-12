@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[["Octopress", "javascript", "Android", "GitHub", "Helloworld", "jamendo", "music", "mootools", "java", "maven", "project", "chrome", "随笔", "面试", "环境搭建", "封装", "算法"]封装 | feeloc's 杂货铺]]></title>
+  <link href="http://feeloc.github.io/blog/categories/feng-zhuang/atom.xml" rel="self"/>
+  <link href="http://feeloc.github.io/"/>
+  <updated>2013-11-12T18:59:58+08:00</updated>
+  <id>http://feeloc.github.io/</id>
+  <author>
+    <name><![CDATA[feeloc]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[mootools框架学习和开发]]></title>
+    <link href="http://feeloc.github.io/blog/2012/08/03/mootools-360/"/>
+    <updated>2012-08-03T15:23:00+08:00</updated>
+    <id>http://feeloc.github.io/blog/2012/08/03/mootools-360</id>
+    <content type="html"><![CDATA[<p><img src="http://www.feeloc.cn/downloads/images/2012-08-03/1.png"></p>
+
+<blockquote><p>MooTools是一个简洁，模块化，面向对象的JavaScript框架。它能够帮助你更快，更简单地编写可扩展和兼容性强的JavaScript代码。
+Mootools从Prototype.js中汲取了许多有益的设计理念，语法也和其极其类似。但它提供的功能要比Prototype.js多，
+整体设计也比Prototype.js要相对完善，功能更强大，比如增加了动画特效、拖放操作等。前一阵子本来说一个项目需要用到mootools框架，于是就开始了框架的学习。</p></blockquote>
+
+<!-- more -->
+
+
+<h2>一、以实际需求入手</h2>
+
+<ul>
+<li>一个新的编程知识的学习，我喜欢以实际需求入手，这样不仅可以达到练习的作用，还能够解决一些实际问题，有阶段性成就感。</li>
+<li>在mootools学习的过程中，我是想用一个店商网站的首页做学习，最终选择了京东商城的首页做练习。因为它包含了几个模块:
+
+<ul>
+<li>slide效果，如京东商城的首页图片展示区
+<img src="http://www.feeloc.cn/downloads/images/2012-08-03/2.png" width="500"></li>
+<li>tab切换效果，如京东商城的首页各处商品展示
+<img src="http://www.feeloc.cn/downloads/images/2012-08-03/3.png" width="500"></li>
+<li>弹出层效果，如京东商城的所有页面商品分类
+<img src="http://www.feeloc.cn/downloads/images/2012-08-03/4.png" width="500"></li>
+<li>Lazyload延迟加载，在可视区域的图片加载，加快页面速度</li>
+<li>倒计时效果，经常会出现在团购网站中，京东也会有团购，商城也会有团购
+<img src="http://www.feeloc.cn/downloads/images/2012-08-03/5.png" width="500"></li>
+</ul>
+</li>
+<li>最终，从显示层面上，我希望能模仿出京东首页的样子，在技术底层，我希望能够将mootools做一些封装，方便调用。</li>
+</ul>
+
+
+<h2>二、mootools框架</h2>
+]]></content>
+  </entry>
+  
+</feed>

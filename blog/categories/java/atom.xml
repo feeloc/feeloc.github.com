@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[["Octopress", "javascript", "Android", "GitHub", "Helloworld", "jamendo", "music", "mootools", "java", "maven", "project", "chrome", "随笔", "面试", "环境搭建", "封装", "算法"]java | feeloc's 杂货铺]]></title>
+  <link href="http://feeloc.github.io/blog/categories/java/atom.xml" rel="self"/>
+  <link href="http://feeloc.github.io/"/>
+  <updated>2013-11-12T18:59:58+08:00</updated>
+  <id>http://feeloc.github.io/</id>
+  <author>
+    <name><![CDATA[feeloc]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[maven入门]]></title>
+    <link href="http://feeloc.github.io/blog/2012/09/21/maven-startup/"/>
+    <updated>2012-09-21T00:51:00+08:00</updated>
+    <id>http://feeloc.github.io/blog/2012/09/21/maven-startup</id>
+    <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/2012-09-21/1.png"></p>
+
+<blockquote><p>在大学一开始接触javaweb的时候，会用myeclipse去搭建SSH项目，觉得那样很方便。后来渐渐熟悉了SSH，加之放弃了myeclipse（实在有些臃肿，还慢），开始自己
+自己手动去添加那一堆包，这样也挺方便，因为就是SSH项目，就那么多包。后来做的项目越来越大了，有时这个项目还依赖另一个项目，包的管理便成了一个让人头疼
+的事。maven将这一切变得容易，解决了很多project方面的问题。</p></blockquote>
+
+<!-- more -->
+
+
+<p>下面简单介绍下maven的配置和使用，PS：下面文章假设您已经安装了jdk,tomcat,eclipse，并且已经配置了环境变量。如果还没有请稳步<a href="http://google.com" title="google java环境搭建">google</a></p>
+
+<h2>一、maven安装配置</h2>
+
+<ul>
+<li>下载Maven<a href="http://maven.apache.org/download.html" title="下载maven">下载页</a>
+<img src="http://feeloc.cn/downloads/images/2012-09-21/2.png" width="700" title="'下载maven'" ></li>
+<li>解压到自己想放的文件夹，在这儿推荐新建一个maven文件夹，然后解压在里面，因为maven会下载各种依赖包，可以将repository再放入maven文件夹中方便管理。
+<img src="http://feeloc.cn/downloads/images/2012-09-21/3.png" width="700" title="'目录结构'" ></li>
+<li>配置maven，添加环境变量<code>M2_HOME</code>，值为<code>D:\maven\maven-3.0.4</code>，将<code>M2_HOME</code>加入<code>Path</code>中
+<img src="http://feeloc.cn/downloads/images/2012-09-21/4.png" width="700" title="'配置环境变量'" ></li>
+<li>验证是否安装成功
+<img src="http://feeloc.cn/downloads/images/2012-09-21/5.png" width="700" title="'验证安装成功'" ></li>
+</ul>
+
+
+<h2>安装eclipse maven插件m2eclipse</h2>
+
+<ul>
+<li>方式一：自动安装
+
+<ul>
+<li>在菜单栏中选择<code>Help</code>，然后选择<code>Install New Software…</code>，接着你会看到一个<code>Install</code>对话框，点击<code>Work with:</code>字段边上的<code>Add</code>按钮，你会得到一个新的Add Repository对话框，在<code>Name</code>字段中输入<code>m2e</code>，Location字段中输入http://m2eclipse.sonatype.org/sites/m2e，然后点击<code>OK</code></li>
+<li>选择后点击<code>Next &gt;</code>，Eclipse会自动计算模块间依赖，然后给出一个将被安装的模块列表，确认无误后，继续点击<code>Next &gt;</code>，这时我们会看到许可证信息，m2eclipse使用的开源许可证是Eclipse Public License v1.0，选择<code>I accept the terms of the license agreements</code>，然后点击<code>Finish</code>，接着就耐心等待Eclipse下载安装这些模块</li>
+</ul>
+</li>
+<li>方式二：link方式安装（推荐）
+
+<ul>
+<li>进入 m2eclipse离线版本<a href="http://m2eclipse.sonatype.org/sites/m2e/" title="离线包">m2eclipse离线包</a>，然后那好相应的<code>features</code>，<code>plugins</code>目录，然后link，如果不会安装可以google。
+<img src="http://feeloc.cn/downloads/images/2012-09-21/6.png" width="700" title="'下载最新离线包'" ></li>
+</ul>
+</li>
+<li>重启eclipse，看m2eclipse是否安装成功，出现下图说明安装成功
+<img src="http://feeloc.cn/downloads/images/2012-09-21/7.png" width="700" title="'安装成功'" ></li>
+</ul>
+
+
+<h2>配置m2eclipse实现自动部署到tomcat</h2>
+
+<ul>
+<li>定义tomcat用户，打开<code>tomcat-users.xml</code>，在<code>&lt;tomcat-users&gt;</code>节点加入如下代码，添加两个role，一个user
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>tomcat-user.xml </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;role</span> <span class="na">rolename=</span><span class="s">&quot;manager-gui&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;role</span> <span class="na">rolename=</span><span class="s">&quot;manager-script&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;user</span> <span class="na">username=</span><span class="s">&quot;***&quot;</span> <span class="na">password=</span><span class="s">&quot;***&quot;</span> <span class="na">roles=</span><span class="s">&quot;manager-gui,manager-script&quot;</span><span class="nt">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></li>
+<li>打开tomcat的web管理页面，输入刚才设置的用户名密码，如果出现如下界面就代表刚才的设置生效了
+<img src="http://feeloc.cn/downloads/images/2012-09-21/8.png" width="700" title="'web管理权限'" ></li>
+<li>在maven的settings.xml的servers节点上添加一台服务器，代码如下：
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>settings.xml </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;server&gt;</span>
+</span><span class='line'><span class="nt">&lt;id&gt;</span>tomcat<span class="nt">&lt;/id&gt;</span>
+</span><span class='line'><span class="nt">&lt;username&gt;</span>admin<span class="nt">&lt;/username&gt;</span>
+</span><span class='line'><span class="nt">&lt;password&gt;</span>admin<span class="nt">&lt;/password&gt;</span>
+</span><span class='line'><span class="nt">&lt;/server&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></li>
+<li>打开eclipse，配置maven
+<img src="http://feeloc.cn/downloads/images/2012-09-21/9.png" width="700" title="'maven目录'" >
+<img src="http://feeloc.cn/downloads/images/2012-09-21/10.png" width="700" title="'maven配置'" ></li>
+</ul>
+
+
+<h2>依旧是hello world</h2>
+
+<ul>
+<li>在eclipse中新建一个maven project，我们需要一个web项目
+<img src="http://feeloc.cn/downloads/images/2012-09-21/11.png" width="700" title="'maven project'" >
+<img src="http://feeloc.cn/downloads/images/2012-09-21/12.png" width="700" title="'maven project 配置'" >
+<img src="http://feeloc.cn/downloads/images/2012-09-21/13.png" width="700" title="'maven project 配置注意红色部分'" >
+<img src="http://feeloc.cn/downloads/images/2012-09-21/14.png" width="700" title="'maven project'" ></li>
+<li>项目配置，加入Dynamic Web Module支持
+<img src="http://feeloc.cn/downloads/images/2012-09-21/15.png" width="700" title="'maven project'" ></li>
+<li>配置pom，实现自动打包发布到tomcat
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>pom.xml </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;plugins&gt;</span>
+</span><span class='line'><span class="nt">&lt;plugin&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span><span class="ni">&amp;lt;</span>groupId<span class="ni">&amp;gt;</span>org.codehaus.mojo<span class="ni">&amp;lt;</span>/groupId<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>artifactId<span class="ni">&amp;gt;</span>tomcat-maven-plugin<span class="ni">&amp;lt;</span>/artifactId<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>version<span class="ni">&amp;gt;</span>1.0-beta-1<span class="ni">&amp;lt;</span>/version<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>configuration<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>url<span class="ni">&amp;gt;</span>http://localhost:8080/manager/html<span class="ni">&amp;lt;</span>/url<span class="ni">&amp;gt;</span>  <span class="ni">&amp;lt;</span>!-- tomcat 7自动部署 --<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>!-- tomcat 6自动部署 <span class="ni">&amp;lt;</span>url<span class="ni">&amp;gt;</span>http://localhost:8080/manager/html<span class="ni">&amp;lt;</span>/url<span class="ni">&amp;gt;</span> --<span class="ni">&amp;gt;</span>
+</span><span class='line'>    <span class="ni">&amp;lt;</span>server<span class="ni">&amp;gt;</span>tomcat<span class="ni">&amp;lt;</span>/server<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>/configuration<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;/plugin&gt;</span>
+</span><span class='line'><span class="nt">&lt;/plugins&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+<li>buide该项目，带参数<code>package tomcat:redeploy</code>，表示自动打包部署到tomcat
+<img src="http://feeloc.cn/downloads/images/2012-09-21/16.png" width="700" title="'maven project'" ></li>
+</ul>
+
+
+<h2>maven,eclipse实现热部署，加速度开发</h2>
+
+<ul>
+<li>在上一步中，虽然实现了自动部署到tomcat上，但每次都需要执行命令加等待还是很麻烦的，必须要实现热部署</li>
+<li>参照以往的经验，设置热部署就是在tomcat的host节点里添加项目配置，现在就是需要找到docBase，和workDir的路径</li>
+<li>重新设置maven的实时编译目录，在<code>src\main\webapp\WEB-INF\</code>下新建<code>classes</code>和<code>lib</code>目录
+<img src="http://feeloc.cn/downloads/images/2012-09-21/17.png" width="700" title="'重设目录'" ></li>
+<li>重设classes目录
+<img src="http://feeloc.cn/downloads/images/2012-09-21/18.png" width="700" title="'重设编译目录'" ></li>
+<li>maven依赖包，切换到项目目录 执行命令<code>mvn dependency:copy-dependencies</code>，这样，test的项目依赖包都会被导入到target/dependency下。将jar包全部放入到<code>src\main\webapp\WEB-INF\</code></li>
+<li>配置tomcat的server.xml文件，修改host节点根据自己的项目目录加入Context节点
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>server.xml </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;Host</span> <span class="na">name=</span><span class="s">&quot;localhost&quot;</span>  <span class="na">appBase=</span><span class="s">&quot;webapps&quot;</span> <span class="na">unpackWARs=</span><span class="s">&quot;true&quot;</span> <span class="na">autoDeploy=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="c">&lt;!-- &lt;Context path=&quot;/www&quot; docBase=&quot;d:\www&quot; debug=&quot;0&quot; reloadable=&quot;true&quot; /&gt; --&gt;</span>
+</span><span class='line'><span class="ni">&amp;lt;</span>!-- SingleSignOn valve, share authentication between web applications
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span> Documentation at: /docs/config/valve.html --<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span><span class="c">&lt;!--</span>
+</span><span class='line'><span class="c">&lt;Valve className=&quot;org.apache.catalina.authenticator.SingleSignOn&quot; /&gt;</span>
+</span><span class='line'><span class="c">--&gt;</span><span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span><span class="ni">&amp;lt;</span>!-- Access log processes all example.<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span> Documentation at: /docs/config/valve.html
+</span><span class='line'> Note: The pattern used is equivalent to using pattern=&quot;common&quot; --<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>Context path=&quot;/yiren&quot; reloadable=&quot;false&quot; defaultSessionTimeOut=&quot;3600&quot;
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span>docBase=&quot;D:\java\workspaces\yiren\src\main\webapp&quot;
+</span><span class='line'>workDir=&quot;D:\java\workspaces\yiren\src\main\webapp\WEB-INF\classes&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="ni">&amp;lt;</span>Valve className=&quot;org.apache.catalina.valves.AccessLogValve&quot; directory=&quot;logs&quot;
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;pre&gt;&lt;code&gt;</span>prefix=&quot;localhost_access_log.&quot; suffix=&quot;.txt&quot;
+</span><span class='line'>pattern=&quot;%h %l %u %t <span class="ni">&amp;amp;</span>quot;%r<span class="ni">&amp;amp;</span>quot; %s %b&quot; /<span class="ni">&amp;gt;</span>
+</span><span class='line'><span class="nt">&lt;/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;&lt;/Host&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+<li>至此，大功造成啦，修改下代码，是不是不需要执行mvn命令了，速度是不是快了，是不是爽了。哈哈！！</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[排序算法总结]]></title>
+    <link href="http://feeloc.github.io/blog/2012/08/03/algorithm/"/>
+    <updated>2012-08-03T20:56:00+08:00</updated>
+    <id>http://feeloc.github.io/blog/2012/08/03/algorithm</id>
+    <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/1.jpg"></p>
+
+<blockquote><p>排序算法是经常会用的，但有天晚上突然想起，大学时候学了好多的排序算法，但后来大部分都忘记了，
+只记得了一堆的名字，决定去复习下各种排序算法。</p></blockquote>
+
+<!-- more -->
+
+
+<h2>一、冒泡排序</h2>
+
+<ul>
+<li>基本思想：就是像泡泡一样，从下往上冒，相邻两个数依次进行比较和调整
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>冒泡排序-bubbleSort.java </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">bubbleSort</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">array</span><span class="o">[]</span> <span class="o">=</span> <span class="o">{</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">21</span><span class="o">,</span> <span class="mi">89</span><span class="o">,</span> <span class="mi">30</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">22</span><span class="o">,</span> <span class="mi">43</span><span class="o">,</span> <span class="mi">11</span><span class="o">,</span> <span class="mi">9</span><span class="o">,</span> <span class="mi">19</span><span class="o">,</span> <span class="mi">3</span> <span class="o">};</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">array</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">&amp;</span><span class="n">gt</span><span class="o">;=</span> <span class="n">array</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">])</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">temp</span> <span class="o">=</span> <span class="n">array</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+</span><span class='line'>        <span class="n">array</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">array</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">];</span>
+</span><span class='line'>        <span class="n">array</span><span class="o">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">temp</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">array</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">a</span> <span class="o">+</span> <span class="s">&quot;,&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+</ul>
+
+
+<h2>二、快速排序</h2>
+
+<ul>
+<li>基本思想：选择一个基准元素,通常选择第一个元素或者最后一个元素,通过一趟扫描，将待排序列分成两部分,一部分比基准元素小,一部分大于等于基准元素,此时基准元素在其排好序后的正确位置,然后再用同样的方法递归地排序划分的两部分。
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>快速排序-QuickSort.java </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">QuickSort</span> <span class="o">{</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">a</span><span class="o">[]</span> <span class="o">=</span> <span class="o">{</span> <span class="mi">49</span><span class="o">,</span> <span class="mi">38</span><span class="o">,</span> <span class="mi">65</span><span class="o">,</span> <span class="mi">97</span><span class="o">,</span> <span class="mi">76</span><span class="o">,</span> <span class="mi">13</span><span class="o">,</span> <span class="mi">27</span><span class="o">,</span> <span class="mi">49</span><span class="o">,</span> <span class="mi">78</span><span class="o">,</span> <span class="mi">34</span><span class="o">,</span> <span class="mi">12</span><span class="o">,</span> <span class="mi">64</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">62</span><span class="o">,</span> <span class="mi">99</span><span class="o">,</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="mi">98</span><span class="o">,</span> <span class="mi">54</span><span class="o">,</span> <span class="mi">56</span><span class="o">,</span> <span class="mi">17</span><span class="o">,</span> <span class="mi">18</span><span class="o">,</span> <span class="mi">23</span><span class="o">,</span> <span class="mi">34</span><span class="o">,</span> <span class="mi">15</span><span class="o">,</span> <span class="mi">35</span><span class="o">,</span> <span class="mi">25</span><span class="o">,</span> <span class="mi">53</span><span class="o">,</span> <span class="mi">51</span> <span class="o">};</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="nf">QuickSort</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">quick</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+</span><span class='line'><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;\n&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">temp</span> <span class="o">:</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">temp</span> <span class="o">+</span> <span class="s">&quot;,&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kt">int</span> <span class="n">getMiddle</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">list</span><span class="o">,</span> <span class="kt">int</span> <span class="n">low</span><span class="o">,</span> <span class="kt">int</span> <span class="n">high</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">list</span><span class="o">[</span><span class="n">low</span><span class="o">];</span> <span class="c1">// 数组的第一个作为中轴</span>
+</span><span class='line'><span class="k">while</span> <span class="o">(</span><span class="n">low</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span> <span class="n">high</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">while</span> <span class="o">(</span><span class="n">low</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span> <span class="n">high</span> <span class="o">&amp;</span><span class="n">amp</span><span class="o">;&amp;</span><span class="n">amp</span><span class="o">;</span> <span class="n">list</span><span class="o">[</span><span class="n">high</span><span class="o">]</span> <span class="o">&amp;</span><span class="n">gt</span><span class="o">;=</span> <span class="n">tmp</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">high</span><span class="o">--;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">list</span><span class="o">[</span><span class="n">low</span><span class="o">]</span> <span class="o">=</span> <span class="n">list</span><span class="o">[</span><span class="n">high</span><span class="o">];</span> <span class="c1">// 比中轴小的记录移到低端</span>
+</span><span class='line'>    <span class="k">while</span> <span class="o">(</span><span class="n">low</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span> <span class="n">high</span> <span class="o">&amp;</span><span class="n">amp</span><span class="o">;&amp;</span><span class="n">amp</span><span class="o">;</span> <span class="n">list</span><span class="o">[</span><span class="n">low</span><span class="o">]</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;=</span> <span class="n">tmp</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">low</span><span class="o">++;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">list</span><span class="o">[</span><span class="n">high</span><span class="o">]</span> <span class="o">=</span> <span class="n">list</span><span class="o">[</span><span class="n">low</span><span class="o">];</span> <span class="c1">// 比中轴大的记录移到高端</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="n">list</span><span class="o">[</span><span class="n">low</span><span class="o">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">;</span> <span class="c1">// 中轴记录到尾</span>
+</span><span class='line'><span class="k">return</span> <span class="n">low</span><span class="o">;</span> <span class="c1">// 返回中轴的位置</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kt">void</span> <span class="n">_quickSort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">list</span><span class="o">,</span> <span class="kt">int</span> <span class="n">low</span><span class="o">,</span> <span class="kt">int</span> <span class="n">high</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">(</span><span class="n">low</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span> <span class="n">high</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">middle</span> <span class="o">=</span> <span class="n">getMiddle</span><span class="o">(</span><span class="n">list</span><span class="o">,</span> <span class="n">low</span><span class="o">,</span> <span class="n">high</span><span class="o">);</span> <span class="c1">// 将list数组进行一分为二</span>
+</span><span class='line'>    <span class="n">_quickSort</span><span class="o">(</span><span class="n">list</span><span class="o">,</span> <span class="n">low</span><span class="o">,</span> <span class="n">middle</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span> <span class="c1">// 对低字表进行递归排序</span>
+</span><span class='line'>    <span class="n">_quickSort</span><span class="o">(</span><span class="n">list</span><span class="o">,</span> <span class="n">middle</span> <span class="o">+</span> <span class="mi">1</span><span class="o">,</span> <span class="n">high</span><span class="o">);</span> <span class="c1">// 对高字表进行递归排序</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kt">void</span> <span class="n">quick</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">a2</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">if</span> <span class="o">(</span><span class="n">a2</span><span class="o">.</span><span class="na">length</span> <span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// 查看数组是否为空</span>
+</span><span class='line'>    <span class="n">_quickSort</span><span class="o">(</span><span class="n">a2</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">a2</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+</ul>
+
+
+<h2>三、归并排序</h2>
+
+<ul>
+<li>基本排序：归并（Merge）排序法是将两个（或两个以上）有序表合并成一个新的有序表，即把待排序序列分为若干个子序列，每个子序列是有序的。然后再把有序子序列合并为整体有序序列。
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>MergingSort.java</span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.util.Arrays</span><span class="o">;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MergingSort</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kt">int</span> <span class="n">a</span><span class="o">[]</span> <span class="o">=</span> <span class="o">{</span> <span class="mi">49</span><span class="o">,</span> <span class="mi">38</span><span class="o">,</span> <span class="mi">65</span><span class="o">,</span> <span class="mi">97</span><span class="o">,</span> <span class="mi">76</span><span class="o">,</span> <span class="mi">13</span><span class="o">,</span> <span class="mi">27</span><span class="o">,</span> <span class="mi">49</span><span class="o">,</span> <span class="mi">78</span><span class="o">,</span> <span class="mi">34</span><span class="o">,</span> <span class="mi">12</span><span class="o">,</span> <span class="mi">64</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">62</span><span class="o">,</span> <span class="mi">99</span><span class="o">,</span>
+</span><span class='line'>        <span class="mi">98</span><span class="o">,</span> <span class="mi">54</span><span class="o">,</span> <span class="mi">56</span><span class="o">,</span> <span class="mi">17</span><span class="o">,</span> <span class="mi">18</span><span class="o">,</span> <span class="mi">23</span><span class="o">,</span> <span class="mi">34</span><span class="o">,</span> <span class="mi">15</span><span class="o">,</span> <span class="mi">35</span><span class="o">,</span> <span class="mi">25</span><span class="o">,</span> <span class="mi">53</span><span class="o">,</span> <span class="mi">51</span> <span class="o">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="nf">MergingSort</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">sort</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;\n&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]+</span><span class="s">&quot;,&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">data</span><span class="o">,</span> <span class="kt">int</span> <span class="n">left</span><span class="o">,</span> <span class="kt">int</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">left</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// 找出中间索引</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">center</span> <span class="o">=</span> <span class="o">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+</span><span class='line'>        <span class="c1">// 对左边数组进行递归</span>
+</span><span class='line'>        <span class="n">sort</span><span class="o">(</span><span class="n">data</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">center</span><span class="o">);</span>
+</span><span class='line'>        <span class="c1">// 对右边数组进行递归</span>
+</span><span class='line'>        <span class="n">sort</span><span class="o">(</span><span class="n">data</span><span class="o">,</span> <span class="n">center</span> <span class="o">+</span> <span class="mi">1</span><span class="o">,</span> <span class="n">right</span><span class="o">);</span>
+</span><span class='line'>        <span class="c1">// 合并</span>
+</span><span class='line'>        <span class="n">merge</span><span class="o">(</span><span class="n">data</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">center</span><span class="o">,</span> <span class="n">right</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">merge</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">data</span><span class="o">,</span> <span class="kt">int</span> <span class="n">left</span><span class="o">,</span> <span class="kt">int</span> <span class="n">center</span><span class="o">,</span> <span class="kt">int</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">int</span><span class="o">[]</span> <span class="n">tmpArr</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">data</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">center</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>    <span class="c1">// third记录中间数组的索引</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">third</span> <span class="o">=</span> <span class="n">left</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">left</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">while</span> <span class="o">(</span><span class="n">left</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;=</span> <span class="n">center</span> <span class="o">&amp;</span><span class="n">amp</span><span class="o">;&amp;</span><span class="n">amp</span><span class="o">;</span> <span class="n">mid</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;=</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// 从两个数组中取出最小的放入中间数组</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">data</span><span class="o">[</span><span class="n">left</span><span class="o">]</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;=</span> <span class="n">data</span><span class="o">[</span><span class="n">mid</span><span class="o">])</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">tmpArr</span><span class="o">[</span><span class="n">third</span><span class="o">++]</span> <span class="o">=</span> <span class="n">data</span><span class="o">[</span><span class="n">left</span><span class="o">++];</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">tmpArr</span><span class="o">[</span><span class="n">third</span><span class="o">++]</span> <span class="o">=</span> <span class="n">data</span><span class="o">[</span><span class="n">mid</span><span class="o">++];</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="c1">// 剩余部分依次放入中间数组</span>
+</span><span class='line'>    <span class="k">while</span> <span class="o">(</span><span class="n">mid</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;=</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">tmpArr</span><span class="o">[</span><span class="n">third</span><span class="o">++]</span> <span class="o">=</span> <span class="n">data</span><span class="o">[</span><span class="n">mid</span><span class="o">++];</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">while</span> <span class="o">(</span><span class="n">left</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;=</span> <span class="n">center</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">tmpArr</span><span class="o">[</span><span class="n">third</span><span class="o">++]</span> <span class="o">=</span> <span class="n">data</span><span class="o">[</span><span class="n">left</span><span class="o">++];</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="c1">// 将中间数组中的内容复制回原数组</span>
+</span><span class='line'>    <span class="k">while</span> <span class="o">(</span><span class="n">tmp</span> <span class="o">&amp;</span><span class="n">lt</span><span class="o">;=</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">data</span><span class="o">[</span><span class="n">tmp</span><span class="o">]</span> <span class="o">=</span> <span class="n">tmpArr</span><span class="o">[</span><span class="n">tmp</span><span class="o">++];</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+</feed>

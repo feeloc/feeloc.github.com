@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Slide Example 5</title>
+    <script src="source/moo.js"></script>
+    <script src="source/switchable.js"></script>
+	<link rel="stylesheet" href="reset.css" type="text/css" /> 
+</head>
+<body>
+    <div>
+        <p>
+            <h1>Slide Example 5: Switchable 多触点</h1>
+        </p>
+    </div>
+    <style>
+#Slide2 { position: relative; width: 680px; height: 300px; overflow: hidden; border:1px solid #000000;}
+#Slide2 .switchable-triggerBox { position: absolute; bottom: 1px; left: 1px; z-index: 99; }
+#Slide2 .switchable-triggerBox li {
+        float: left;
+        width: 135px;
+        height: 32px;
+        line-height: 32px;
+        margin-right: 1px;
+        background-color: #000000;
+        color: #ffffff;
+        text-align: center;
+        cursor: pointer;
+		opacity:0.5;    
+		filter:alpha(opacity=50);  
+
+    }
+#Slide2 .switchable-triggerBox li.last{
+		margin:0; 
+		width:134px;
+	} 
+#Slide2 .switchable-triggerBox li.active {
+        color: #FFF;
+        background-color: #505050;
+        font-weight: bold;
+		opacity:0.8;
+		filter:alpha(opacity=80); 
+    }
+#Slide2 .switchable-content li { height: 300px; width: 680px; overflow: hidden; }
+    /* for countdown plugin */
+#Slide2 .switchable-triggerBox li,
+#Slide2 .content {
+        position: relative;
+    }
+#Slide2 .mask {
+        position: absolute;
+        right: 0;
+        width: 18px;
+        height: 18px;
+        background-color: #FF9415;
+        visibility: hidden
+    }
+#Slide2 .active .mask {
+        visibility: visible
+    }
+</style>
+
+<div id="Slide2" class="Auto_Widget" data-widget-type="Switchable" data-widget-config ="{autoplay:true,effect:'fade',duration:1000,interval:4000,activeClass:'active',circular:false,eventType:'mouse',lazyDataType:'img'}">
+    <ul class="switchable-content">
+        <li class=""><img alt="" src="assets/ad01.jpg"/></li>
+        <li class="hidden "><img alt="" src="assets/ad02.jpg"/></li>
+        <li class="hidden "><img alt="" src="assets/ad03.jpg"/></li>
+        <li class="hidden "><img alt="" img-lazyload="assets/ad04.jpg" src="assets/loading.gif"/></li>
+		<li class="hidden "><img alt="" img-lazyload="assets/ad05.jpg" src="assets/loading.gif"/></li>
+       
+    </ul>
+	<ul class="switchable-triggerBox">
+		<li class="active">E商学院正式上线</li>
+		<li class="">走进百城万店计划</li>
+		<li class="">分销王清凉大礼</li>
+		<li class="">易开店1.0上线</li>
+		<li class="last">淘宝卖家ERP系统</li>
+	</ul>
+    <ul class="switchable-triggerBox" style="bottom:50px;">
+		<li class="active">111111111111</li>
+		<li class="">22222222222</li>
+		<li class="">333333333</li>
+		<li class="">444444444</li>
+		<li class="last">55555555</li>
+	</ul>
+</div>
+<div class="code" style="margin-top:20px;">
+    <h2>Dom code:</h2>
+    <pre>
+&lt;div id="Slide2" class="Auto_Widget"  data-widget-type="Switchable" data-widget-config="{autoplay:true,effect:'fade',duration:1000,<br />interval:3000,activeClass:'active',circular:false,eventType:'mouse',lazyDataType:'img'}"&gt; 
+	&lt;ul class="switchable-content"&gt;
+		&lt;li class=""&gt;&lt;img alt="" src="assets/ad01.jpg"/&gt;&lt;/li&gt;
+		&lt;li class="hidden "&gt;&lt;img alt="" src="assets/ad02.jpg"/&gt;&lt;/li&gt;
+		&lt;li class="hidden "&gt;&lt;img alt="" src="assets/ad03.jpg"/&gt;&lt;/li&gt;
+		&lt;li class="hidden "&gt;&lt;img alt="" img-lazyload="assets/ad04.jpg" src="assets/loading.gif"/&gt;&lt;/li&gt;
+		&lt;li class="hidden "&gt;&lt;img alt="" img-lazyload="assets/ad05.jpg" src="assets/loading.gif"/&gt;&lt;/li&gt;   
+	&lt;/ul&gt;
+	&lt;ul class="switchable-triggerBox"&gt;
+			&lt;li class="active"&gt;E商学院正式上线&lt;/li&gt;
+			&lt;li class=""&gt;走进百城万店计划&lt;/li&gt;
+			&lt;li class=""&gt;分销王清凉大礼&lt;/li&gt;
+			&lt;li class=""&gt;易开店1.0上线&lt;/li&gt;
+			&lt;li class=""&gt;淘宝卖家ERP系统&lt;/li&gt;
+	&lt;/ul&gt;
+	&lt;ul class="switchable-triggerBox" style="bottom:50px;"&gt;
+		&lt;li class="active"&gt;111111111111&lt;/li&gt;
+		&lt;li class=""&gt;22222222222&lt;/li&gt;
+		&lt;li class=""&gt;333333333&lt;/li&gt;
+		&lt;li class=""&gt;444444444&lt;/li&gt;
+		&lt;li class="last"&gt;55555555&lt;/li&gt;
+	&lt;/ul&gt;
+&lt;/div&gt;</pre>
+</div>
+
+
+
+<div class="code" style="margin-top:20px;">
+    <h2>Css code:</h2>
+<pre>
+#Slide2 { position: relative; width: 680px; height: 300px; overflow: hidden; border:1px solid #000000;}
+#Slide2 .switchable-triggerBox { position: absolute; bottom: 1px; left: 1px; z-index: 99; }
+#Slide2 .switchable-triggerBox li {
+        float: left;
+        width: 135px;
+        height: 32px;
+        line-height: 32px;
+        margin-right: 1px;
+        background-color: #000000;
+        color: #ffffff;
+        text-align: center;
+        cursor: pointer;
+		opacity:0.5;                              //for firefox（记得删除本行注释）
+		filter:alpha(opacity=50);                 //for IE（记得删除本行注释）
+
+    }
+#Slide2 .switchable-triggerBox li.last{
+		margin:0; 
+		width:134px;
+	} 
+#Slide2 .switchable-triggerBox li.active {
+        color: #FFF;
+        background-color: #505050;
+        font-weight: bold;
+		opacity:0.8；                             //for firefox（记得删除本行注释）
+		filter:alpha(opacity=80);                 //for IE（记得删除本行注释）
+    }
+#Slide2 .switchable-content li { height: 300px; width: 680px; overflow: hidden; }
+    /* for countdown plugin */
+#Slide2 .switchable-triggerBox li,
+#Slide2 .content {
+        position: relative;
+    }
+#Slide2 .mask {
+        position: absolute;
+        right: 0;
+        width: 18px;
+        height: 18px;
+        background-color: #FF9415;
+        visibility: hidden
+    }
+#Slide2 .active .mask {
+        visibility: visible
+    }
+</pre>
+</div>
+</body>
+</html>

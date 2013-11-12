@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>svg实现任意边框</title>
+    <style type="text/css">
+        body{
+            background: #d8e5f1;
+        }
+        .photo{
+            float: left;
+            width: 120px;
+            height: 120px;
+            margin-right: 40px;
+            overflow: hidden;
+            background: url("http://fs3u.dajie.com/2013/05/17/101/13687605014653364m.png");
+        }
+    </style>
+    <script type="text/javascript" src="https://gist.github.com/feeloc/5618615/raw/e0ee319f4a4e301e1a6b1b3129515f9ed87d2a81/raphael-min.js"></script>
+    <script type="text/javascript">
+        window.onload = function(){
+            var r = Raphael("photo", 121, 121);
+            var c = Raphael.getColor();
+            var color = '#d8e5f1';
+            r.circle(60, 60, 82).attr({stroke: c, transform: 'r0 320 240', "fill-opacity": .1, 'stroke-width': 46, 'stroke': color}).mouseover(function () {
+                this.stop().animate({"fill": '#d8e5f1', "fill-opacity": .7}, 300);
+            }).mouseout(function () {
+                this.stop().animate({"fill": 'none', "fill-opacity": .1}, 300);
+            });
+            r.circle(60, 60, 58).attr({stroke: c, transform: 'r0 320 240', "fill-opacity": .4, 'stroke-width': 2, 'stroke': '#a1b3c4'});
+
+            var r1 = Raphael("photo1", 121, 121);
+            r1.circle(60, 60, 82).attr({stroke: c, transform: 'r0 320 240', "fill-opacity": .1, 'stroke-width': 46, 'stroke': color}).mouseover(function () {
+                this.stop().animate({"fill": '#d8e5f1', "fill-opacity": .7}, 300);
+            }).mouseout(function () {
+                        this.stop().animate({"fill": 'none', "fill-opacity": .1}, 300);
+                    });
+            r1.circle(60, 60, 58).attr({stroke: c, transform: 'r0 320 240', "fill-opacity": .4, 'stroke-width': 2, 'stroke': '#F00'});
+
+            var r2 = Raphael("photo2", 121, 121);
+            r2.ellipse(60, 60, 65, 85).attr({stroke: c, transform: 'r0 320 240', "fill-opacity": .1, 'stroke-width': 30, 'stroke': color}).mouseover(function () {
+                this.stop().animate({"fill": '#d8e5f1', "fill-opacity": .7}, 300);
+            }).mouseout(function () {
+                        this.stop().animate({"fill": 'none', "fill-opacity": .1}, 300);
+                    });
+            r2.ellipse(60, 60, 55, 75).attr({stroke: c, transform: 'r0 320 240', "fill-opacity": .1, 'stroke-width': 2, 'stroke': '#a1b3c4'})
+        };
+    </script>
+</head>
+
+<body>
+<div class="photo" id="photo"></div>
+<div class="photo" id="photo1"></div>
+<div class="photo" id="photo2"></div>
+</body>
+</html>
