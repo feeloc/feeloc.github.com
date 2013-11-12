@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "开始使用Octopress写博客"
+title: "开始使用Octopress写博客，测试"
 date: 2012-07-30 13:10
 comments: true
 categories: octopress github 环境搭建
