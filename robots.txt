@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://feeloc.github.io/sitemap.xml 
+Sitemap: http://www.feeloc.cn/sitemap.xml 

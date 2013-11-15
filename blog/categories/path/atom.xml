@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[["Octopress", "javascript", "Android", "GitHub", "Helloworld", "jamendo", "music", "mootools", "java", "maven", "project", "chrome", "随笔", "面试", "环境搭建", "封装", "算法"]path | feeloc's 杂货铺]]></title>
-  <link href="http://feeloc.github.io/blog/categories/path/atom.xml" rel="self"/>
-  <link href="http://feeloc.github.io/"/>
-  <updated>2013-11-14T22:11:32+08:00</updated>
-  <id>http://feeloc.github.io/</id>
+  <link href="http://www.feeloc.cn/blog/categories/path/atom.xml" rel="self"/>
+  <link href="http://www.feeloc.cn/"/>
+  <updated>2013-11-15T12:16:45+08:00</updated>
+  <id>http://www.feeloc.cn/</id>
   <author>
     <name><![CDATA[feeloc]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[元素任意路径运动]]></title>
-    <link href="http://feeloc.github.io/blog/2013/05/21/circle-path/"/>
+    <link href="http://www.feeloc.cn/blog/2013/05/21/circle-path/"/>
     <updated>2013-05-21T18:58:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2013/05/21/circle-path</id>
+    <id>http://www.feeloc.cn/blog/2013/05/21/circle-path</id>
     <content type="html"><![CDATA[<p><img src="http://www.feeloc.cn/downloads/images/2013-05-21/path.jpg" width="800"></p>
 
 <blockquote><p>元素运动很常见，这次总结一些运动轨迹，其实就是复习下各种数学公式，先从圆形运动开始全文。</p></blockquote>

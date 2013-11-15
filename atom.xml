@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[feeloc's 杂货铺]]></title>
-  <link href="http://feeloc.github.io/atom.xml" rel="self"/>
-  <link href="http://feeloc.github.io/"/>
-  <updated>2013-11-14T22:11:32+08:00</updated>
-  <id>http://feeloc.github.io/</id>
+  <link href="http://www.feeloc.cn/atom.xml" rel="self"/>
+  <link href="http://www.feeloc.cn/"/>
+  <updated>2013-11-15T12:16:45+08:00</updated>
+  <id>http://www.feeloc.cn/</id>
   <author>
     <name><![CDATA[feeloc]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[服务器配置，tengine，git，nodejs，grunt，mongodb……]]></title>
-    <link href="http://feeloc.github.io/blog/2013/09/04/server-config/"/>
+    <link href="http://www.feeloc.cn/blog/2013/09/04/server-config/"/>
     <updated>2013-09-04T21:58:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2013/09/04/server-config</id>
+    <id>http://www.feeloc.cn/blog/2013/09/04/server-config</id>
     <content type="html"><![CDATA[<blockquote><p>最近准备用nodejs+mongodb开发个网站，手上正好有个vps，装个centos，那就从头搭建个开发及生产环境吧，目前只需要考虑3点：
 1、使用git作代码管理，push后能自动部署到前端资源中。
 2、如果修改了node文件，需要push后能查看，在commit消息中加入<code>deploy</code>，代码全站部署。
@@ -1161,9 +1161,9 @@
   
   <entry>
     <title type="html"><![CDATA[元素任意路径运动]]></title>
-    <link href="http://feeloc.github.io/blog/2013/05/21/circle-path/"/>
+    <link href="http://www.feeloc.cn/blog/2013/05/21/circle-path/"/>
     <updated>2013-05-21T18:58:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2013/05/21/circle-path</id>
+    <id>http://www.feeloc.cn/blog/2013/05/21/circle-path</id>
     <content type="html"><![CDATA[<p><img src="http://www.feeloc.cn/downloads/images/2013-05-21/path.jpg" width="800"></p>
 
 <blockquote><p>元素运动很常见，这次总结一些运动轨迹，其实就是复习下各种数学公式，先从圆形运动开始全文。</p></blockquote>
@@ -1292,9 +1292,9 @@
   
   <entry>
     <title type="html"><![CDATA[SVG实现任意形状相框]]></title>
-    <link href="http://feeloc.github.io/blog/2013/05/21/svg-img/"/>
+    <link href="http://www.feeloc.cn/blog/2013/05/21/svg-img/"/>
     <updated>2013-05-21T16:54:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2013/05/21/svg-img</id>
+    <id>http://www.feeloc.cn/blog/2013/05/21/svg-img</id>
     <content type="html"><![CDATA[<p><img src="http://www.feeloc.cn/downloads/images/2013-05-21/idea.png" width="800"></p>
 
 <blockquote><p>SVG是可缩放矢量图形（Scalable Vector Graphics，SVG）是基于可扩展标记语言（XML），用于描述二维矢量图形的一种图形格式。本文不具体讨论SVG，只是
@@ -1378,9 +1378,9 @@
   
   <entry>
     <title type="html"><![CDATA[史上最简单windows下搭建octopress环境]]></title>
-    <link href="http://feeloc.github.io/blog/2013/01/11/octopress/"/>
+    <link href="http://www.feeloc.cn/blog/2013/01/11/octopress/"/>
     <updated>2013-01-11T01:38:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2013/01/11/octopress</id>
+    <id>http://www.feeloc.cn/blog/2013/01/11/octopress</id>
     <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/2012-09-21/1.png"></p>
 
 <blockquote><p>之前使用rubyinstall在windows环境下搭建ruby开发环境，真是蛋疼得很，经常出现各种问题，尤其是在windows 7 64位下面，
@@ -1395,9 +1395,9 @@
   
   <entry>
     <title type="html"><![CDATA[jquery上传插件]]></title>
-    <link href="http://feeloc.github.io/blog/2012/11/27/upload-photo/"/>
+    <link href="http://www.feeloc.cn/blog/2012/11/27/upload-photo/"/>
     <updated>2012-11-27T23:29:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2012/11/27/upload-photo</id>
+    <id>http://www.feeloc.cn/blog/2012/11/27/upload-photo</id>
     <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/1.jpg"></p>
 
 <blockquote><p>上传功能在WEB网站中经常需要使用到，整理下以前写的上传插件。</p></blockquote>
@@ -1778,9 +1778,9 @@
   
   <entry>
     <title type="html"><![CDATA[maven入门]]></title>
-    <link href="http://feeloc.github.io/blog/2012/09/21/maven-startup/"/>
+    <link href="http://www.feeloc.cn/blog/2012/09/21/maven-startup/"/>
     <updated>2012-09-21T00:51:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2012/09/21/maven-startup</id>
+    <id>http://www.feeloc.cn/blog/2012/09/21/maven-startup</id>
     <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/2012-09-21/1.png"></p>
 
 <blockquote><p>在大学一开始接触javaweb的时候，会用myeclipse去搭建SSH项目，觉得那样很方便。后来渐渐熟悉了SSH，加之放弃了myeclipse（实在有些臃肿，还慢），开始自己
@@ -1986,9 +1986,9 @@
   
   <entry>
     <title type="html"><![CDATA[chrome插件]]></title>
-    <link href="http://feeloc.github.io/blog/2012/09/21/chrome-plugin/"/>
+    <link href="http://www.feeloc.cn/blog/2012/09/21/chrome-plugin/"/>
     <updated>2012-09-21T00:50:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2012/09/21/chrome-plugin</id>
+    <id>http://www.feeloc.cn/blog/2012/09/21/chrome-plugin</id>
     <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/2012-09-21/1.png"></p>
 
 <blockquote><p>前阵子遇到一些繁琐的操作，需要在页面上重复填写表单，需要将数据从一个地方粘贴到表单里，数据量非常之大，此等重复劳动的工作哪是一个程序员该做的事情，
@@ -2160,9 +2160,9 @@
   
   <entry>
     <title type="html"><![CDATA[sony sr45h 拆机清灰]]></title>
-    <link href="http://feeloc.github.io/blog/2012/08/08/snoy-sr45h/"/>
+    <link href="http://www.feeloc.cn/blog/2012/08/08/snoy-sr45h/"/>
     <updated>2012-08-08T22:49:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2012/08/08/snoy-sr45h</id>
+    <id>http://www.feeloc.cn/blog/2012/08/08/snoy-sr45h</id>
     <content type="html"><![CDATA[<p><img src="http://www.feeloc.cn/downloads/images/1.jpg"></p>
 
 <blockquote><p>今天需要拆SONY SR45H/B型笔记本，好久没有清灰了，夏天经常温度太高，手放在排风口，基本上感觉不到风吹出来，一定是长年累积的
@@ -2204,9 +2204,9 @@
   
   <entry>
     <title type="html"><![CDATA[排序算法总结]]></title>
-    <link href="http://feeloc.github.io/blog/2012/08/03/algorithm/"/>
+    <link href="http://www.feeloc.cn/blog/2012/08/03/algorithm/"/>
     <updated>2012-08-03T20:56:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2012/08/03/algorithm</id>
+    <id>http://www.feeloc.cn/blog/2012/08/03/algorithm</id>
     <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/1.jpg"></p>
 
 <blockquote><p>排序算法是经常会用的，但有天晚上突然想起，大学时候学了好多的排序算法，但后来大部分都忘记了，
@@ -2480,9 +2480,9 @@
   
   <entry>
     <title type="html"><![CDATA[mootools框架学习和开发]]></title>
-    <link href="http://feeloc.github.io/blog/2012/08/03/mootools-360/"/>
+    <link href="http://www.feeloc.cn/blog/2012/08/03/mootools-360/"/>
     <updated>2012-08-03T15:23:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2012/08/03/mootools-360</id>
+    <id>http://www.feeloc.cn/blog/2012/08/03/mootools-360</id>
     <content type="html"><![CDATA[<p><img src="http://www.feeloc.cn/downloads/images/2012-08-03/1.png"></p>
 
 <blockquote><p>MooTools是一个简洁，模块化，面向对象的JavaScript框架。它能够帮助你更快，更简单地编写可扩展和兼容性强的JavaScript代码。
@@ -2520,9 +2520,9 @@ Mootools从Prototype.js中汲取了许多有益的设计理念，语法也和其
   
   <entry>
     <title type="html"><![CDATA[android开源音乐播放器Jamendo学习及二次开发]]></title>
-    <link href="http://feeloc.github.io/blog/2012/08/02/android-musicplayer/"/>
+    <link href="http://www.feeloc.cn/blog/2012/08/02/android-musicplayer/"/>
     <updated>2012-08-02T19:13:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2012/08/02/android-musicplayer</id>
+    <id>http://www.feeloc.cn/blog/2012/08/02/android-musicplayer</id>
     <content type="html"><![CDATA[<p><img src="http://www.feeloc.cn/downloads/images/2012-08-02/14.png"></p>
 
 <blockquote><p>音乐播放器是我天天都会用到的，不管是电脑的，还是手机的，还是播放器的，既然这么需要，正好在研究android程序，那就以播放器做研究吧
@@ -2547,9 +2547,9 @@ Mootools从Prototype.js中汲取了许多有益的设计理念，语法也和其
   
   <entry>
     <title type="html"><![CDATA[android开发环境搭建]]></title>
-    <link href="http://feeloc.github.io/blog/2012/08/02/interview-one/"/>
+    <link href="http://www.feeloc.cn/blog/2012/08/02/interview-one/"/>
     <updated>2012-08-02T19:12:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2012/08/02/interview-one</id>
+    <id>http://www.feeloc.cn/blog/2012/08/02/interview-one</id>
     <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/2012-08-02/1.png"></p>
 
 <blockquote><p>换了安卓手机也很长一段时间了，作为一个程序员竟然不想在自己的手机上做一些开发，真是不应该啊，正好也可以学习一些android开发，说干就干，
@@ -2657,9 +2657,9 @@ Mootools从Prototype.js中汲取了许多有益的设计理念，语法也和其
   
   <entry>
     <title type="html"><![CDATA[开始使用Octopress写博客]]></title>
-    <link href="http://feeloc.github.io/blog/2012/07/30/my-first-blog/"/>
+    <link href="http://www.feeloc.cn/blog/2012/07/30/my-first-blog/"/>
     <updated>2012-07-30T13:10:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2012/07/30/my-first-blog</id>
+    <id>http://www.feeloc.cn/blog/2012/07/30/my-first-blog</id>
     <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/1.jpg"></p>
 
 <blockquote><p>多么渴求知识的喵星人啊，最近看了Octopress配合GitHub搭建个人博客的文章，觉得正是我想要的那种非常简约的博客风格，不仅是样式简约大气，

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[["Octopress", "javascript", "Android", "GitHub", "Helloworld", "jamendo", "music", "mootools", "java", "maven", "project", "chrome", "随笔", "面试", "环境搭建", "封装", "算法"]javascript | feeloc's 杂货铺]]></title>
-  <link href="http://feeloc.github.io/blog/categories/javascript/atom.xml" rel="self"/>
-  <link href="http://feeloc.github.io/"/>
-  <updated>2013-11-14T22:11:32+08:00</updated>
-  <id>http://feeloc.github.io/</id>
+  <link href="http://www.feeloc.cn/blog/categories/javascript/atom.xml" rel="self"/>
+  <link href="http://www.feeloc.cn/"/>
+  <updated>2013-11-15T12:16:45+08:00</updated>
+  <id>http://www.feeloc.cn/</id>
   <author>
     <name><![CDATA[feeloc]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[元素任意路径运动]]></title>
-    <link href="http://feeloc.github.io/blog/2013/05/21/circle-path/"/>
+    <link href="http://www.feeloc.cn/blog/2013/05/21/circle-path/"/>
     <updated>2013-05-21T18:58:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2013/05/21/circle-path</id>
+    <id>http://www.feeloc.cn/blog/2013/05/21/circle-path</id>
     <content type="html"><![CDATA[<p><img src="http://www.feeloc.cn/downloads/images/2013-05-21/path.jpg" width="800"></p>
 
 <blockquote><p>元素运动很常见，这次总结一些运动轨迹，其实就是复习下各种数学公式，先从圆形运动开始全文。</p></blockquote>
@@ -142,9 +142,9 @@
   
   <entry>
     <title type="html"><![CDATA[SVG实现任意形状相框]]></title>
-    <link href="http://feeloc.github.io/blog/2013/05/21/svg-img/"/>
+    <link href="http://www.feeloc.cn/blog/2013/05/21/svg-img/"/>
     <updated>2013-05-21T16:54:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2013/05/21/svg-img</id>
+    <id>http://www.feeloc.cn/blog/2013/05/21/svg-img</id>
     <content type="html"><![CDATA[<p><img src="http://www.feeloc.cn/downloads/images/2013-05-21/idea.png" width="800"></p>
 
 <blockquote><p>SVG是可缩放矢量图形（Scalable Vector Graphics，SVG）是基于可扩展标记语言（XML），用于描述二维矢量图形的一种图形格式。本文不具体讨论SVG，只是
@@ -248,9 +248,9 @@
   
   <entry>
     <title type="html"><![CDATA[jquery上传插件]]></title>
-    <link href="http://feeloc.github.io/blog/2012/11/27/upload-photo/"/>
+    <link href="http://www.feeloc.cn/blog/2012/11/27/upload-photo/"/>
     <updated>2012-11-27T23:29:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2012/11/27/upload-photo</id>
+    <id>http://www.feeloc.cn/blog/2012/11/27/upload-photo</id>
     <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/1.jpg"></p>
 
 <blockquote><p>上传功能在WEB网站中经常需要使用到，整理下以前写的上传插件。</p></blockquote>
@@ -631,9 +631,9 @@
   
   <entry>
     <title type="html"><![CDATA[chrome插件]]></title>
-    <link href="http://feeloc.github.io/blog/2012/09/21/chrome-plugin/"/>
+    <link href="http://www.feeloc.cn/blog/2012/09/21/chrome-plugin/"/>
     <updated>2012-09-21T00:50:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2012/09/21/chrome-plugin</id>
+    <id>http://www.feeloc.cn/blog/2012/09/21/chrome-plugin</id>
     <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/2012-09-21/1.png"></p>
 
 <blockquote><p>前阵子遇到一些繁琐的操作，需要在页面上重复填写表单，需要将数据从一个地方粘贴到表单里，数据量非常之大，此等重复劳动的工作哪是一个程序员该做的事情，
@@ -827,9 +827,9 @@
   
   <entry>
     <title type="html"><![CDATA[排序算法总结]]></title>
-    <link href="http://feeloc.github.io/blog/2012/08/03/algorithm/"/>
+    <link href="http://www.feeloc.cn/blog/2012/08/03/algorithm/"/>
     <updated>2012-08-03T20:56:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2012/08/03/algorithm</id>
+    <id>http://www.feeloc.cn/blog/2012/08/03/algorithm</id>
     <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/1.jpg"></p>
 
 <blockquote><p>排序算法是经常会用的，但有天晚上突然想起，大学时候学了好多的排序算法，但后来大部分都忘记了，

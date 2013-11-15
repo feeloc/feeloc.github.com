@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[["Octopress", "javascript", "Android", "GitHub", "Helloworld", "jamendo", "music", "mootools", "java", "maven", "project", "chrome", "随笔", "面试", "环境搭建", "封装", "算法"]sr45h | feeloc's 杂货铺]]></title>
-  <link href="http://feeloc.github.io/blog/categories/sr45h/atom.xml" rel="self"/>
-  <link href="http://feeloc.github.io/"/>
-  <updated>2013-11-14T22:11:32+08:00</updated>
-  <id>http://feeloc.github.io/</id>
+  <link href="http://www.feeloc.cn/blog/categories/sr45h/atom.xml" rel="self"/>
+  <link href="http://www.feeloc.cn/"/>
+  <updated>2013-11-15T12:16:45+08:00</updated>
+  <id>http://www.feeloc.cn/</id>
   <author>
     <name><![CDATA[feeloc]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[sony sr45h 拆机清灰]]></title>
-    <link href="http://feeloc.github.io/blog/2012/08/08/snoy-sr45h/"/>
+    <link href="http://www.feeloc.cn/blog/2012/08/08/snoy-sr45h/"/>
     <updated>2012-08-08T22:49:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2012/08/08/snoy-sr45h</id>
+    <id>http://www.feeloc.cn/blog/2012/08/08/snoy-sr45h</id>
     <content type="html"><![CDATA[<p><img src="http://www.feeloc.cn/downloads/images/1.jpg"></p>
 
 <blockquote><p>今天需要拆SONY SR45H/B型笔记本，好久没有清灰了，夏天经常温度太高，手放在排风口，基本上感觉不到风吹出来，一定是长年累积的

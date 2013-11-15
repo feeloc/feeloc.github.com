@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[["Octopress", "javascript", "Android", "GitHub", "Helloworld", "jamendo", "music", "mootools", "java", "maven", "project", "chrome", "随笔", "面试", "环境搭建", "封装", "算法"]ruby | feeloc's 杂货铺]]></title>
-  <link href="http://feeloc.github.io/blog/categories/ruby/atom.xml" rel="self"/>
-  <link href="http://feeloc.github.io/"/>
-  <updated>2013-11-14T22:11:32+08:00</updated>
-  <id>http://feeloc.github.io/</id>
+  <link href="http://www.feeloc.cn/blog/categories/ruby/atom.xml" rel="self"/>
+  <link href="http://www.feeloc.cn/"/>
+  <updated>2013-11-15T12:16:45+08:00</updated>
+  <id>http://www.feeloc.cn/</id>
   <author>
     <name><![CDATA[feeloc]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[史上最简单windows下搭建octopress环境]]></title>
-    <link href="http://feeloc.github.io/blog/2013/01/11/octopress/"/>
+    <link href="http://www.feeloc.cn/blog/2013/01/11/octopress/"/>
     <updated>2013-01-11T01:38:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2013/01/11/octopress</id>
+    <id>http://www.feeloc.cn/blog/2013/01/11/octopress</id>
     <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/2012-09-21/1.png"></p>
 
 <blockquote><p>之前使用rubyinstall在windows环境下搭建ruby开发环境，真是蛋疼得很，经常出现各种问题，尤其是在windows 7 64位下面，

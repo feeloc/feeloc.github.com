@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[["Octopress", "javascript", "Android", "GitHub", "Helloworld", "jamendo", "music", "mootools", "java", "maven", "project", "chrome", "随笔", "面试", "环境搭建", "封装", "算法"]环境搭建 | feeloc's 杂货铺]]></title>
-  <link href="http://feeloc.github.io/blog/categories/huan-jing-da-jian/atom.xml" rel="self"/>
-  <link href="http://feeloc.github.io/"/>
-  <updated>2013-11-14T22:11:32+08:00</updated>
-  <id>http://feeloc.github.io/</id>
+  <link href="http://www.feeloc.cn/blog/categories/huan-jing-da-jian/atom.xml" rel="self"/>
+  <link href="http://www.feeloc.cn/"/>
+  <updated>2013-11-15T12:16:45+08:00</updated>
+  <id>http://www.feeloc.cn/</id>
   <author>
     <name><![CDATA[feeloc]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[android开发环境搭建]]></title>
-    <link href="http://feeloc.github.io/blog/2012/08/02/interview-one/"/>
+    <link href="http://www.feeloc.cn/blog/2012/08/02/interview-one/"/>
     <updated>2012-08-02T19:12:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2012/08/02/interview-one</id>
+    <id>http://www.feeloc.cn/blog/2012/08/02/interview-one</id>
     <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/2012-08-02/1.png"></p>
 
 <blockquote><p>换了安卓手机也很长一段时间了，作为一个程序员竟然不想在自己的手机上做一些开发，真是不应该啊，正好也可以学习一些android开发，说干就干，
@@ -123,9 +123,9 @@
   
   <entry>
     <title type="html"><![CDATA[开始使用Octopress写博客]]></title>
-    <link href="http://feeloc.github.io/blog/2012/07/30/my-first-blog/"/>
+    <link href="http://www.feeloc.cn/blog/2012/07/30/my-first-blog/"/>
     <updated>2012-07-30T13:10:00+08:00</updated>
-    <id>http://feeloc.github.io/blog/2012/07/30/my-first-blog</id>
+    <id>http://www.feeloc.cn/blog/2012/07/30/my-first-blog</id>
     <content type="html"><![CDATA[<p><img src="http://feeloc.cn/downloads/images/1.jpg"></p>
 
 <blockquote><p>多么渴求知识的喵星人啊，最近看了Octopress配合GitHub搭建个人博客的文章，觉得正是我想要的那种非常简约的博客风格，不仅是样式简约大气，
