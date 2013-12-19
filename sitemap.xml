@@ -2,74 +2,78 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://www.feeloc.cn/blog/2012/07/30/my-first-blog/</loc>
-        <lastmod>2013-11-14T22:09:47+08:00</lastmod>
+        <lastmod>2013-12-19T14:16:58+08:00</lastmod>
     </url>
     <url>
         <loc>http://www.feeloc.cn/blog/2012/08/02/interview-one/</loc>
-        <lastmod>2013-11-12T18:15:30+08:00</lastmod>
+        <lastmod>2013-12-19T14:16:58+08:00</lastmod>
     </url>
     <url>
         <loc>http://www.feeloc.cn/blog/2012/08/02/android-musicplayer/</loc>
-        <lastmod>2013-11-12T18:15:30+08:00</lastmod>
+        <lastmod>2013-12-19T14:16:58+08:00</lastmod>
     </url>
     <url>
         <loc>http://www.feeloc.cn/blog/2012/08/03/mootools-360/</loc>
-        <lastmod>2013-11-12T18:15:30+08:00</lastmod>
+        <lastmod>2013-12-19T14:16:58+08:00</lastmod>
     </url>
     <url>
         <loc>http://www.feeloc.cn/blog/2012/08/03/algorithm/</loc>
-        <lastmod>2013-11-12T18:15:30+08:00</lastmod>
+        <lastmod>2013-12-19T14:16:58+08:00</lastmod>
     </url>
     <url>
         <loc>http://www.feeloc.cn/blog/2012/08/08/snoy-sr45h/</loc>
-        <lastmod>2013-11-12T18:15:30+08:00</lastmod>
+        <lastmod>2013-12-19T14:16:58+08:00</lastmod>
     </url>
     <url>
         <loc>http://www.feeloc.cn/blog/2012/09/21/chrome-plugin/</loc>
-        <lastmod>2013-11-12T18:15:30+08:00</lastmod>
+        <lastmod>2013-12-19T14:16:58+08:00</lastmod>
     </url>
     <url>
         <loc>http://www.feeloc.cn/blog/2012/09/21/maven-startup/</loc>
-        <lastmod>2013-11-12T18:15:30+08:00</lastmod>
+        <lastmod>2013-12-19T14:16:58+08:00</lastmod>
     </url>
     <url>
         <loc>http://www.feeloc.cn/blog/2012/11/27/upload-photo/</loc>
-        <lastmod>2013-11-12T18:15:30+08:00</lastmod>
+        <lastmod>2013-12-19T14:16:58+08:00</lastmod>
     </url>
     <url>
         <loc>http://www.feeloc.cn/blog/2013/01/11/octopress/</loc>
-        <lastmod>2013-11-12T22:21:24+08:00</lastmod>
+        <lastmod>2013-12-19T14:16:58+08:00</lastmod>
     </url>
     <url>
         <loc>http://www.feeloc.cn/blog/2013/05/21/svg-img/</loc>
-        <lastmod>2013-11-12T18:15:30+08:00</lastmod>
+        <lastmod>2013-12-19T14:16:58+08:00</lastmod>
     </url>
     <url>
         <loc>http://www.feeloc.cn/blog/2013/05/21/circle-path/</loc>
-        <lastmod>2013-11-12T18:15:30+08:00</lastmod>
+        <lastmod>2013-12-19T14:16:58+08:00</lastmod>
     </url>
     <url>
         <loc>http://www.feeloc.cn/blog/2013/09/04/server-config/</loc>
-        <lastmod>2013-11-12T22:21:24+08:00</lastmod>
+        <lastmod>2013-12-19T14:16:58+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.feeloc.cn/blog/2013/12/19/node-modules/</loc>
+        <lastmod>2013-12-19T14:20:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://www.feeloc.cn/404.html</loc>
-        <lastmod>2013-11-12T18:15:30+08:00</lastmod>
+        <lastmod>2013-12-19T14:16:58+08:00</lastmod>
     </url>
     <url>
         <loc>http://www.feeloc.cn/about/</loc>
-        <lastmod>2013-11-12T22:21:24+08:00</lastmod>
+        <lastmod>2013-12-19T14:16:58+08:00</lastmod>
     </url>
     <url>
         <loc>http://www.feeloc.cn/blog/archives/</loc>
-        <lastmod>2013-11-14T22:09:47+08:00</lastmod>
+        <lastmod>2013-12-19T14:20:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://www.feeloc.cn/robots.txt</loc>
-        <lastmod>2013-11-12T18:15:30+08:00</lastmod>
+        <lastmod>2013-12-19T14:16:58+08:00</lastmod>
     </url>
     <url>
         <loc>http://www.feeloc.cn/</loc>
-        <lastmod>2013-11-14T22:09:47+08:00</lastmod>
+        <lastmod>2013-12-19T14:20:41+08:00</lastmod>
     </url>
 </urlset>

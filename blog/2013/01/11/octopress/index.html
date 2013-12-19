@@ -5,12 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>史上最简单windows下搭建octopress环境 - feeloc's 杂货铺</title>
+  <title>超简单windows下octopress环境搭建 - feeloc's 杂货铺</title>
   <meta name="author" content="feeloc">
 
   
-  <meta name="description" content=" 之前使用rubyinstall在windows环境下搭建ruby开发环境，真是蛋疼得很，经常出现各种问题，尤其是在windows 7 64位下面，
-曾经一度想放弃使用octopress写博客，想使用hexo去写博客，现在分享新的方法，简化流程。 ">
+  <meta name="description" content="octopress博客无论是markdown的写作方式，还是简洁的界面我都非常喜欢，但windows下搭建ruby环境真的是一个很蛋疼的问题，
+特别是在64位环境下，一度想改成hexo去写博客，最近发现windows
+下有更简单的ruby环境搭建方法，在此分享给大家， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -70,7 +71,7 @@
   
   <header>
     
-      <h1 class="entry-title">史上最简单windows下搭建octopress环境</h1>
+      <h1 class="entry-title">超简单windows下octopress环境搭建</h1>
     
     
       <p class="meta">
@@ -86,7 +87,7 @@
   
 
 
-<time datetime="2013-01-11T01:38:00+08:00" pubdate data-updated="true">Jan 11<span>th</span>, 2013</time>
+<time datetime="2013-01-11T23:29:00+08:00" pubdate data-updated="true">Jan 11<span>th</span>, 2013</time>
         
       </p>
     
@@ -95,12 +96,56 @@
 
 <div class="entry-content"><p><img src="http://feeloc.cn/downloads/images/2012-09-21/1.png"></p>
 
-<blockquote><p>之前使用rubyinstall在windows环境下搭建ruby开发环境，真是蛋疼得很，经常出现各种问题，尤其是在windows 7 64位下面，
-曾经一度想放弃使用octopress写博客，想使用<a href="https://github.com/tommy351/hexo" title="hexo">hexo</a>去写博客，现在分享新的方法，简化流程。</p></blockquote>
+<blockquote><p>octopress博客无论是markdown的写作方式，还是简洁的界面我都非常喜欢，但windows下搭建ruby环境真的是一个很蛋疼的问题，
+特别是在64位环境下，一度想改成<a href="https://github.com/tommy351/hexo" title="hexo github">hexo</a>去写博客，最近发现windows
+下有更简单的ruby环境搭建方法，在此分享给大家，简化windows下的octopress环境搭建。</p></blockquote>
 
 <!-- more -->
 
 
+<h2>一、准备工作</h2>
+
+<ul>
+<li>下载及安装<a href="http://railsinstaller.org/" title="下载railinstaller">railsinstaller</a>，基本一路next。<code>最好安装railsinstaller全部模块，以免发生不可预料错误</code></li>
+<li>配置git环境，连接上github，在些就不重复说明了，详见<a href="http://www.feeloc.cn/blog/2012/07/30/my-first-blog/" title="开始使用Octopress写博客">开始使用Octopress写博客</a></li>
+<li>配置环境变量，<code>LANG</code>和<code>LC_ALL</code>，值均为<code>zh_CN.UTF-8</code>
+
+<h2>二、安装octopress</h2></li>
+<li>安装octopress</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#1. 克隆 Octopress
+</span><span class='line'>$ cd d:
+</span><span class='line'>$ git clone git://github.com/imathis/octopress.git sinosmond.github.com myblog
+</span><span class='line'>$ cd myblog
+</span><span class='line'>#2. 修改 Octopress 的 GEM 源
+</span><span class='line'>$ vi Gemfile 或 notepad Gemfile
+</span><span class='line'>将行 ： source "http://rubygems.org/"
+</span><span class='line'>改为 ： source "http://ruby.taobao.org/"
+</span><span class='line'>#3. 安装 Octopress 所需的GEM组件
+</span><span class='line'>$ bundle install
+</span><span class='line'>#4. 生成Octopress 的模版文件
+</span><span class='line'>bundle update    #防止出现rake aborted!最好每次修改完Gemfile都更新下
+</span><span class='line'>rake install</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>下面就可以快乐得进行octopress写博客了</li>
+</ul>
 
 </div>
 
@@ -124,7 +169,7 @@
   
 
 
-<time datetime="2013-01-11T01:38:00+08:00" pubdate data-updated="true">Jan 11<span>th</span>, 2013</time>
+<time datetime="2013-01-11T23:29:00+08:00" pubdate data-updated="true">Jan 11<span>th</span>, 2013</time>
       
 
 <span class="categories">
@@ -197,6 +242,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/12/19/node-modules/">那些年，我们喜爱的nodejs模块</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/09/04/server-config/">服务器配置，tengine，git，nodejs，grunt，mongodb……</a>
       </li>
     
@@ -209,11 +258,7 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2013/01/11/octopress/">史上最简单windows下搭建octopress环境</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/11/27/upload-photo/">jquery上传插件</a>
+        <a href="/blog/2013/01/11/octopress/">超简单windows下octopress环境搭建</a>
       </li>
     
   </ul>
