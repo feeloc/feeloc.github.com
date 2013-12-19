@@ -4,7 +4,7 @@
   <title><![CDATA[feeloc's 杂货铺]]></title>
   <link href="http://www.feeloc.cn/atom.xml" rel="self"/>
   <link href="http://www.feeloc.cn/"/>
-  <updated>2013-12-19T14:42:04+08:00</updated>
+  <updated>2013-12-19T14:50:12+08:00</updated>
   <id>http://www.feeloc.cn/</id>
   <author>
     <name><![CDATA[feeloc]]></name>
@@ -18,7 +18,9 @@
     <link href="http://www.feeloc.cn/blog/2013/12/19/node-modules/"/>
     <updated>2013-12-19T14:03:00+08:00</updated>
     <id>http://www.feeloc.cn/blog/2013/12/19/node-modules</id>
-    <content type="html"><![CDATA[<blockquote><p>使用nodejs来写各种应用感觉十分得舒服，利益于nodejs的模块。</p></blockquote>
+    <content type="html"><![CDATA[<p><img src="http://www.feeloc.cn/downloads/images/2013-05-21/idea.png" width="800"></p>
+
+<blockquote><p>使用nodejs来写各种应用感觉十分得舒服，利益于nodejs的模块。</p></blockquote>
 ]]></content>
   </entry>
   
